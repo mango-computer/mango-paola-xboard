@@ -1,6 +1,6 @@
 # mango-paola-xboard
 
-Código del Motor de ajedrez mango paola versión competencia entre motores o para interfaces que implementen el protocolo xboard
+Código del Motor de Ajedrez Mango Paola versión competencia entre motores o para interfaces que implementen el protocolo xboard
 
 Blog oficial http://mangocomputerca.blogspot.com/
 Ranking Mundial del Motor https://ccrl.chessdom.com/ccrl/4040/cgi/engine_details.cgi?print=Details&each_game=1&eng=Mango%20Paola%20Ajedrez%204.1#Mango_Paola_Ajedrez_4_1
