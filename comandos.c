@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -28,12 +28,21 @@
 #ifndef COMANDOS_C
 #define COMANDOS_C
 
+static void mostrarPrompt(void)
+{
+	if (juego.colorTurno)
+		printf("mangoac [negras]> ");
+	else
+		printf("mangoac [blancas]> ");
+	fflush(stdout);
+}
+
 void leerComandos()
 {
 	int c=0;
 	setbuf(stdout, NULL);
 
-	printf("Blancas> ");
+	mostrarPrompt();
 
 	while ( (c=getc(stdin)) != EOF  )
 	{
@@ -46,18 +55,12 @@ void leerComandos()
 				if (!ejecutarComando(BUFF_COMANDOS)) return;
 			}
 
-			if (juego.colorTurno)
-			{		
-				printf("Negras> ");
-			} else {
-				printf("Blancas> ");
-			}
-			fflush(stdout);
+			mostrarPrompt();
 
 		} else {
 			if (CONT_BUFF_COMANDOS>=LARGO_BUFER_COMANDOS)
 			{
-				printf("Comando muy largo\n");
+				printf("El comando es demasiado largo\n");
 				CONT_BUFF_COMANDOS = 0;
 			}
 			
@@ -68,12 +71,115 @@ void leerComandos()
 
 }
 
+static void mostrarAyuda(void)
+{
+	printf("\n");
+	printf("  Mango AC Ajedrez — comandos de consola\n");
+	printf("  Escriba el comando y pulse <Enter>. Los alias van entre paréntesis.\n");
+	printf("  English help: type help\n");
+	printf("\n");
+	printf("  Partida\n");
+	printf("    %-32s %s\n", "nuevo",                    "Inicia una nueva partida");
+	printf("    %-32s %s\n", "tablero (d, t)",           "Muestra el tablero");
+	printf("    %-32s %s\n", "girar (g, r)",             "Gira el tablero");
+	printf("    %-32s %s\n", "deshacer (u, regresar)",   "Deshace el último movimiento");
+	printf("    %-32s %s\n", "partida (juego)",          "Muestra las jugadas de la partida");
+	printf("    %-32s %s\n", "blancas (blanco)",         "Turno de las blancas");
+	printf("    %-32s %s\n", "negras (negro)",           "Turno de las negras");
+	printf("    %-32s %s\n", "move e2e4",                "Juega un movimiento (origen-destino)");
+	printf("\n");
+	printf("  Motor\n");
+	printf("    %-32s %s\n", "jugar (dale)",             "El motor realiza su jugada");
+	printf("    %-32s %s\n", "auto (cc)",                "Partida de motor contra motor");
+	printf("    %-32s %s\n", "facil / medio / fuerte",   "Nivel predefinido del motor");
+	printf("    %-32s %s\n", "profundidad n",            "Profundidad máxima de búsqueda");
+	printf("    %-32s %s\n", "tiempo n",                 "Tiempo por movimiento, en segundos");
+	printf("    %-32s %s\n", "libro si (librosi)",       "Activa el libro de aperturas");
+	printf("    %-32s %s\n", "libro no (librono)",       "Desactiva el libro de aperturas");
+	printf("\n");
+	printf("  Análisis\n");
+	printf("    %-32s %s\n", "legales (movimientos)",    "Muestra los movimientos legales");
+	printf("    %-32s %s\n", "eval",                     "Evaluación estática de la posición");
+	printf("    %-32s %s\n", "fen",                      "Muestra la posición en notación FEN");
+	printf("    %-32s %s\n", "leerfen archivo n",        "Carga la posición n de un archivo FEN");
+	printf("    %-32s %s\n", "perft n",                  "Cuenta nodos a profundidad n (prueba)");
+	printf("    %-32s %s\n", "info (i)",                 "Muestra las variables internas");
+	printf("\n");
+	printf("  Sistema\n");
+	printf("    %-32s %s\n", "version (ver)",            "Muestra la versión y el autor");
+	printf("    %-32s %s\n", "xboard",                   "Activa el protocolo WinBoard/xboard");
+	printf("    %-32s %s\n", "uci",                      "Activa el protocolo UCI");
+	printf("    %-32s %s\n", "salir",                    "Sale del programa");
+	printf("    %-32s %s\n", "ayuda (?, h)",             "Muestra esta ayuda");
+	printf("\n");
+	printf("  Depuración\n");
+	printf("    %-32s %s\n", "ver ocupados",             "Mapa de bits de las casillas ocupadas");
+	printf("    %-32s %s\n", "ver blancos",              "Mapa de bits de las piezas blancas");
+	printf("    %-32s %s\n", "ver negros",               "Mapa de bits de las piezas negras");
+	printf("    %-32s %s\n", "ver peones blancos",       "Mapa de bits de los peones blancos");
+	printf("    %-32s %s\n", "ver peones negros",        "Mapa de bits de los peones negros");
+	printf("    %-32s %s\n", "ver destinos blancos",     "Mapa de bits de destinos blancos");
+	printf("    %-32s %s\n", "ver destinos negros",      "Mapa de bits de destinos negros");
+	printf("\n");
+}
+
+static void mostrarHelp(void)
+{
+	printf("\n");
+	printf("  Mango AC Chess — console commands\n");
+	printf("  Type a command and press <Enter>. Aliases are shown in parentheses.\n");
+	printf("  Ayuda en español: escriba ayuda\n");
+	printf("\n");
+	printf("  Game\n");
+	printf("    %-32s %s\n", "new",                      "Start a new game");
+	printf("    %-32s %s\n", "board (d, t)",             "Display the board");
+	printf("    %-32s %s\n", "flip (g, r)",              "Flip the board");
+	printf("    %-32s %s\n", "undo (u)",                 "Take back the last move");
+	printf("    %-32s %s\n", "game",                     "Show the moves of the game");
+	printf("    %-32s %s\n", "white",                    "White to move");
+	printf("    %-32s %s\n", "black",                    "Black to move");
+	printf("    %-32s %s\n", "move e2e4",                "Play a move (from-to notation)");
+	printf("\n");
+	printf("  Engine\n");
+	printf("    %-32s %s\n", "go",                       "Let the engine make a move");
+	printf("    %-32s %s\n", "auto (cc)",                "Engine vs engine game");
+	printf("    %-32s %s\n", "sd n",                     "Set maximum search depth");
+	printf("    %-32s %s\n", "time n",                   "Set time per move, in seconds");
+	printf("    %-32s %s\n", "book on",                  "Enable the opening book");
+	printf("    %-32s %s\n", "book off",                 "Disable the opening book");
+	printf("\n");
+	printf("  Analysis\n");
+	printf("    %-32s %s\n", "moves",                    "Show legal moves");
+	printf("    %-32s %s\n", "eval",                     "Static evaluation of the position");
+	printf("    %-32s %s\n", "fen",                      "Show the position in FEN notation");
+	printf("    %-32s %s\n", "readfen file n",           "Load position n from a FEN file");
+	printf("    %-32s %s\n", "perft n",                  "Count nodes at depth n (test)");
+	printf("    %-32s %s\n", "info (i)",                 "Show internal engine variables");
+	printf("\n");
+	printf("  System\n");
+	printf("    %-32s %s\n", "version",                  "Show version and author");
+	printf("    %-32s %s\n", "xboard",                   "Switch to WinBoard/xboard protocol");
+	printf("    %-32s %s\n", "uci",                      "Switch to UCI protocol");
+	printf("    %-32s %s\n", "quit (exit)",              "Leave the program");
+	printf("    %-32s %s\n", "help (h)",                 "Show this help");
+	printf("\n");
+	printf("  Debug\n");
+	printf("    %-32s %s\n", "ver ocupados",             "Bitboard of occupied squares");
+	printf("    %-32s %s\n", "ver blancos",              "Bitboard of white pieces");
+	printf("    %-32s %s\n", "ver negros",               "Bitboard of black pieces");
+	printf("    %-32s %s\n", "ver peones blancos",       "Bitboard of white pawns");
+	printf("    %-32s %s\n", "ver peones negros",        "Bitboard of black pawns");
+	printf("    %-32s %s\n", "ver destinos blancos",     "Bitboard of white destinations");
+	printf("    %-32s %s\n", "ver destinos negros",      "Bitboard of black destinations");
+	printf("\n");
+}
+
 BOOLEANO ejecutarComando(const char *buff)
 {
 	BOOLEANO esJaque;
 	uint64 tiempo_ms  = 0;  
 	MOVIMIENTO m;
-	int profundidadSugerida;
+	int profundidadSugerida = 2;
 
 	if (!strcmp(buff, ""))
 	{
@@ -81,80 +187,26 @@ BOOLEANO ejecutarComando(const char *buff)
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "help")) || (!strcmp(buff, "h")) || (!strcmp(buff, "?")) || (!strcmp(buff, "ayuda")))
+	if ((!strcmp(buff, "ayuda")) || (!strcmp(buff, "?")))
 	{
-
-		printf("\n******* Ayuda *******\n");
-		printf("ata n			: Devuelve un mapa de bit de todos los atacantes en el escaque dado\n");
-		printf("blanco			: Blanco mueve\n");
-		printf("cc			: Jugar computadora vs computadora\n");
-		printf("configuracion		: Configura el tablero\n");
-		printf("dale			: Juega la computadora\n");
-		printf("d			: Mostrar Tablero\n");
-		printf("eval			: Muestra evaluacion estatica de esta posición\n");
-		printf("g			: Gira el tablero\n");
-		printf("i			: Muestra el valor de las variables\n");
-		printf("info			: Muestra el valor de las variables\n");
-		printf("juego			: Muestra los movimientos del juego\n");
-		printf("leerfen nombreArchivo n	: Lee el numero de lineaa de un archivo FEN\n");
-		printf("librono			: Des-habilita el uso de diccionario o libro de aperturas\n");
-		printf("librosi			: Habilita el uso de diccionario o libro de aperturas\n");
-		printf("movimientos		: muestra todos los movimientos legales\n");
-		printf("negro			: Negro mueve\n");
-		printf("nuevo			: Inicia un nuevo juego\n");
-		printf("regresar		: Devuelve el ultimo movimiento\n");
-		printf("r			: Gira el tablero\n");
-		printf("sd n			: Establece la profundidad de busquedad en n*2\n");
-		printf("t			: Mostrar Tablero\n");
-		printf("u			: Devuelve el ultimo movimiento\n");
-		printf("ver blancos		: Muestra el bitmap de los blancos\n");
-		printf("ver destinos blancos	: Muestra el bitmap de los destinos blancos\n");
-		printf("ver destinos negros	: Muestra el bitmap de los destinos negros\n");
-		printf("ver			: Muestra la versión y autor del motor de ajedrez\n");
-		printf("ver negros		: Muestra el bitmap de los negros\n");
-		printf("ver ocupados		: Muestra el bitmap de ocupados\n");
-		printf("ver peones blancos	: Muestra el bitmap de los peones blancos\n");
-		printf("ver peons negros	: Muestra el bitmap de los peones negros\n");
-		printf("ver todos mov		: Muestra todos los movimientos generados sin validar\n");
-
-		printf("\n******* Help *******\n");
-		printf("ata n			: Devuelve un mapa de bit de todos los atacantes en el escaque dado\n");
-		printf("black			: Negro mueve\n");
-		printf("cc			: Jugar computadora vs computadora\n");
-		printf("d			: Mostrar Tablero\n");
-		printf("eval			: Muestra evaluacion estatica de esta posición\n");
-		printf("exit			: Salir del Juego\n");
-		printf("game			: Muestra los movimientos del juego\n");
-		printf("g			: Gira el tablero\n");
-		printf("go			: Juega la computadora\n");
-		printf("i			: Muestra el valor de las variables\n");
-		printf("info			: Muestra el valor de las variables\n");
-		printf("move e2e4		: Introduce un movimiento (use este formato)\n");
-		printf("moves			: muestra todos los movimientos legales\n");
-		printf("new			: Inicia un nuevo juego\n");
-		printf("perft n			: Calcula el numero de nodos en bruto, con profundida n\n");
-		printf("perft			: punto de referencia un número de funciones clave\n");
-		printf("quit			: Salir del programa\n");
-		printf("readfen nombreArchivo n	: Lee el numero de lineaa de un archivo FEN\n");
-		printf("r			: Gira el tablero\n");
-		printf("sd n			: Establece la profundidad de busquedad en n*2\n");
-		printf("setup			: Configura el tablero\n");
-		printf("t			: Mostrar Tablero\n");
-		printf("u			: Devuelve el ultimo movimiento\n");
-		printf("undo			: Devuelve el ultimo movimiento\n");
-		printf("white			: Blanco mueve\n");
-
-
+		mostrarAyuda();
 		CONT_BUFF_COMANDOS = '\0';
 		return VERDADERO;    
-       }
+	}
+
+	if ((!strcmp(buff, "help")) || (!strcmp(buff, "h")))
+	{
+		mostrarHelp();
+		CONT_BUFF_COMANDOS = '\0';
+		return VERDADERO;    
+	}
 
 	if (buff[0] == 'p' && buff[1] == 'e' && buff[2] == 'r' && buff[3] == 'f' && buff[4] == 't' && isdigit(buff[6]))  
 	{
 		uint64 resulPerft = 0;
 		tiempo_ms  = 0;  
 		uint8  profundidad = buff[6] - 48;
-		printf("Inciado la prueba a una profundidad de %d\n", profundidad);
+		printf("Iniciando la prueba a profundidad %d\n", profundidad);
 		printf("...\n");
 
 		DataPerft.InvCaptura		= 0;
@@ -173,8 +225,8 @@ BOOLEANO ejecutarComando(const char *buff)
 
 		printf("\n");
 		printf("Capturas	: %u\n",DataPerft.InvCaptura);
-		printf("Peon al Paso	: %u\n",DataPerft.InvPeonPaso);
-		printf("Promocion	: %u\n",DataPerft.InvPromocion);
+		printf("Peón al paso	: %u\n",DataPerft.InvPeonPaso);
+		printf("Promoción	: %u\n",DataPerft.InvPromocion);
 		printf("OO		: %u\n",DataPerft.InvEnroqueOO);
 		printf("OOO		: %u\n",DataPerft.InvEnroqueOOO);
 		printf("Total Enroque	: %u\n",(DataPerft.InvEnroqueOOO+DataPerft.InvEnroqueOO));
@@ -183,7 +235,7 @@ BOOLEANO ejecutarComando(const char *buff)
 
 		if (tiempo_ms > 0)
 		{
-			printf("Relacion: %lld knods/s \n", resulPerft/tiempo_ms);
+			printf("Relación: %lld knodos/s\n", resulPerft/tiempo_ms);
 		}
 		CONT_BUFF_COMANDOS = '\0';
 		return VERDADERO;    
@@ -201,7 +253,7 @@ BOOLEANO ejecutarComando(const char *buff)
 		{
 			hacerMovimiento(mov);
 
-			if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+			if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 			{
 				esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 			} else {
@@ -213,20 +265,24 @@ BOOLEANO ejecutarComando(const char *buff)
 				juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
 				mostrarTablero();
 			} else {
-				printf("Movimiento Ilegal: !!! Rey queda en jaque !!!\n");
+				printf("Movimiento ilegal: el rey queda en jaque\n");
 				desHacerMovimiento(mov);
 			}
 		} else {
-			printf("Movimiento Ilegal: Escaque origen/destino invalido\n");
+			printf("Movimiento ilegal: escaque de origen o destino inválido\n");
 		}
 
 		return VERDADERO;    
 	}
 
-	if ((!strncmp(buff, "sd", 2)))
+	if ((!strncmp(buff, "profundidad ", 12)) ||
+	    (!strncmp(buff, "sd", 2) && (buff[2] == '\0' || buff[2] == ' ')))
 	{
 		CONT_BUFF_COMANDOS = '\0';
-		sscanf(buff,"sd %d", &profundidadSugerida);
+		if (!strncmp(buff, "profundidad ", 12))
+			sscanf(buff, "profundidad %d", &profundidadSugerida);
+		else
+			sscanf(buff, "sd %d", &profundidadSugerida);
 		if (profundidadSugerida < 2) profundidadSugerida = 2;
 		juego.profundidadBusquedad = profundidadSugerida;
 		nivelPC = PC_NIVEL_PERSONALIZADO;
@@ -256,7 +312,8 @@ BOOLEANO ejecutarComando(const char *buff)
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "undo")) || (!strcmp(buff, "regresar")) || (!strcmp(buff, "u")))
+	if ((!strcmp(buff, "undo")) || (!strcmp(buff, "regresar")) || (!strcmp(buff, "u")) ||
+	    (!strcmp(buff, "deshacer")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		if (juego.indiceHJuego > 0)
@@ -272,7 +329,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		int resulEval = evaluacionTablero(-INFINITO,INFINITO);
-		printf("Evaluación Estatica del Tablero Actual\nEval:	%d\n",resulEval);
+		printf("Evaluación estática del tablero actual\nEval:	%d\n",resulEval);
 		return VERDADERO;    
 	}
 #ifdef COMPILAR_CON_EGBB
@@ -339,11 +396,15 @@ BOOLEANO ejecutarComando(const char *buff)
 	}
 
 
-	if ((!strncmp(buff, "time", 4)))
+	if ((!strncmp(buff, "tiempo ", 7)) ||
+	    (!strncmp(buff, "time", 4) && (buff[4] == '\0' || buff[4] == ' ')))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		int tiempoUser = juego.maxTiempo/1000;
-		sscanf(buff,"time %d", &tiempoUser);
+		if (!strncmp(buff, "tiempo ", 7))
+			sscanf(buff, "tiempo %d", &tiempoUser);
+		else
+			sscanf(buff, "time %d", &tiempoUser);
 		if (tiempoUser < 1) tiempoUser = 1;
 		juego.maxTiempo = tiempoUser * 1000;
 		printf("juego.maxTiempo = %d\n",juego.maxTiempo);
@@ -355,11 +416,11 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		nuevo_juego();
-		printf("Motor Re-Inicializado\n");
+		printf("Motor reiniciado\n");
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "white")) || (!strcmp(buff, "blanco")))
+	if ((!strcmp(buff, "white")) || (!strcmp(buff, "blanco")) || (!strcmp(buff, "blancas")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		if (juego.colorTurno)
@@ -371,7 +432,7 @@ BOOLEANO ejecutarComando(const char *buff)
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "black")) || (!strcmp(buff, "negro")))
+	if ((!strcmp(buff, "black")) || (!strcmp(buff, "negro")) || (!strcmp(buff, "negras")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		if (!juego.colorTurno)
@@ -391,7 +452,7 @@ BOOLEANO ejecutarComando(const char *buff)
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "r")) || (!strcmp(buff, "g")))
+	if ((!strcmp(buff, "r")) || (!strcmp(buff, "g")) || (!strcmp(buff, "girar")) || (!strcmp(buff, "flip")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		juego.vista = !juego.vista;
@@ -401,14 +462,14 @@ BOOLEANO ejecutarComando(const char *buff)
 
 
 
-	if ((!strcmp(buff, "d")) || (!strcmp(buff, "t")))
+	if ((!strcmp(buff, "d")) || (!strcmp(buff, "t")) || (!strcmp(buff, "tablero")) || (!strcmp(buff, "board")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		mostrarTablero();
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "game")) || (!strcmp(buff, "juego")))
+	if ((!strcmp(buff, "game")) || (!strcmp(buff, "juego")) || (!strcmp(buff, "partida")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		verMovimentosJuego();
@@ -416,7 +477,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	}
 
 
-	if ((!strcmp(buff, "moves")) || (!strcmp(buff, "movimientos")))
+	if ((!strcmp(buff, "moves")) || (!strcmp(buff, "movimientos")) || (!strcmp(buff, "legales")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		verMovimentosLegales();
@@ -468,16 +529,16 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		char nombreArchivo[100];
-		printf("Por favor espere mientras el test se realiza...\n");
+		printf("Por favor, espere mientras se realiza la prueba...\n");
 		FILE *fp = freopen("test.txt", "w",stdout);
 		sscanf(buff,"test %s", nombreArchivo);
 
-		printf("MODO TEST en %s\n",nombreArchivo);
+		printf("MODO PRUEBA en %s\n",nombreArchivo);
 
 		int i=1;
 		while(readFen(nombreArchivo, i))
 		{
-			printf("Iteracion # %d\n",i);
+			printf("Iteración n.º %d\n",i);
 			pensarRapido();
 			i++;
 		}	
@@ -497,13 +558,13 @@ BOOLEANO ejecutarComando(const char *buff)
 		{
 			printf("Escaque=%d EET=%d\n",escaque, EETPOS(escaque, ccolor));
 		} else {
-			printf("Escaque=%d fuera de rango (0-63) \n",escaque);
+			printf("Escaque=%d fuera de rango (0-63)\n",escaque);
 		}
 		return VERDADERO;    
 	}
 
 
-	if (((!strcmp(buff, "go")) || (!strcmp(buff, "dale"))) && STATUS_FIN_JUEGO_NO_TERMINADO)
+	if (((!strcmp(buff, "go")) || (!strcmp(buff, "dale")) || (!strcmp(buff, "jugar"))) && STATUS_FIN_JUEGO_NO_TERMINADO)
 	{
 
 		CONT_BUFF_COMANDOS = '\0';
@@ -513,7 +574,7 @@ BOOLEANO ejecutarComando(const char *buff)
 		esConsola = FALSO;
 		if (!m)
 		{
-			printf("\nNo se encontró ningun movimiento valido\n");
+			printf("\nNo se encontró ningún movimiento válido\n");
 			return VERDADERO;    
 		} 
 
@@ -533,14 +594,14 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 
 		CONT_BUFF_COMANDOS = '\0';
-		printf("Pensando sin qbusquedad... profundidad: %d\n", juego.profundidadBusquedad);
+		printf("Pensando sin búsqueda de tranquilidad... profundidad: %d\n", juego.profundidadBusquedad);
 		esVariable = VERDADERO;	
 		m = pensarRapido();
 		esVariable = FALSO;	
 
 		if (!m)
 		{
-			printf("\nNo se encontró ningun movimiento valido\n");
+			printf("\nNo se encontró ningún movimiento válido\n");
 			return VERDADERO;    
 		} 
 
@@ -549,6 +610,13 @@ BOOLEANO ejecutarComando(const char *buff)
 		imprimirMovimiento(m);	
 		mostrarTablero();
 
+		return VERDADERO;    
+	}
+
+	if ((!strcmp(buff, "uci")))
+	{
+		CONT_BUFF_COMANDOS = '\0';
+		uci();
 		return VERDADERO;    
 	}
 
@@ -570,21 +638,21 @@ BOOLEANO ejecutarComando(const char *buff)
 		return FALSO;    
 	}
 
-	if ((!strcmp(buff, "librosi")))
+	if ((!strcmp(buff, "librosi")) || (!strcmp(buff, "libro si")) || (!strcmp(buff, "libro on")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		usarLibroAperturas = VERDADERO;
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "librono")))
+	if ((!strcmp(buff, "librono")) || (!strcmp(buff, "libro no")) || (!strcmp(buff, "libro off")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		usarLibroAperturas = FALSO;
 		return VERDADERO;    
 	}
 
-	if ((!strcmp(buff, "ver")))
+	if ((!strcmp(buff, "ver")) || (!strcmp(buff, "version")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		printf("%s\n",VERSION_MANGO_AJEDREZ);
@@ -592,7 +660,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	}
 	
 
-	if ((!strcmp(buff, "cc")) && STATUS_FIN_JUEGO_NO_TERMINADO)
+	if (((!strcmp(buff, "cc")) || (!strcmp(buff, "auto"))) && STATUS_FIN_JUEGO_NO_TERMINADO)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		statusFinJuego = obtEstadoJuego();
@@ -605,10 +673,10 @@ BOOLEANO ejecutarComando(const char *buff)
 			m = pensarRapido();
 			detenerTiempo();
 			tiempo_ms  = obt_msTiempo();
-			printf("Tiempo de Proceso: %lld ms ",tiempo_ms);
+			printf("Tiempo de proceso: %lld ms ",tiempo_ms);
 			if (!m)
 			{
-				printf("\nNo se encontró ningun movimiento valido\n");
+				printf("\nNo se encontró ningún movimiento válido\n");
 				break;
 			} 
 			hacerMovimiento(m);
@@ -672,7 +740,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	}
 
 
-	printf("Comando desconocido, Escriba \'ayuda\' para mayor información\n");
+	printf("Comando desconocido. Escriba \"ayuda\" para ver la lista de comandos.\n");
 	CONT_BUFF_COMANDOS = '\0';
 	return VERDADERO;    
 }
@@ -746,7 +814,7 @@ void verMovimentosLegales()
 
 	if (juego.Buffer_MOV_INDEXCAPAS[0] == juego.Buffer_MOV_INDEXCAPAS[1])
 	{
-		printf("No hay movimientos validos\n");
+		printf("No hay movimientos válidos\n");
 		return;
 	}
 
@@ -755,7 +823,7 @@ void verMovimentosLegales()
 
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
-		if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+		if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 		{
 			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 		} else {
@@ -777,7 +845,7 @@ void verMovimentosTodos()
 
 	if (juego.Buffer_MOV_INDEXCAPAS[0] == juego.Buffer_MOV_INDEXCAPAS[1])
 	{
-		printf("No hay movimientos validos\n");
+		printf("No hay movimientos válidos\n");
 		return;
 	}
 
@@ -805,9 +873,9 @@ void verMovimentosJuego()
 
 void informacionVariables()
 {
-	printf("*** Información Variables del Juego ***\n\n");
-	printf("Profundidad de Busquedad	(profundidadBusquedad)	: %d\n", juego.profundidadBusquedad);
-	printf("Tiempo x Movimiento		(juego.maxTiempo)	: %d ms\n", juego.maxTiempo);
+	printf("*** Información de las variables del juego ***\n\n");
+	printf("Profundidad de búsqueda	(profundidadBusquedad)	: %d\n", juego.profundidadBusquedad);
+	printf("Tiempo por movimiento		(juego.maxTiempo)	: %d ms\n", juego.maxTiempo);
 	printf("Libro de Aperturas (SI/NO)	(usarLibroAperturas)	: %s\n", usarLibroAperturas?"Si":"No");
 	printf("Nivel PC			(nivelPC)		: %s\n", NOMBRENIVELPC[nivelPC]);
 	printf("Balance material		(material_total)	: %d\n", juego.material_total);
@@ -815,7 +883,7 @@ void informacionVariables()
 	printf("Material peones blanco		(material_peon_blanco)	: %d\n", juego.material_peon_blanco);
 	printf("Material negro			(material_lado_negro)	: %d\n", juego.material_lado_negro);
 	printf("Material peones negro		(material_peon_negro)	: %d\n", juego.material_peon_negro);
-	printf("Color bando jugar 		(colorTurno)		: %s\n",(juego.colorTurno?"Negro":"Blanco"));
+	printf("Bando que juega		(colorTurno)		: %s\n",(juego.colorTurno?"Negro":"Blanco"));
 	printf("# Movimientos \"Regla 50 mov\"	(reglaCincuentaMov)	: %d\n",juego.reglaCincuentaMov);
 	printf("# Total Movimientos 		(totalMov)		: %d\n",juego.totalMov);
 	printf("Es posible OO  blanco		(OOB)			: %s\n",(juego.OOB?"Si":"No"));
@@ -824,14 +892,14 @@ void informacionVariables()
 	printf("Es posible OOO negro		(OOON)			: %s\n",(juego.OOON?"Si":"No"));
 	printf("Hubo Enroque blanco		(ENROQUEB)		: %s\n",(juego.ENROQUEB?"Si":"No"));
 	printf("Hubo Enroque negro		(ENROQUEN)		: %s\n",(juego.ENROQUEN?"Si":"No"));
-	printf("Indice del Juego		(juego.indiceHJuego)	: %d\n",juego.indiceHJuego);
+	printf("Índice de la partida		(juego.indiceHJuego)	: %d\n",juego.indiceHJuego);
 	if (juego.posPeonPaso==SIN_POS_VALIDA)
 	{
-		printf("Escaque \"Peon al Paso\"		(posPeonPaso)		: Sin una posición valida\n");
+		printf("Escaque \"peón al paso\"		(posPeonPaso)		: Sin una posición válida\n");
 	} else {
-		printf("Escaque \"Peon al Paso\"		(posPeonPaso)		: %d\n",juego.posPeonPaso);
+		printf("Escaque \"peón al paso\"		(posPeonPaso)		: %d\n",juego.posPeonPaso);
 	}
-	printf("Utiliti 			(numEstatico)		: %d\n",numEstatico);
+	printf("Utilidad			(numEstatico)		: %d\n",numEstatico);
 	printf("maxHistorial Blanco		(maxHistorial[BLANCO])	: %d\n",maxHistorial[BLANCO]);
 	printf("maxHistorial Negro		(maxHistorial[NEGRO])	: %d\n",maxHistorial[NEGRO]);
 
@@ -879,7 +947,6 @@ void xboard()
 	BOOLEANO esJaque;	
 	esPost = VERDADERO;
 	BOOLEANO esPonder=FALSO;
-	printf("\n");
 
 	nuevo_juego();
 	computadora = NEGRO;
@@ -957,7 +1024,7 @@ void xboard()
 		}
 		if (!strcmp(buffComandos, "sd"))
 		{
-			sscanf(buffComandos, "sd %d", &juego.profundidadBusquedad);
+			sscanf(linea, "sd %d", &juego.profundidadBusquedad);
 			juego.maxTiempo = 1 << 25;
 			continue;
 		}
@@ -1017,8 +1084,8 @@ void xboard()
 		}
 		if (!strcmp(buffComandos, "protover"))
 		{
-			printf("feature setboard=0 analyze=0 ping=1 colors=0 draw=0 sigint=0 sigterm=0"
-				   " variants=\"normal\" myname=\"%s\"\n",NOMBRE_MANGO_PAOLA);
+			printf("feature setboard=1 analyze=0 ping=1 colors=0 draw=0 sigint=0 sigterm=0 usermove=0"
+				   " variants=\"normal\" myname=\"%s %s\"\n",NOMBRE_MANGO_AC, VERSION_MANGO_AC);
 			printf("feature done=1\n");
 			continue;
 		}
@@ -1029,7 +1096,6 @@ void xboard()
 		}
 		if (!strcmp(buffComandos, "rejected"))
 		{
-			printf("feature rejected\n");
 			continue;
 		}
 		if (!strcmp(buffComandos, "setboard"))
@@ -1043,18 +1109,6 @@ void xboard()
 
 			sscanf(linea, "setboard %s %s %s %s %d %d",
 						fen,fencolor,fenEnroque,fenPeonPaso,&fenReglaCincuentaMov,&fenTotalMov);
-			if (fencolor[0] == 'w')
-			{
-				printf("# blanco es siguiente movimiento\n");
-			} else {
-				printf("# negro es siguiente movimiento\n");
-			}
-
-			printf("# Enroque: %s\n", fenEnroque);
-			printf("# Peon al Paso Escaque: %s\n", fenPeonPaso);
-			printf("# Regla 50 mov: %d\n", fenReglaCincuentaMov);
-			printf("# Total mov: %d\n", fenTotalMov);
-
 			setupFen(fen, fencolor, fenEnroque, fenPeonPaso, fenReglaCincuentaMov, fenTotalMov);
 			continue;
 		}
@@ -1163,19 +1217,25 @@ void xboard()
 			continue;
 		}
 
+		if (!strcmp(buffComandos, "usermove"))
+		{
+			if (sscanf(linea, "usermove %s", buffComandos) != 1)
+				continue;
+		}
+
 		if (!esUnMovimiento(buffComandos))
 		{
 			printf("Error (unknown command): %s\n", buffComandos);
 			continue;
 		}
 
-		m = parse_mov(linea);
+		m = parse_mov(buffComandos);
 		if (m == -1)
 			printf("Illegal move: %s\n", buffComandos);
 		else {
 			hacerMovimiento(m);
 
-			if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+			if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 			{
 				esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 			} else {
@@ -1282,7 +1342,7 @@ BOOLEANO esMovimentoLegal(MOVIMIENTO m)
 
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
-		if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+		if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 		{
 			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 		} else {

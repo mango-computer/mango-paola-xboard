@@ -1,3 +1,9 @@
+
+
+/*
+gcc -lm bitmma3.c -Wall -O2 -o mangoac
+*/
+
 /*
 http://chessprogramming.wikispaces.com
 http://chessprogramming.wikispaces.com/General+Setwise+Operations#TheLeastSignificantOneBitLS1B
@@ -6,38 +12,39 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 */
 
 /*
-	flag del movimiento (orden de los bits y significado) basado en los estandares de juegos de ajedrez
+	Indicadores del movimiento (orden de los bits y su significado),
+	según los estándares habituales de los motores de ajedrez.
 
-	6: Escaque origen del movimiento
-	6: Escaque destino del movimiento
-	4: Pieza origen
+	6: Escaque de origen del movimiento
+	6: Escaque de destino del movimiento
+	4: Pieza de origen
 	4: Pieza capturada
-	4: Pieza Coronada
-	4: codigo movimiento
+	4: Pieza de coronación
+	4: Código del movimiento
 
-	Total Bytes 28 de (uint32)
+	Total: 28 bits en un uint32
 
-	Tabla de codigo movimientos
+	Tabla de códigos de movimiento
 
-	cod	promocion	captura		especial 1	especial 0		tipo mov
-	0	0		0		0		0			Movimiento Tranquilo
-	1	0		0		0		1			Salida Doble Peon
-	2	0		0		1		0			Enroque Corto oo
-	3	0		0		1		1			Enroque Largo ooo
-	4	0		1		0		0			Captura		
-	5	0		1		0		1			Captura Peon al Paso
-	8	1		0		0		0			Promocion Caballo
-	9	1		0		0		1			Promocion Alfil
-	10	1		0		1		0 			Promocion Torre
-	11	1		0		1		1			Promocion Dama
-	12	1		1		0		0			Promocion/Captura Caballo
-	13	1		1		0		1			Promocion/Captura Alfil
-	14	1		1		1		0			Promocion/Captura Torre
-	15	1		1		1		1			Promocion/Captura Dama
+	cod	promoción	captura		especial 1	especial 0		tipo de movimiento
+	0	0		0		0		0			Movimiento tranquilo
+	1	0		0		0		1			Avance doble de peón
+	2	0		0		1		0			Enroque corto (oo)
+	3	0		0		1		1			Enroque largo (ooo)
+	4	0		1		0		0			Captura
+	5	0		1		0		1			Captura de peón al paso
+	8	1		0		0		0			Promoción a caballo
+	9	1		0		0		1			Promoción a alfil
+	10	1		0		1		0 			Promoción a torre
+	11	1		0		1		1			Promoción a dama
+	12	1		1		0		0			Promoción/captura a caballo
+	13	1		1		0		1			Promoción/captura a alfil
+	14	1		1		1		0			Promoción/captura a torre
+	15	1		1		1		1			Promoción/captura a dama
 
-	Movimientos Tranquilos:
-	Son todos los movimientos que no alteren material, por lo que no capta ni promociones.
-	También se puede excluir a los movimientos que presentan amenazas inminentes, tales como comprobar.
+	Movimientos tranquilos:
+	Son los que no alteran el material: no capturan ni promocionan.
+	También se pueden excluir los que presentan amenazas inmediatas, como los jaques.
 
 
 	Notas:
@@ -77,6 +84,7 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 #include "ajedrez.c"
 #include "ini.c"
 #include "comandos.c"
+#include "uci.c"
 #include "tiempo.c"
 #include "perft.c"
 #include "fevaluacion.c"
@@ -92,56 +100,37 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 
 int main(int np, char* param[])
 {
-printf("#     					                ,   .				\n"); 
-printf("#                                                      ___/J-._ 				\n");
-printf("#                                                    -\"   L    ~ 			\n");
-printf("#                                                  -\"      '  ; \\ 			\n");
-printf("#                                                 \"       /   `r,\\ . 			\n");
-printf("#                                                /       |        \\ 			\n");
-printf("#                                               /        \\       ;.\\ 			\n");
-printf("#                                               |         f\"-_ \"\" ' \\ 			\n");
-printf("#                                               |       :  \\  ',,-. bj 			\n");
-printf("#                                               |       : : \\   L`]_/ 			\n");
-printf("#                                               |      \"\"\"; :\\:  \" 			\n");
-printf("#                                               |   ::::      \\ 				\n");
-printf("#                                               |o::        :: \\ 			\n");
-printf("#                                              /:::'        :o | 			\n");
-printf("#                                             /               - - 			\n");
-printf("#                                            /               _ |_\\ 			\n");
-printf("#            _,,,--._                     _.\"        :  :.  / 'x  \\ 			\n");
-printf("#          ,\" ,..    \"-,              _,-\"          ::;. :: .  |  | 			\n");
-printf("#        ,, \"'    `~..  )    __,---\"\"\"              :          |  L____ 			\n");
-printf("#        d,         ,).(__,-\"                              L   |-,     \"\"\"--\"\", 		\n");
-printf("#       ,d'.       :OO\\   ,     '.. .                      7 _ L     __,,,_   | 		\n");
-printf("#       'P\"   ;  ;.OP/ ,-\"  ::;.          .               / _ (-\"\"\"\"\"      T  J 		\n");
-printf("#       ,8:   o::oO`  /        :         ::;;     ,;:oO88(    \"\\           / / 		\n");
-printf("#      ,YP  ,::;:O:   |        .     (   \".:::::::::oo888 \\     \\         / / 		\n");
-printf("#      ',d: :;;O;:    |888::    ;;;   \"-,  \\ooooooooo88__, \",_   \\      ,/ / 		\n");
-printf("#      dPY:  :o8O     |O8888O:O:; ;;;    \" |       _,\"\"      \",   \\-,,_  \\ 		\n");
-printf("#     ,' O:  'ob`      |8888888Oo;        |__,,--\"\"            \",  \\   |  | 		\n");
-printf("#     '  Y:  ,:o:       L,___            _j                      j  \"  l -\" 		\n");
-printf("#        ::  ';o:            \\       _,-\"                        \\   \\ 			\n");
-printf("#       `:   Oo:             J / ,-\"                             \"._ j 			\n");
-printf("#         :o; 8oP            /  :/                                   \\ \\ 		\n");
-printf("#        ,ooO:8O'          /\" o:/                                     \\ \\ 		\n");
-printf("#        ;O8odo'           L_(_|L                                      \\ \\ 		\n");
-printf("#       d\"`)8O'              -,, \"-._                                   \\ \"-, 		\n");
-printf("#      ''-'`\"                   \"\"-,_, \"\",                               L__ '-, 	\n");
-printf("#                                    \"-j  \\                                 L   \\ 	\n");
-
+	const char *R  = "\033[0m";
+	const char *mx = "\033[38;5;83m";
+	const char *mn = "\033[38;5;203m";
+	const char *br = "\033[38;5;245m";
+	const char *vy = "\033[48;5;220m";
+	const char *vb = "\033[48;5;25m";
+	const char *vr = "\033[48;5;160m";
+	const char *sw = "\033[97m";
+	const char *tc = "\033[48;5;81m";
+	const char *tp = "\033[48;5;213m";
+	const char *tw = "\033[48;5;231m";
 
 	printf("#\n");
-	printf("#	**************************************************\n");
-	printf("#	*						 *\n");
-	printf("#	*               MANGO PAOLA AJEDREZ      	 *\n");
-	printf("#	*						 *\n");
-	printf("#	* Programado por: Jose Andres Morales Linares    *\n");
-	printf("#	* Version:        1.0                            *\n");
-	printf("#	* Anio:           2013                           *\n");
-	printf("#	* Licencia:       GPLv3                          *\n");
-	printf("#	* Contacto:       comprasmangocomputer@gmail.com *\n");
-	printf("#	*						 *\n");
-	printf("#	**************************************************\n#\n");
+	printf("#  %s           +V            %s%s          %s  %s          %s\n", mx, R, vy, R, tc, R);
+	printf("#  %s         /  |  \\         %s%s%s ******** %s  %s          %s\n", br, R, vb, sw, R, tp, R);
+	printf("#  %s       -V  -V  -V        %s%s          %s  %s          %s\n", mn, R, vr, R, tw, R);
+	printf("#  %s      / \\   |   / \\      %s            %s          %s\n", br, R, tp, R);
+	printf("#  %s    +V  +V +V +V  +V     %s            %s          %s\n", mx, R, tc, R);
+	printf("#\n");
+	printf("#  +----------------------------------------------------+\n");
+	printf("#  |          Mango Alexander & Camila Ajedrez          |\n");
+	printf("#  +----------------------------------------------------+\n");
+	printf("#  |  Autor      Jose Andres Morales Linares            |\n");
+	printf("#  |  Version    %-38s |\n", VERSION_MANGO_AC);
+	printf("#  |  Anio       2013-2026                              |\n");
+	printf("#  |  Licencia   GPLv3                                  |\n");
+	printf("#  |  Contacto   comprasmangocomputer@gmail.com         |\n");
+	printf("#  |  LGBT+ friendly                                    |\n");
+	printf("#  +----------------------------------------------------+\n");
+	printf("#\n");
+	printf("#  Arranque\n");
 
 
 
@@ -150,15 +139,15 @@ printf("#                                    \"-j  \\                           
 	usarLibroAperturas 	= VERDADERO;
 
 
-	FILE *mangopaolaINI = fopen("mangopaola.ini", "r");
+	FILE *mangoacINI = fopen("mangoac.ini", "r");
 
-	if (mangopaolaINI)
+	if (mangoacINI)
 	{
-		//Leer variables de mangopaola.ini
+		// Leer variables de mangoac.ini
 		char lineaINI[512];
 
-		fseek(mangopaolaINI, 0, SEEK_SET);
-		while (fgets(lineaINI, 512, mangopaolaINI)) 
+		fseek(mangoacINI, 0, SEEK_SET);
+		while (fgets(lineaINI, 512, mangoacINI)) 
 		{
 			if (lineaINI[0] != '#' && lineaINI[0] != ' ' && lineaINI[0] != 13 && lineaINI[0] != 10)
 			{	
@@ -168,7 +157,7 @@ printf("#                                    \"-j  \\                           
 					int u=0;
 					sscanf(lineaINI, "UsarTablaHash %d", &u);
 					esUsoTablaHash = ((u)?VERDADERO:FALSO);
-					printf("#UsarTablaHash %d\n",esUsoTablaHash);
+					printf("#  Tabla hash            %s\n", esUsoTablaHash ? "activa" : "inactiva");
 
 				} else if (!strncmp(lineaINI, "TamanioTablaHash",16)) {
 					int t=0;
@@ -192,7 +181,7 @@ printf("#                                    \"-j  \\                           
 					int u=0;
 					sscanf(lineaINI, "UsarLibroAperturas %d", &u);
 					usarLibroAperturas = ((u) ? VERDADERO:FALSO);
-					printf("#UsarLibroAperturas %d\n",usarLibroAperturas);
+					printf("#  Libro de aperturas    %s\n", usarLibroAperturas ? "activo" : "inactivo");
 
 				} else if (!strncmp(lineaINI, "RutaRandom1",11)) {
 					memset(rutaRandom1,'\0',512);
@@ -214,7 +203,7 @@ printf("#                                    \"-j  \\                           
 					int u=0;
 					sscanf(lineaINI, "UsarTablaFinalesNalimov %d", &u);
 					usar_egbb = ((u)?VERDADERO:FALSO);
-					printf("#UsarTablaFinalesNalimov %d\n",usar_egbb);
+					printf("#  Tablas de finales     %s\n", usar_egbb ? "activas" : "inactivas");
 
 				} else if (!strncmp(lineaINI, "RutaEGBB",8)) {
 					memset(rutaEGBB,'\0',512);
@@ -229,7 +218,7 @@ printf("#                                    \"-j  \\                           
 			}
 		}
 
-		fclose(mangopaolaINI);
+		fclose(mangoacINI);
 	}
 
 	iniMatrizMov();
@@ -251,7 +240,9 @@ printf("#                                    \"-j  \\                           
 	if (usar_egbb)
 		cargaBitbases();
 #endif
-	printf("# Escriba \"ayuda\" y presione la tecla <Enter>\n");
+	printf("#\n");
+	printf("#  Escriba \"ayuda\" o \"help\" y pulse <Enter>.\n");
+	printf("#\n");
 	leerComandos();
 
 	exit(0);

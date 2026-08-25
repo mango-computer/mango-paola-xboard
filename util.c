@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -43,10 +43,10 @@ int obtEstadoJuego()
 	BOOLEANO jaque;
 	BOOLEANO es;
 
-	//Verificar regla 3 repeticiones tablero
+	// Verificar la regla de triple repetición
 //*
 
-	//Solicitar Tablas segun el caso y si  vamos perdiendo
+	// Solicitar tablas según el caso y si vamos perdiendo
 
 	if ((computadora && juego.material_total > 0) || (!computadora && juego.material_total < 0))
 	{
@@ -56,7 +56,7 @@ int obtEstadoJuego()
 			return STATUS_FIN_JUEGO_TABLAS_REPETICION;
 		}
 
-		// Verificar Insuficiencia de material para hacer mate
+		// Verificar insuficiencia de material para dar mate
 		ES_INSUFICIENTE_MATERIAL(es);
 		if (es)
 		{ 
@@ -208,7 +208,7 @@ int contarMovLegales()
 
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
-		if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+		if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 		{
 			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 		} else {

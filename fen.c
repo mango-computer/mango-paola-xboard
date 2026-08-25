@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -48,7 +48,7 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
        valorRetorno = FALSO;
        if (numero <= 0) return valorRetorno;
  
-    // abrir el archivo para leer y escanear a través hasta encontrar la posición numero-ésima:
+    // Abrir el archivo y recorrer las posiciones hasta encontrar la número n:
        fp=fopen(nombreArchivo, "rt");
        if (fp != NULL)
        {
@@ -58,7 +58,7 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
                      if (!strcmp(s, "[White"))
                      {
                            int_fscanf = fscanf(fp, "%s", fenBlanco);
-                           // quitar primero (") y los últimos dos caracteres ("]) de fenBlanco:
+                           // Quitar el primer (") y los dos últimos caracteres ("]) de fenBlanco:
                            strcpy(temp, "");
                            strncat(temp, fenBlanco, strlen(fenBlanco)-2);
                            strcpy(temp, temp+1);
@@ -67,7 +67,7 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
                      if (!strcmp(s, "[Black"))
                      {
                            int_fscanf = fscanf(fp, "%s", fenNegro);
-                           // remove first (") and last two characters ("]) from fenNegro:
+                           // Quitar el primer (") y los dos últimos caracteres ("]) de fenNegro:
                            strcpy(temp, "");
                            strncat(temp, fenNegro, strlen(fenNegro)-2);
                            strcpy(temp, temp+1);
@@ -75,8 +75,8 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
                      }
                      if (!strcmp(s, "[FEN"))
                      {
-                           // posición encontrada, por lo que incremento numerof.
-                           // ya tenemos fenBlanco y fenNegro.
+                           // Posición encontrada; se incrementa numerof.
+                           // Ya tenemos fenBlanco y fenNegro.
                            numerof++;
                            if (numerof == numero)
                            {
@@ -84,8 +84,8 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
                                   int_fscanf = fscanf(fp, "%s", fencolor);           // b or w
                                   int_fscanf = fscanf(fp, "%s", fenEnroque);        // -, or KQkq
                                   int_fscanf = fscanf(fp, "%s", fenPeonPaso);       // -, or e3, or b6, etc
-                                  int_fscanf = fscanf(fp, "%d", &fenReglaCincuentaMov);  // int, utilizado para la regla de mov50 empate 
-                                  int_fscanf = fscanf(fp, "%d", &fenTotalMov); // int. comenzar con 1, se incrementa después del movimiento por Negro
+                                  int_fscanf = fscanf(fp, "%d", &fenReglaCincuentaMov);  // Entero usado para la regla de los 50 movimientos 
+                                  int_fscanf = fscanf(fp, "%d", &fenTotalMov); // Entero. Empieza en 1 y se incrementa tras el movimiento de las negras
  
 				printf("Mango> fen # %d en %s:\n",numerof,nombreArchivo);
 				printf("# Blanco: %s\n", fenBlanco);
@@ -94,21 +94,21 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
 
                                   if (fencolor[0] == 'w')
                                   {
-					printf("# blanco es siguiente movimiento\n");
+					printf("# Juegan las blancas\n");
                                   } else {
-					printf("# negro es siguiente movimiento\n");
+					printf("# Juegan las negras\n");
                                   }
 				printf("# Enroque: %s\n", fenEnroque);
-				printf("# Peon al Paso Escaque: %s\n", fenPeonPaso);
-				printf("# Regla 50 mov: %d\n", fenReglaCincuentaMov);
-				printf("# Total mov: %d\n", fenTotalMov);
+				printf("# Escaque de peón al paso: %s\n", fenPeonPaso);
+				printf("# Regla de 50 movimientos: %d\n", fenReglaCincuentaMov);
+				printf("# Total de movimientos: %d\n", fenTotalMov);
                            }
                      }
               }
  
               if (numerof < numero)
               {
-                     printf("Mango> sólo %d fens presentes en %s, fen #%d no encontrado\n",
+                     printf("Mango> solo hay %d FEN en %s; no se encontró el FEN n.º %d\n",
                      numerof, nombreArchivo, numero);
                      valorRetorno = FALSO;
               } else {
@@ -117,7 +117,7 @@ BOOLEANO readFen(char *nombreArchivo, int numero)
               }
               fclose(fp);
        } else {
-              printf("Mango> error abriendo: %s\n", nombreArchivo);
+              printf("Mango> error al abrir: %s\n", nombreArchivo);
               valorRetorno = FALSO;
        }
        return valorRetorno;
@@ -307,7 +307,7 @@ void setupFen(char *fen, char *fencolor, char *fenEnroque, char *fenPeonPaso, in
 }
 
 
-/*convertimos una posición de tablero a formato FEN (epd) para poder consultar el libro de aperturas*/
+/* Convertimos una posición del tablero a formato FEN (EPD) para consultar el libro de aperturas */
 void converTabler2FEN(char *string)
 {
 	int x, y, l=0, i=0, sq;

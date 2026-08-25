@@ -1,5 +1,5 @@
 /*
-	< DanaSah is a chess engine winboard. >
+	< DanaSah is a WinBoard chess engine. >
     Copyright (C) <2013>  <Pedro Castro Elgarresta>
 	E-mail <pecastro@msn.com>
 
@@ -86,12 +86,13 @@ int LoadEgbbLibrary(char* main_path, int egbb_cache_size)
      		probe_egbb = (PPROBE_EGBB) GetProcAddress(hmod,"probe_egbb_5men");
 
         	load_egbb(main_path, egbb_cache_size, egbb_load_type);
+		printf("#  Tablas de finales     cargadas\n");
 
 		return VERDADERO;
 
 	} else {
 
-		printf("# EgbbProbe not Loaded!\n");
+		printf("#  Tablas de finales     no se pudo cargar EgbbProbe\n");
 		return FALSO;
 	}
 }
@@ -107,7 +108,7 @@ void unload_bitbases(void)
 #else   /*not WINDOWS*/
          if (dlclose(hmod))
 #endif
-            printf("# Can't unload bitbases");
+            printf("# No se han podido descargar las bitbases\n");
          hmod = NULL;
          probe_egbb = NULL;
          egbb_is_loaded = FALSO;

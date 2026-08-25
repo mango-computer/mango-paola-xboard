@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -48,7 +48,7 @@ uint32 generarTodosMov(uint32 indice)
 
 	if (juego.colorTurno) //Lado Negro
 	{
-		//	Generacion de los Mov Peon Negro
+		//	Generación de los movimientos del peón negro
 		tempOrigenes = juego.tablero[NEGRO][PEON];
 		EST_MOV_PIEZA(mov, PEON_NEGRO);
 		while (tempOrigenes)
@@ -68,7 +68,7 @@ uint32 generarTodosMov(uint32 indice)
 				EST_MOV_DESTINO(mov, escaqueDestino);
 				EST_MOV_CAPTURA(mov, ESCAQUES[escaqueDestino]);
 
-				if (RANKS[escaqueDestino]==1) // Promocion
+				if (RANKS[escaqueDestino]==1) // Promoción
 				{
 					EST_MOV_PROMOCION(mov,DAMA_NEGRO);
 					juego.Buffer_MOV[indice++] = mov;
@@ -85,11 +85,11 @@ uint32 generarTodosMov(uint32 indice)
 				tempDestinos ^= BITSET[escaqueDestino];
 			}
 
-			if (juego.posPeonPaso != SIN_POS_VALIDA)  // Captura Peon al Paso
+			if (juego.posPeonPaso != SIN_POS_VALIDA)  // Captura de peón al paso
 			{
 				if (mascaraCapturarPeon[escaqueOrigen][NEGRO] & BITSET[juego.posPeonPaso])
 				{
-					 // no estamos en mov null
+					 // no estamos en un movimiento nulo
 					if (RANKBIT[3] & BITSET[juego.posPeonPaso])
 					{
 						EST_MOV_CAPTURA(mov, PEON_BLANCO);
@@ -105,7 +105,7 @@ uint32 generarTodosMov(uint32 indice)
 
 		}
 		
-		//	Generacion de los Mov Torre Negro
+		//	Generación de los movimientos de la torre negra
 		tempOrigenes = juego.tablero[NEGRO][TORRE];
 		EST_MOV_PIEZA(mov, TORRE_NEGRO);
 		while (tempOrigenes)
@@ -124,7 +124,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Caballo Negro
+		//	Generación de los movimientos del caballo negro
 		tempOrigenes = juego.tablero[NEGRO][CABALLO];
 		EST_MOV_PIEZA(mov, CABALLO_NEGRO);
 		while (tempOrigenes)
@@ -143,7 +143,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Alfil Negro
+		//	Generación de los movimientos del alfil negro
 		tempOrigenes = juego.tablero[NEGRO][ALFIL];
 		EST_MOV_PIEZA(mov, ALFIL_NEGRO);
 		while (tempOrigenes)
@@ -162,7 +162,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Dama Negro
+		//	Generación de los movimientos de la dama negra
 		tempOrigenes = juego.tablero[NEGRO][DAMA];
 		EST_MOV_PIEZA(mov, DAMA_NEGRO);
 		while (tempOrigenes)
@@ -181,7 +181,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Rey Negro
+		//	Generación de los movimientos del rey negro
 		tempOrigenes = juego.tablero[NEGRO][REY];
 		EST_MOV_PIEZA(mov, REY_NEGRO);
 		while (tempOrigenes)
@@ -225,7 +225,7 @@ uint32 generarTodosMov(uint32 indice)
 	
 	} else { // ******* Lado Blanco *********
 
-		//	Generacion de los Mov Peon Blanco
+		//	Generación de los movimientos del peón blanco
 		tempOrigenes = juego.tablero[BLANCO][PEON];
 		EST_MOV_PIEZA(mov, PEON_BLANCO);
 		while (tempOrigenes)
@@ -245,7 +245,7 @@ uint32 generarTodosMov(uint32 indice)
 				EST_MOV_DESTINO(mov, escaqueDestino);
 				EST_MOV_CAPTURA(mov, ESCAQUES[escaqueDestino]);
 
-				if (RANKS[escaqueDestino]==8) // Promocion
+				if (RANKS[escaqueDestino]==8) // Promoción
 				{
 					EST_MOV_PROMOCION(mov,DAMA_BLANCO);
 					juego.Buffer_MOV[indice++] = mov;
@@ -263,11 +263,11 @@ uint32 generarTodosMov(uint32 indice)
 				tempDestinos ^= BITSET[escaqueDestino];
 			}
 
-			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura Peon al Paso
+			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura de peón al paso
 			{
 				if (mascaraCapturarPeon[escaqueOrigen][BLANCO] & BITSET[juego.posPeonPaso])
 				{
-					 // no estamos en mov null
+					 // no estamos en un movimiento nulo
 					if (RANKBIT[6] & BITSET[juego.posPeonPaso])
 					{
 
@@ -283,7 +283,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Torre Blanco
+		//	Generación de los movimientos de la torre blanca
 		tempOrigenes = juego.tablero[BLANCO][TORRE];
 		EST_MOV_PIEZA(mov, TORRE_BLANCO);
 		while (tempOrigenes)
@@ -302,7 +302,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Caballo Blanco
+		//	Generación de los movimientos del caballo blanco
 		tempOrigenes = juego.tablero[BLANCO][CABALLO];
 		EST_MOV_PIEZA(mov, CABALLO_BLANCO);
 		while (tempOrigenes)
@@ -321,7 +321,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Alfil Blanco
+		//	Generación de los movimientos del alfil blanco
 		tempOrigenes = juego.tablero[BLANCO][ALFIL];
 		EST_MOV_PIEZA(mov, ALFIL_BLANCO);
 		while (tempOrigenes)
@@ -340,7 +340,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Dama Blanco
+		//	Generación de los movimientos de la dama blanca
 		tempOrigenes = juego.tablero[BLANCO][DAMA];
 		EST_MOV_PIEZA(mov, DAMA_BLANCO);
 		while (tempOrigenes)
@@ -359,7 +359,7 @@ uint32 generarTodosMov(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Rey Blanco
+		//	Generación de los movimientos del rey blanco
 		tempOrigenes = juego.tablero[BLANCO][REY];
 		EST_MOV_PIEZA(mov, REY_BLANCO);
 		while (tempOrigenes)
@@ -407,7 +407,7 @@ uint32 generarTodosMov(uint32 indice)
 }
 
 //******************************************************************************************************************************
-//	Genera movimientos seudo-legales que solo sean capturas o promociones 
+//	Genera movimientos seudolegales que solo sean capturas o promociones 
 //******************************************************************************************************************************
 
 uint32 generarMovCapPro(uint32 indice)
@@ -431,7 +431,7 @@ uint32 generarMovCapPro(uint32 indice)
 
 	if (juego.colorTurno) //Lado Negro
 	{
-		//	Generacion de los Mov Peon Negro
+		//	Generación de los movimientos del peón negro
 		tempOrigenes = juego.tablero[NEGRO][PEON];
 		EST_MOV_PIEZA(mov, PEON_NEGRO);
 		while (tempOrigenes)
@@ -450,7 +450,7 @@ uint32 generarMovCapPro(uint32 indice)
 				EST_MOV_DESTINO(mov, escaqueDestino);
 				EST_MOV_CAPTURA(mov, ESCAQUES[escaqueDestino]);
 
-				if (RANKS[escaqueDestino]==1) // Promocion
+				if (RANKS[escaqueDestino]==1) // Promoción
 				{
 					EST_MOV_PROMOCION(mov,DAMA_NEGRO);
 					juego.Buffer_MOV[indice] = mov; agregarMovCapPro(primero, &indice);indice++;
@@ -467,7 +467,7 @@ uint32 generarMovCapPro(uint32 indice)
 				tempDestinos ^= BITSET[escaqueDestino];
 			}
 
-			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura Peon al Paso
+			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura de peón al paso
 			{
 				if (mascaraCapturarPeon[escaqueOrigen][NEGRO] & BITSET[juego.posPeonPaso])
 				{
@@ -487,7 +487,7 @@ uint32 generarMovCapPro(uint32 indice)
 
 		}
 
-		//	Generacion de los Mov Caballo Negro
+		//	Generación de los movimientos del caballo negro
 		tempOrigenes = juego.tablero[NEGRO][CABALLO];
 		EST_MOV_PIEZA(mov, CABALLO_NEGRO);
 		while (tempOrigenes)
@@ -506,7 +506,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Alfil Negro
+		//	Generación de los movimientos del alfil negro
 		tempOrigenes = juego.tablero[NEGRO][ALFIL];
 		EST_MOV_PIEZA(mov, ALFIL_NEGRO);
 		while (tempOrigenes)
@@ -525,7 +525,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Torre Negro
+		//	Generación de los movimientos de la torre negra
 		tempOrigenes = juego.tablero[NEGRO][TORRE];
 		EST_MOV_PIEZA(mov, TORRE_NEGRO);
 		while (tempOrigenes)
@@ -544,7 +544,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Dama Negro
+		//	Generación de los movimientos de la dama negra
 		tempOrigenes = juego.tablero[NEGRO][DAMA];
 		EST_MOV_PIEZA(mov, DAMA_NEGRO);
 		while (tempOrigenes)
@@ -563,7 +563,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Rey Negro
+		//	Generación de los movimientos del rey negro
 		tempOrigenes = juego.tablero[NEGRO][REY];
 		EST_MOV_PIEZA(mov, REY_NEGRO);
 		while (tempOrigenes)
@@ -586,7 +586,7 @@ uint32 generarMovCapPro(uint32 indice)
 
 	} else { // ******* Lado Blanco *********
 
-		//	Generacion de los Mov Peon Blanco
+		//	Generación de los movimientos del peón blanco
 		tempOrigenes = juego.tablero[BLANCO][PEON];
 		EST_MOV_PIEZA(mov, PEON_BLANCO);
 		while (tempOrigenes)
@@ -605,7 +605,7 @@ uint32 generarMovCapPro(uint32 indice)
 				EST_MOV_DESTINO(mov, escaqueDestino);
 				EST_MOV_CAPTURA(mov, ESCAQUES[escaqueDestino]);
 
-				if (RANKS[escaqueDestino]==8) // Promocion
+				if (RANKS[escaqueDestino]==8) // Promoción
 				{
 					EST_MOV_PROMOCION(mov,DAMA_BLANCO);
 					juego.Buffer_MOV[indice] = mov; agregarMovCapPro(primero, &indice);indice++;
@@ -623,7 +623,7 @@ uint32 generarMovCapPro(uint32 indice)
 				tempDestinos ^= BITSET[escaqueDestino];
 			}
 
-			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura Peon al Paso
+			if (juego.posPeonPaso != SIN_POS_VALIDA) // Captura de peón al paso
 			{
 				if (mascaraCapturarPeon[escaqueOrigen][BLANCO] & BITSET[juego.posPeonPaso])
 				{
@@ -642,7 +642,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Caballo Blanco
+		//	Generación de los movimientos del caballo blanco
 		tempOrigenes = juego.tablero[BLANCO][CABALLO];
 		EST_MOV_PIEZA(mov, CABALLO_BLANCO);
 		while (tempOrigenes)
@@ -661,7 +661,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Alfil Blanco
+		//	Generación de los movimientos del alfil blanco
 		tempOrigenes = juego.tablero[BLANCO][ALFIL];
 		EST_MOV_PIEZA(mov, ALFIL_BLANCO);
 		while (tempOrigenes)
@@ -680,7 +680,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Torre Blanco
+		//	Generación de los movimientos de la torre blanca
 		tempOrigenes = juego.tablero[BLANCO][TORRE];
 		EST_MOV_PIEZA(mov, TORRE_BLANCO);
 		while (tempOrigenes)
@@ -699,7 +699,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Dama Blanco
+		//	Generación de los movimientos de la dama blanca
 		tempOrigenes = juego.tablero[BLANCO][DAMA];
 		EST_MOV_PIEZA(mov, DAMA_BLANCO);
 		while (tempOrigenes)
@@ -718,7 +718,7 @@ uint32 generarMovCapPro(uint32 indice)
 			tempOrigenes ^= BITSET[escaqueOrigen];
 		}
 
-		//	Generacion de los Mov Rey Blanco
+		//	Generación de los movimientos del rey blanco
 		tempOrigenes = juego.tablero[BLANCO][REY];
 		EST_MOV_PIEZA(mov, REY_BLANCO);
 		while (tempOrigenes)
@@ -744,7 +744,7 @@ uint32 generarMovCapPro(uint32 indice)
 }
 
 //******************************************************************************************************************************
-//	Agregar los Captura-Promocion-movimientos seudolegales   
+//	Agregar los movimientos seudolegales de captura o promoción   
 
 void agregarMovCapPro(uint32 indexPrimero, uint32 *index)
 {

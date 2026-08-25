@@ -1,5 +1,5 @@
 /*
-	< DanaSah is a chess engine winboard. >
+	< DanaSah is a WinBoard chess engine. >
     Copyright (C) <2011>  <Pedro Castro Elgarresta>
 	E-mail <pecastro@msn.com>
 
@@ -18,15 +18,15 @@
 */
 
 /*
-DanaSah desde la versiÛn 3.02 accede al libro de aperturas del programa rebel/prodeo. El libro de aperturas
-es creado por Jeroen Noomen, el cÛdigo de acceso al libro proporcionado por Ed Shrˆeder, danasah utiliza una
-variante de la dll creada por Fonzy, ahora incluida en el cÛdigo del programa.
+DanaSah, desde la versiùn 3.02, accede al libro de aperturas del programa Rebel/ProDeo. El libro de aperturas
+fue creado por Jeroen Noomen; el cùdigo de acceso lo proporcionù Ed Schrùder. DanaSah utiliza una
+variante de la DLL creada por Fonzy, ahora incluida en el cùdigo del programa.
 
-El libro de aperturas es iniciado en la funciÛn xboard() y se utiliza en la b˙squeda.
+El libro de aperturas se inicia en la funciùn xboard() y se utiliza durante la bùsqueda.
 */
 
 /*                      Opening Book Module for Chess Programs
-                                written by Ed Schrˆder
+                                written by Ed Schrùder
                                     Version 1.00
 
            This information provides the way how to include the Pro Deo 1.4 opening
@@ -111,7 +111,7 @@ El libro de aperturas es iniciado en la funciÛn xboard() y se utiliza en la b˙sq
                             CCC forum: http://216.25.93.108/forum
 
 
-           Ed Schrˆder
+           Ed Schrùder
            Deventer, March 2007
            matador@home.nl
            www.top-5000.nl
@@ -184,31 +184,31 @@ void abrirLibro2()
 {
 	int er = 0;
 
-	er=INITIALIZE(rutaTourBook,rutaMainBook);		/*Inicia libro de Rebel*/
+	er=INITIALIZE(rutaTourBook,rutaMainBook);		/* Inicia el libro de Rebel */
 
 	esActivoLibro = FALSO;
 
 	if (er == 0) {
 		esActivoLibro = VERDADERO;
-		printf("#Libro Rebel Cargado!\n");
+		printf("#  Libro Rebel           cargado\n");
 	}
 	else if (er == 1) {
 		esActivoLibro = VERDADERO;
-		printf("#Libro Rebel Cargado pero Libro de Torneo no fue cargado, se trabajara solo con el libro principal\n");
+		printf("#  Libro Rebel           cargado (sin libro de torneo)\n");
 	}
 	else if (er == 2) {
-		printf("#No se ha encontrado los archivos random1.bin y/o random2.bin. Libro Rebel no cargado!\n");
+		printf("#  Libro Rebel           no cargado (faltan random1.bin/random2.bin)\n");
 	}
 	else if (er == 3) {
-		printf("#No se ha encontrado los archivo main del libro. Libro Rebel no cargado!\n");
+		printf("#  Libro Rebel           no cargado (falta el archivo principal)\n");
 	}
 	else {
-		printf("#XError cargando Libro Rebel!\n");
+		printf("#  Libro Rebel           error al cargar\n");
 	}
 }
 
 
-int INITIALIZE(const char *Toerfile,const char *Bookfile)   /*read hashkeys in memory*/
+int INITIALIZE(const char *Toerfile,const char *Bookfile)   /* Lee las claves hash en memoria */
 {       int x,y; FILE *fp1; FILE *fp2;
 	long fsize;
 

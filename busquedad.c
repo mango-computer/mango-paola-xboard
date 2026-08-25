@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -104,7 +104,7 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			{
 				hacerMovimiento(m);
 
-				if (juego.colorTurno) // Le toca al negro, se chequea que el rey blanco no haya quedado en jaque
+				if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
 				{
 					esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
 				} else {
@@ -115,7 +115,8 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			
 				if (!esJaque)
 				{
-					printf ("0 0 0 0 Book move\n");
+					if (!esUCI)
+						printf ("0 0 0 0 Book move\n");
 					return m;
 				}
 			}
@@ -130,7 +131,7 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 	{
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
-		// Le toca al negro, el lado blanco ha jugado, se chequea que el rey blanco no haya quedado en jaque
+		// Tras la jugada blanca, se comprueba que el rey blanco no haya quedado en jaque
 		if (juego.colorTurno) 
 		{
 			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
@@ -262,7 +263,30 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			printf("\n");
 		}
 
-		//Aun queda tiempo en la busqueda, podemos en teoria seguir al proximo nivel de profundidad
+		if (esUCI && !tiempoVencido)
+		{
+			unsigned long long nodos = (unsigned long long)(contadorNodos + QcontadorNodos);
+			unsigned long long nps = tiempo > 0 ? (nodos * 1000ull / (unsigned long long)tiempo) : 0ull;
+
+			printf("info depth %d", profundidadActual);
+			if (valoracion > 90000)
+				printf(" score mate %d", (VALOR_JAQUE_MATE - valoracion) / 2 + 1);
+			else if (valoracion < -90000)
+				printf(" score mate -%d", (VALOR_JAQUE_MATE + valoracion) / 2 + 1);
+			else
+				printf(" score cp %d", valoracion);
+			printf(" time %llu nodes %llu nps %llu pv",
+				(unsigned long long)tiempo, nodos, nps);
+			for (i_pv = 0; i_pv < juego.triangularLargo[0]; ++i_pv)
+			{
+				printf(" ");
+				imprimirMovimiento(juego.triangularArray[0][i_pv]);
+			}
+			printf("\n");
+			fflush(stdout);
+		}
+
+		// Aún queda tiempo en la búsqueda; en teoría se puede seguir al siguiente nivel de profundidad
 		if (!tiempoVencido) 
 		{
 			if (juego.triangularArray[0][0])
@@ -272,8 +296,8 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 
 		} else if (tiempoVencido && movResul != juego.triangularArray[0][0]){ 
 
-			//El tiempo se vencio durante la busquedad, hubo un corte en la profundidad
-			//Verificar que tan confiable es el movimiento encontrado
+			// El tiempo se venció durante la búsqueda; hubo un corte en la profundidad
+			// Verificar qué tan fiable es el movimiento encontrado
 
 			if (nodoRaiz > fraccionTotalMovRaiz)
 			{
@@ -302,7 +326,7 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			profundidadActual = profundidadTotal;
 	}
 
-	//No encontro ningun movimiento bueno para ganar, (Termina en empate o derrota, devolver cualquier movimiento estupido)
+	// No se encontró ningún movimiento bueno para ganar (termina en empate o derrota; devolver cualquier movimiento)
 	if (!movResul) 
 	{
 		juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
@@ -313,7 +337,7 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			seleccionarMovimiento(0, i);
 			hacerMovimiento(juego.Buffer_MOV[i]);
 
-			// Le toca al negro, el lado blanco ha jugado, se chequea que el rey blanco no haya quedado en jaque
+			// Tras la jugada blanca, se comprueba que el rey blanco no haya quedado en jaque
 			if (juego.colorTurno) 
 			{
 				esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
@@ -396,7 +420,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
  *************************************************************************/
 	if (capa) 
 	{
-		//Chequear Repeticion del tablero
+		// Comprobar repetición del tablero
 		ES_REPETICION_TABLERO(es);
 		if (es)
 		{
@@ -409,7 +433,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
  *
  *************************************************************************/
 
-	//Poner limite a las capas de busquedad
+	// Limitar las capas de búsqueda
 	if (capa >= MAX_CAPAS_BUSQUEDAD) return busquedadTranquilidad(capa, alfa, beta);	
 
 
@@ -548,7 +572,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 		    (!juego.colorTurno && (juego.material_lado_blanco > LIMITE_MOV_NULL))))
 		{
 
-			if (juego.colorTurno) // Le toca al negro, se chequea que el rey negro este en jaque
+			if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey negro esté en jaque
 			{
 				esJaque = esAtacadoPor(juego.tablero[NEGRO][REY], BLANCO);
 			} else {
@@ -639,7 +663,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 		seleccionarMovimiento(capa, i);
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
-		// Le toca al negro, el lado blanco ha jugado, se chequea que el rey blanco no haya quedado en jaque
+		// Tras la jugada blanca, se comprueba que el rey blanco no haya quedado en jaque
 		if (juego.colorTurno) 
 		{
 			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);

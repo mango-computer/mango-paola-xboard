@@ -1,26 +1,26 @@
 /* 
-	Mango Paola Ajedrez 1.0
-	Licencia: GPLv3   
-    	Copyright (c) 2012-2013 - Mango Computer c.a 
+	Mango AC Ajedrez 1.0
+	Licencia: GPLv3
+	Copyright (c) 2012-2013 - Mango Computer c.a
 
-    	El Programa Mango Paola Ajedrez ésta basado en la investigación de Jose Andres Morales Linares.
+	El programa Mango AC Ajedrez está basado en la investigación de Jose Andres Morales Linares.
 
-	Nadie debería estar restringido por el software que utilizan. Hay cuatro libertades que cada usuario debe tener:
-	* La libertad de usar el programa para cualquier propósito,
-	* La libertad de cambiar el software para satisfacer sus necesidades,
-	* La libertad de compartir el software con sus amigos y vecinos.
+	Nadie debería verse restringido por el software que utiliza. Hay cuatro libertades que cada usuario debe tener:
+	* La libertad de usar el programa para cualquier propósito.
+	* La libertad de cambiar el software para satisfacer sus necesidades.
+	* La libertad de compartir el software con amigos y vecinos.
 	* La libertad de compartir los cambios que realice.
 
-	Cuando un programa se ofrece a los usuarios todas estas libertades, lo llamamos software libre.
+	Cuando un programa ofrece a los usuarios todas estas libertades, lo llamamos software libre.
 
-	Winglet es un bitboard de código abierto motor de ajedrez. El programa es software libre. Usted puede redistribuirlo y/o 		modificarlo bajo los términos de la Licencia Pública General de GNU según es publicada por la Free Software Foundation, 	bien de 	la versión 3 de la Licencia, o (a su elección) cualquier versión posterior. El programa se distribuye 		con la esperanza de que 		sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de 		COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO 		PARTICULAR. Vea la Licencia Pública General de GNU para más 		detalles: http://www.gnu.org/licenses/
+	Winglet es un motor de ajedrez de código abierto basado en bitboards. El programa es software libre. Usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior. El programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública General de GNU para más detalles: http://www.gnu.org/licenses/
 
-	Existen muchos avances en la forma de escribir motores de ajedrez, estos dos sitios web 
-	fuerón de mucha ayuda durante el proceso de investigacion y desarrollo. 
+	Existen muchos avances en la forma de escribir motores de ajedrez. Estos dos sitios web
+	fueron de gran ayuda durante el proceso de investigación y desarrollo:
 	* http://chessprogramming.wikispaces.com
-    	* http://www.sluijten.com/winglet/
+	* http://www.sluijten.com/winglet/
 
-    	Información de contacto:
+	Información de contacto:
 	comprasmangocomputer@gmail.com
 
 */
@@ -36,7 +36,7 @@ int evaluacionTablero(int alfa, int beta)
 
 //****************************************************************************************************************
 //****************************************************************************************************************
-//			COMPROBAR QUE ESTA POSICION NO HAYA SIDO YA EVALUADA 
+//			COMPROBAR QUE ESTA POSICIÓN NO HAYA SIDO YA EVALUADA 
 //****************************************************************************************************************
 //****************************************************************************************************************
 //*
@@ -48,7 +48,7 @@ int evaluacionTablero(int alfa, int beta)
 //*/
 //****************************************************************************************************************
 //****************************************************************************************************************
-//			COMPROBAR CON EL ALGORITMO DE PUNTAJE PERSOSO 
+//			COMPROBAR CON EL ALGORITMO DE PUNTUACIÓN PEREZOSA 
 //****************************************************************************************************************
 //****************************************************************************************************************
 //*
@@ -153,19 +153,19 @@ int evaluacionTablero(int alfa, int beta)
 
 //****************************************************************************************************************
 //****************************************************************************************************************
-//			INI LADO NEGRO Y BLANCO 
+//			INICIO LADO NEGRO Y BLANCO 
 //****************************************************************************************************************
 //****************************************************************************************************************
 
 	ini_material();
 
-	//Determinar si un lado es peligroso
+	// Determinar si un lado es peligroso
 	//Blanco
 	esPeligroso[BLANCO] = ((juego.tablero[BLANCO][DAMA] && (fase[BLANCO] > 13)) || ((nTorres[BLANCO]>1) && (fase[BLANCO] > 15)));
 	esPeligroso[NEGRO]  = ((juego.tablero[NEGRO][DAMA]  && (fase[NEGRO]  > 13)) || ((nTorres[NEGRO] >1) && (fase[NEGRO]  > 15)));
 
 
-	//Eval empate e insuficiencia de material
+	// Evaluación de empate e insuficiencia de material
 	if ((fase[BLANCO] < 13) && (fase[NEGRO] < 13))
 	{
 		do {
@@ -392,7 +392,7 @@ int evaluacionTablero(int alfa, int beta)
 			tempDestinos ^= BITSET[escaqueOrigen];
 		}
 
-		// Analisis de las piezas clavadas
+		// Análisis de las piezas clavadas
 		//Blanco
 		puntajeBlanco -= (cuentaBit(juego.tablero[BLANCO][CABALLO] & clavadas[BLANCO]) * DESCUENTO_CABALLO_CLAVADO);
 		puntajeBlanco -= (cuentaBit(juego.tablero[BLANCO][ALFIL]   & clavadas[BLANCO]) * DESCUENTO_ALFIL_CLAVADO);
@@ -514,7 +514,7 @@ int evaluacionTablero(int alfa, int beta)
 
 //****************************************************************************************************************
 //****************************************************************************************************************
-//			OBTENER RESULTADO SEGUN EL BANDO A EVALUAR 
+//			OBTENER RESULTADO SEGÚN EL BANDO A EVALUAR 
 //****************************************************************************************************************
 //****************************************************************************************************************
 
@@ -1075,11 +1075,11 @@ void evalCaballo(COLOR colorEval)
 	{
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
 
-		//Evaluar la posicion del Caballo en el tablero
+		// Evaluar la posición del caballo en el tablero
 		puntaje_m[colorEval] += (CABALLO_PUNTAJE_POS[colorEval][escaqueOrigen]);
 		puntaje_f[colorEval] += (CABALLO_PUNTAJE_POS_FINAL[escaqueOrigen]);
 
-		//Ajuste del caballo segun el numero de peones
+		// Ajuste del caballo según el número de peones
 		puntaje_m[colorEval] += adjuste_caballo[nPeones[colorEval]];
 		puntaje_f[colorEval] += adjuste_caballo[nPeones[colorEval]];
 //*/
@@ -1093,7 +1093,7 @@ void evalCaballo(COLOR colorEval)
 		mapaPosAtacadas[colorEval] 		|= tempDestinos;
 		mapaPosAtacadasXPza[colorEval][CABALLO]	|= tempDestinos;
 
-		//Puesto de Avanzada
+		// Puesto avanzado
 		i = CABALLO_PUESTO_AVANZADA[colorEval][escaqueOrigen];
 		if (!((PASADO[colorEval][escaqueOrigen] & AISLADO[escaqueOrigen]) & juego.tablero[xcolorEval][PEON]) && i)
 		{
@@ -1166,7 +1166,7 @@ void evalAlfil(COLOR colorEval)
 			puntaje_f[colorEval] += alfil_peon_ganador[FINAL_JUEGO];
 		}
 
-		//Puesto de Avanzada
+		// Puesto avanzado
 		i = ALFIL_PUESTO_AVANZADA[colorEval][escaqueOrigen];
 		if (i)
 		{
@@ -1263,7 +1263,7 @@ void evalTorre(COLOR colorEval)
 		puntaje_m[colorEval] += (TORRE_PUNTAJE_POS[escaqueOrigen]);
 		puntaje_f[colorEval] += (TORRE_PUNTAJE_POS[escaqueOrigen]);
 
-		//Ajuste de la torre segun el numero de peones
+		// Ajuste de la torre según el número de peones
 		puntaje_m[colorEval] += adjuste_torre[nPeones[colorEval]];
 		puntaje_f[colorEval] += adjuste_torre[nPeones[colorEval]];
 
@@ -1413,7 +1413,7 @@ void ini_material()
 	}
 
 #ifdef VERVALORES
-	printf("******Material Base*******\n");
+	printf("******Material base*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
 	printf("f[B]=%d\n",puntaje_f[BLANCO]);
 	printf("m[N]=%d\n",puntaje_m[NEGRO]);
@@ -1432,7 +1432,7 @@ void ini_material()
 	}
 
 #ifdef VERVALORES
-	printf("******Material Base + Bono Turno*******\n");
+	printf("******Material base + bono de turno*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
 	printf("f[B]=%d\n",puntaje_f[BLANCO]);
 	printf("m[N]=%d\n",puntaje_m[NEGRO]);
@@ -1461,7 +1461,7 @@ void ini_material()
 	}
 
 #ifdef VERVALORES
-	printf("******Material Base + Bono Turno + imbalace*******\n");
+	printf("******Material base + bono de turno + desequilibrio*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
 	printf("f[B]=%d\n",puntaje_f[BLANCO]);
 	printf("m[N]=%d\n",puntaje_m[NEGRO]);
@@ -1483,7 +1483,7 @@ void ini_material()
 	}
 
 #ifdef VERVALORES
-	printf("******Material Base + Bono Turno + imbalace + ajuste alfil*******\n");
+	printf("******Material base + bono de turno + desequilibrio + ajuste de alfil*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
 	printf("f[B]=%d\n",puntaje_f[BLANCO]);
 	printf("m[N]=%d\n",puntaje_m[NEGRO]);
@@ -1516,7 +1516,7 @@ void ini_material()
 		}
 	}
 #ifdef VERVALORES
-	printf("******Material Base + Bono Turno + imbalace + ajuste alfil + alfil finales*******\n");
+	printf("******Material base + bono de turno + desequilibrio + ajuste de alfil + alfil en finales*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
 	printf("f[B]=%d\n",puntaje_f[BLANCO]);
 	printf("m[N]=%d\n",puntaje_m[NEGRO]);
