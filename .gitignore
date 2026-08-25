@@ -1,0 +1,8 @@
+# Binario y objetos de compilación
+mangoac
+*.o
+*.a
+*~
+
+# Archivo suelto, no el libro PGN del repo
+.pgn
