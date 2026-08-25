@@ -7,7 +7,8 @@ Lo llamo **Mango AC** en honor a mis hijos, Alexander y Camila.
 El núcleo —búsqueda, evaluación y generación de jugadas— es el motor que creé en **2012**. No lo he reescrito. Lo que he cambiado es cómo habla con la interfaz.
 
 Licencia: GPLv3.  
-Contacto: comprasmangocomputer@gmail.com
+Contacto: comprasmangocomputer@gmail.com  
+Blog oficial: [Mango AC Ajedrez](http://mangocomputerca.blogspot.com/2013/03/mango-computer-ca.html)
 
 ---
 
