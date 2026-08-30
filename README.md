@@ -6,9 +6,21 @@ Lo llamo **Mango AC** en honor a mis hijos, Alexander y Camila.
 
 El núcleo —búsqueda, evaluación y generación de jugadas— es el motor que creé en **2012**. No lo he reescrito. Lo que he cambiado es cómo habla con la interfaz.
 
-Licencia: GPLv3.  
+Licencia: [GPLv3](LICENSE).  
 Contacto: comprasmangocomputer@gmail.com  
 Blog oficial: [Mango AC Ajedrez](http://mangocomputerca.blogspot.com/2013/03/mango-computer-ca.html)
+
+## Jugar
+
+Es un **motor** (UCI y xboard), no una ventana de tablero. Se engancha a una interfaz: [Cute Chess](https://github.com/cutechess/cutechess), Arena, WinBoard, o la consola.
+
+1. Compila (abajo) o, cuando haya paquetes, baja el zip de [Releases](https://github.com/mango-computer/mango-paola-xboard/releases).
+2. Deja juntos el binario (`mangoac` o `mangoac.exe`), `mangoac.ini` y la carpeta `libros/`.
+3. En la GUI, añade el motor como UCI (o xboard/WinBoard). En consola: `./mangoac`, luego `ayuda`.
+
+## Sugerir mejoras
+
+Abre un [Issue](https://github.com/mango-computer/mango-paola-xboard/issues) o un Pull Request. Cómo hacerlo está en [CONTRIBUTING.md](CONTRIBUTING.md). No hace falta cuenta de colaborador: el repo es público y `master` no se pisa desde fuera.
 
 ---
 
@@ -164,25 +176,25 @@ El libro de aperturas es binario (`libro2.c`, estilo Polyglot: random/main/tour 
 
 ## Compilar y ejecutar
 
+Hace falta `gcc` (o MinGW en Windows). Una sola unidad de traducción: `bitmma3.c` incluye el resto de `.c`. La configuración está en `mangoac.ini` (hash, libro, rutas).
+
+Linux / macOS:
+
 ```bash
 gcc -lm bitmma3.c -Wall -O2 -o mangoac
 ./mangoac
 ```
 
-O `./compilar.sh`, que compila y arranca si no hay errores.
-
-Para generar las versiones **Linux x86_64** y **Windows x86_64** (binario + `mangoac.ini` + zip):
+Windows (MinGW):
 
 ```bash
-# Desde la raíz del repo, o desde mangoac_ajedrez
-./mangoac_ajedrez/scripts/crear-versiones.sh
+gcc -lm bitmma3.c -Wall -O2 -o mangoac.exe
+mangoac.exe
 ```
 
-En Cursor: Run and Debug → **Motor: Linux + Windows 64**.
+O `./compilar.sh` en Linux: compila y arranca si no hay errores.
 
-Hace falta `gcc` y, para Windows, el cruzado `gcc-mingw-w64-x86-64`. Salida en `mangoac_ajedrez/dist/`. También copia el motor a `UI-multi-platform/bin/` para empaquetar la GUI.
-
-Uso una sola unidad de traducción: `bitmma3.c` incluye el resto de `.c`. La configuración está en `mangoac.ini` (hash, libro, rutas).
+Los binarios no van en este git. Cuando publique una versión, estarán en [Releases](https://github.com/mango-computer/mango-paola-xboard/releases).
 
 Desde consola: `uci` o `xboard` para enganchar una GUI. Ejemplo UCI mínimo:
 
@@ -197,4 +209,4 @@ go depth 8
 
 ## Licencia
 
-GPLv3. Ofrezco el código sin garantía. Investigación y autoría: Jose Andres Morales Linares, Mango Computer. Motor de 2012–2013; el protocolo, después.
+GPLv3: el texto íntegro está en [LICENSE](LICENSE). Ofrezco el código sin garantía. Investigación y autoría: Jose Andres Morales Linares, Mango Computer. Motor de 2012–2013; el protocolo, después.
