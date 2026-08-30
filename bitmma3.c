@@ -58,8 +58,10 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 #include <string.h>
 #include <sys/timeb.h>
 #include <ctype.h>
-//#include <termios.h> 
+//#include <termios.h>
+#if !defined(_WIN32) && !defined(_WIN64)
 #include <unistd.h>
+#endif
 #include <time.h>
 
 #if defined (_WIN32) || defined(_WIN64)

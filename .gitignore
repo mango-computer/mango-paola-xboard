@@ -1,5 +1,6 @@
 # Binario y objetos de compilación
 mangoac
+mangoac.exe
 *.o
 *.a
 *~

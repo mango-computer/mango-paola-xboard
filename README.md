@@ -171,6 +171,17 @@ gcc -lm bitmma3.c -Wall -O2 -o mangoac
 
 O `./compilar.sh`, que compila y arranca si no hay errores.
 
+Para generar las versiones **Linux x86_64** y **Windows x86_64** (binario + `mangoac.ini` + zip):
+
+```bash
+# Desde la raíz del repo, o desde mangoac_ajedrez
+./mangoac_ajedrez/scripts/crear-versiones.sh
+```
+
+En Cursor: Run and Debug → **Motor: Linux + Windows 64**.
+
+Hace falta `gcc` y, para Windows, el cruzado `gcc-mingw-w64-x86-64`. Salida en `mangoac_ajedrez/dist/`. También copia el motor a `UI-multi-platform/bin/` para empaquetar la GUI.
+
 Uso una sola unidad de traducción: `bitmma3.c` incluye el resto de `.c`. La configuración está en `mangoac.ini` (hash, libro, rutas).
 
 Desde consola: `uci` o `xboard` para enganchar una GUI. Ejemplo UCI mínimo:
