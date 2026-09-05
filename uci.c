@@ -9,6 +9,73 @@
 #ifndef UCI_C
 #define UCI_C
 
+#define UCI_LINE_INITIAL_CAPACITY 5120u
+#define UCI_LINE_MAX_CAPACITY (256u * 1024u)
+
+enum {
+	UCI_LINE_EOF = 0,
+	UCI_LINE_OK = 1,
+	UCI_LINE_TOO_LONG = -1,
+	UCI_LINE_NO_MEMORY = -2
+};
+
+static void uciDescartarRestoLinea(FILE *entrada)
+{
+	int c;
+
+	while ((c = fgetc(entrada)) != '\n' && c != EOF)
+		;
+}
+
+static int uciLeerLinea(FILE *entrada, char **linea, size_t *capacidad)
+{
+	size_t usados = 0;
+
+	if (!*linea) {
+		*linea = (char *)malloc(UCI_LINE_INITIAL_CAPACITY);
+		if (!*linea)
+			return UCI_LINE_NO_MEMORY;
+		*capacidad = UCI_LINE_INITIAL_CAPACITY;
+	}
+
+	(*linea)[0] = '\0';
+	for (;;) {
+		size_t disponibles = *capacidad - usados;
+		char *fragmento;
+		size_t recibidos;
+
+		fragmento = fgets(*linea + usados, (int)disponibles, entrada);
+		if (!fragmento)
+			return usados ? UCI_LINE_OK : UCI_LINE_EOF;
+
+		recibidos = strlen(*linea + usados);
+		usados += recibidos;
+		if (usados && (*linea)[usados - 1] == '\n')
+			return UCI_LINE_OK;
+		if (feof(entrada))
+			return UCI_LINE_OK;
+
+		if (*capacidad >= UCI_LINE_MAX_CAPACITY) {
+			uciDescartarRestoLinea(entrada);
+			(*linea)[0] = '\0';
+			return UCI_LINE_TOO_LONG;
+		}
+
+		{
+			size_t nueva_capacidad = *capacidad * 2u;
+			char *ampliada;
+
+			if (nueva_capacidad > UCI_LINE_MAX_CAPACITY)
+				nueva_capacidad = UCI_LINE_MAX_CAPACITY;
+			ampliada = (char *)realloc(*linea, nueva_capacidad);
+			if (!ampliada)
+				return UCI_LINE_NO_MEMORY;
+			*linea = ampliada;
+			*capacidad = nueva_capacidad;
+		}
+	}
+}
+
 static char *uciSiguienteToken(char *p, char *tok, int toksize)
 {
 	int n = 0;
@@ -526,8 +593,10 @@ static void uciGo(char *linea)
 
 void uci(void)
 {
-	char linea[1024];
+	char *linea = NULL;
+	size_t capacidad_linea = 0;
 	char cmd[64];
+	int estado_linea;
 
 	esPost = FALSO;
 	esConsola = FALSO;
@@ -536,7 +605,19 @@ void uci(void)
 
 	uciIdentificarse();
 
-	while (fgets(linea, (int)sizeof(linea), stdin)) {
+	for (;;) {
+		estado_linea = uciLeerLinea(stdin, &linea, &capacidad_linea);
+		if (estado_linea == UCI_LINE_EOF)
+			break;
+		if (estado_linea == UCI_LINE_TOO_LONG) {
+			printf("info string error: UCI command too long\n");
+			continue;
+		}
+		if (estado_linea == UCI_LINE_NO_MEMORY) {
+			printf("info string error: unable to allocate UCI command buffer\n");
+			break;
+		}
+
 		uciSiguienteToken(linea, cmd, (int)sizeof(cmd));
 		if (cmd[0] == '\0')
 			continue;
@@ -565,9 +646,11 @@ void uci(void)
 #ifdef COMPILAR_CON_EGBB
 			cerrarBitbases();
 #endif
+			free(linea);
 			exit(0);
 		}
 	}
+	free(linea);
 }
 
 #endif
