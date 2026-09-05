@@ -31,7 +31,7 @@
 #define 	VERSION_MANGO_AJEDREZ 		"Mango AC Ajedrez 1.1, (c) 2013. Creado por Jose Andres Morales Linares. comprasmangocomputer@gmail.com"
 
 #define NOMBRE_MANGO_AC			"Mango AC"
-#define VERSION_MANGO_AC			"1.1"
+#define VERSION_MANGO_AC			"1.1.1"
 
 
 //#define		DEBUG_MANGO_AJEDREZ

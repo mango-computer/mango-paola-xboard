@@ -55,7 +55,7 @@ Lo implementé en `uci.c`. El motor responde al subconjunto que usan las GUI hab
 
 **Handshake**
 
-- `uci` → `id name Mango AC 1.1`, `id author Jose Andres Morales Linares`, `uciok`
+- `uci` → `id name Mango AC 1.1.1`, `id author Jose Andres Morales Linares`, `uciok`
 - `isready` → `readyok`
 - `ucinewgame` → `nuevo_juego()` (tablero inicial, hash, generador)
 - `quit` → cierra recursos y `exit(0)`
@@ -117,11 +117,11 @@ En `protover` declaro:
 
 ```
 feature setboard=1 analyze=0 ping=1 colors=0 draw=0 sigint=0 sigterm=0 usermove=0
-         variants="normal" myname="Mango AC 1.1"
+         variants="normal" myname="Mango AC 1.1.1"
 feature done=1
 ```
 
-El único cambio de protocolo aquí es **`myname`**: ya no me identifico como Mango Paola, sino como **Mango AC**. El diálogo (`move e2e4`, `post` con `profundidad score tiempo nodos pv`) sigue siendo CECP.
+El único cambio de protocolo aquí es **`myname`**: ya no me identifico como Mango Paola, sino como **Mango AC 1.1.1**. El diálogo (`move e2e4`, `post` con `profundidad score tiempo nodos pv`) sigue siendo CECP.
 
 La GUI envía jugadas en notación algebraica larga; yo las parseo, compruebo legalidad (rey en jaque) y, si me toca, busco y respondo `move`.
 

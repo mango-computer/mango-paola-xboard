@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import queue
 import subprocess
 import tempfile
@@ -123,6 +124,14 @@ class UciSession:
 class LongUciCommandTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        configured_binary = os.environ.get("MANGOAC_TEST_BINARY")
+        if configured_binary:
+            cls.temp_dir = None
+            cls.binary = Path(configured_binary).resolve()
+            if not cls.binary.is_file():
+                raise FileNotFoundError(cls.binary)
+            return
+
         cls.temp_dir = tempfile.TemporaryDirectory()
         cls.binary = Path(cls.temp_dir.name) / "mangoac"
         subprocess.run(
@@ -143,7 +152,8 @@ class LongUciCommandTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        cls.temp_dir.cleanup()
+        if cls.temp_dir is not None:
+            cls.temp_dir.cleanup()
 
     def assert_position_and_bestmove(self, moves: str, forbidden: str) -> None:
         command = f"position startpos moves {moves}"
