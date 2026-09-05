@@ -146,7 +146,8 @@ void verReloj_y_Teclado()
 		if (bioskey()) 
 		{
 			tiempoVencido = VERDADERO;
-			computadora   = SIN_COLOR;
+			if (!esUCI)
+				computadora   = SIN_COLOR;
 		}
 
 	} else if (tipoDeBusqueda == TIPO_BUSQUEDA_PONDER) {

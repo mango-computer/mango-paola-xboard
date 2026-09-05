@@ -268,7 +268,28 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 			unsigned long long nodos = (unsigned long long)(contadorNodos + QcontadorNodos);
 			unsigned long long nps = tiempo > 0 ? (nodos * 1000ull / (unsigned long long)tiempo) : 0ull;
 
-			printf("info depth %d", profundidadActual);
+			if (juego.triangularArray[0][0] && uciMultiPV > 1)
+			{
+				int k;
+				int found = 0;
+				MOVIMIENTO first = juego.triangularArray[0][0];
+				for (k = 0; k < uciAltCount; k++)
+				{
+					if (uciAltMov[k] == first)
+					{
+						uciAltScore[k] = valoracion;
+						found = 1;
+						break;
+					}
+				}
+				if (!found && uciAltCount < 3)
+				{
+					uciAltMov[uciAltCount] = first;
+					uciAltScore[uciAltCount] = valoracion;
+					uciAltCount++;
+				}
+			}
+			printf("info multipv 1 depth %d", profundidadActual);
 			if (valoracion > 90000)
 				printf(" score mate %d", (VALOR_JAQUE_MATE - valoracion) / 2 + 1);
 			else if (valoracion < -90000)

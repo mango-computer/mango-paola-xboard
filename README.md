@@ -59,7 +59,14 @@ Lo implementé en `uci.c`. El motor responde al subconjunto que usan las GUI hab
 - `isready` → `readyok`
 - `ucinewgame` → `nuevo_juego()` (tablero inicial, hash, generador)
 - `quit` → cierra recursos y `exit(0)`
-- `setoption` y `stop` los acepto y los ignoro: no hay opciones UCI ni aborto cooperativo de la búsqueda
+- `setoption name MultiPV value N` (1–3). En análisis la GUI pide 3; en partida 1.
+- `legal` → `legalmoves e2e4 …` y `legalok` (UCI largo).
+- `facts d1f3 g1f3` (posición ya fijada con `position`) → líneas `fact …` y `factsok`. Tokens, no frases:
+  - `fact move d1f3 piece Q color w from d1 to f3 capture -`
+  - `fact attack d1f3 to d5 victim q ray f3 e4 d5 empty e4`
+  - `fact attack g1f3 none`
+  - `fact material w 32 b 34`
+- `stop` durante `go`: el sondeo de reloj ve stdin y corta la búsqueda (`tiempoVencido`), luego `bestmove`.
 
 **Posición** — `position startpos [moves …]` o `position fen <fen> [moves …]`
 
@@ -82,6 +89,10 @@ Lo implementé en `uci.c`. El motor responde al subconjunto que usan las GUI hab
 La asignación de tiempo (`uciAsignarTiempo`) reparte el reloj: `remaining / movestogo + inc`, o `remaining / 25 + inc` si no hay control. Recorto para no gastar más de la mitad del restante y no bajo de 30 ms.
 
 Al terminar, imprimo `bestmove <lan>` (o `bestmove 0000` si no hay jugada) y **aplico** esa jugada en el tablero interno, igual que hago en xboard con `move`.
+
+`info score cp` / `score mate` es la valoración del **bando que mueve** (STM), no siempre POV blancas. La GUI de Mango AC lo convierte a POV blancas para el LLM. Otras GUI no deben asumir POV fijo.
+
+`facts` lee el tablero **actual**. Tras un `go` el tablero ya tiene el `bestmove`; hay que volver a enviar `position` antes de `facts`.
 
 **Salida durante la búsqueda** (`esUCI`)
 
@@ -204,6 +215,20 @@ isready
 position startpos
 go depth 8
 ```
+
+---
+
+## Apoya Mango AC
+
+Si valoras este motor y quieres ayudar a que siga creciendo, puedes apoyar su
+desarrollo. Las aportaciones ayudan a mantener las pruebas, preparar versiones
+para distintas plataformas y continuar investigando la evolución del motor.
+
+[Apoyar con 10 € en PayPal](https://paypal.me/JoseMoralesLinares/10)
+
+La aportación es voluntaria. Mango AC seguirá siendo software libre. También
+puedes ayudar comunicando errores, proponiendo mejoras, compartiendo el proyecto
+o contribuyendo con código.
 
 ---
 

@@ -32,7 +32,291 @@ static void uciIdentificarse(void)
 {
 	printf("id name %s %s\n", NOMBRE_MANGO_AC, VERSION_MANGO_AC);
 	printf("id author Jose Andres Morales Linares\n");
+	printf("option name MultiPV type spin default 1 min 1 max 3\n");
 	printf("uciok\n");
+	fflush(stdout);
+}
+
+static void uciSetOption(char *linea)
+{
+	char tok[64];
+	char *p = linea;
+	int value;
+
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	if (strcmp(tok, "name"))
+		return;
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	if (strcmp(tok, "MultiPV"))
+		return;
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	if (strcmp(tok, "value"))
+		return;
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	value = atoi(tok);
+	if (value < 1)
+		value = 1;
+	if (value > 3)
+		value = 3;
+	uciMultiPV = value;
+}
+
+static void uciLegal(void)
+{
+	int i;
+	BOOLEANO esJaque;
+	BOOLEANO first = VERDADERO;
+
+	juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
+	printf("legalmoves");
+	for (i = juego.Buffer_MOV_INDEXCAPAS[0]; i < juego.Buffer_MOV_INDEXCAPAS[1]; i++)
+	{
+		hacerMovimiento(juego.Buffer_MOV[i]);
+		if (juego.colorTurno)
+			esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
+		else
+			esJaque = esAtacadoPor(juego.tablero[NEGRO][REY], BLANCO);
+		desHacerMovimiento(juego.Buffer_MOV[i]);
+		if (esJaque)
+			continue;
+		printf(" ");
+		imprimirMovimiento(juego.Buffer_MOV[i]);
+		first = FALSO;
+	}
+	(void)first;
+	printf("\nlegalok\n");
+	fflush(stdout);
+}
+
+static char uciTipoLetra(int pieza)
+{
+	switch (pieza) {
+	case PEON_BLANCO:
+	case PEON_NEGRO:
+		return 'P';
+	case CABALLO_BLANCO:
+	case CABALLO_NEGRO:
+		return 'N';
+	case ALFIL_BLANCO:
+	case ALFIL_NEGRO:
+		return 'B';
+	case TORRE_BLANCO:
+	case TORRE_NEGRO:
+		return 'R';
+	case DAMA_BLANCO:
+	case DAMA_NEGRO:
+		return 'Q';
+	case REY_BLANCO:
+	case REY_NEGRO:
+		return 'K';
+	default:
+		return '?';
+	}
+}
+
+static char uciVictimLetra(int pieza)
+{
+	char letra = uciTipoLetra(pieza);
+
+	if (pieza >= PEON_NEGRO && letra >= 'A' && letra <= 'Z')
+		letra = (char)(letra - 'A' + 'a');
+	return letra;
+}
+
+static int uciPiezaBlanca(int pieza)
+{
+	return pieza >= PEON_BLANCO && pieza <= DAMA_BLANCO;
+}
+
+static uint64 uciAtaquesPieza(int sq, int pieza)
+{
+	switch (pieza) {
+	case DAMA_BLANCO:
+	case DAMA_NEGRO:
+		return genTorreMOVAtaqueTablero(sq, juego) | genAlfilMOVAtaqueTablero(sq, juego);
+	case TORRE_BLANCO:
+	case TORRE_NEGRO:
+		return genTorreMOVAtaqueTablero(sq, juego);
+	case ALFIL_BLANCO:
+	case ALFIL_NEGRO:
+		return genAlfilMOVAtaqueTablero(sq, juego);
+	case CABALLO_BLANCO:
+	case CABALLO_NEGRO:
+		return mascaraCaballo[sq];
+	case REY_BLANCO:
+	case REY_NEGRO:
+		return mascaraRey[sq];
+	case PEON_BLANCO:
+		return mascaraCapturarPeon[sq][BLANCO];
+	case PEON_NEGRO:
+		return mascaraCapturarPeon[sq][NEGRO];
+	default:
+		return 0;
+	}
+}
+
+static int uciEsDeslizante(int pieza)
+{
+	return pieza == DAMA_BLANCO || pieza == DAMA_NEGRO ||
+	       pieza == TORRE_BLANCO || pieza == TORRE_NEGRO ||
+	       pieza == ALFIL_BLANCO || pieza == ALFIL_NEGRO;
+}
+
+static void uciImprimirRayo(int from, int to)
+{
+	int df = (to % 8) - (from % 8);
+	int dr = (to / 8) - (from / 8);
+	int sf;
+	int sr;
+	int step;
+	int sq;
+	int empty = 0;
+
+	if (from == to)
+		return;
+	if (df && dr && abs(df) != abs(dr))
+		return;
+	sf = (df > 0) - (df < 0);
+	sr = (dr > 0) - (dr < 0);
+	step = sf + sr * 8;
+	if (!step)
+		return;
+
+	printf(" ray");
+	for (sq = from; ; sq += step) {
+		printf(" %s", NOMBRE_ESCAQUES[sq]);
+		if (sq == to)
+			break;
+		if (sq < 0 || sq > 63)
+			return;
+	}
+	printf(" empty");
+	for (sq = from + step; sq != to && sq >= 0 && sq <= 63; sq += step) {
+		if (ESCAQUES[sq] == VACIO) {
+			printf(" %s", NOMBRE_ESCAQUES[sq]);
+			empty = 1;
+		}
+	}
+	if (!empty)
+		printf(" -");
+}
+
+static int uciMaterialBando(COLOR lado)
+{
+	return cuentaBit(juego.tablero[lado][PEON]) * 1 +
+	       cuentaBit(juego.tablero[lado][CABALLO]) * 3 +
+	       cuentaBit(juego.tablero[lado][ALFIL]) * 3 +
+	       cuentaBit(juego.tablero[lado][TORRE]) * 5 +
+	       cuentaBit(juego.tablero[lado][DAMA]) * 9;
+}
+
+static void uciFactsUnMov(char *uciTok)
+{
+	MOVIMIENTO m;
+	int origen;
+	int destino;
+	int pieza;
+	int captura;
+	int ocupante;
+	BOOLEANO esJaque;
+	uint64 ataques;
+	uint64 enemy;
+	int to;
+	int printed = 0;
+
+	if (!esUnMovimiento(uciTok))
+		return;
+	m = parse_mov(uciTok);
+	if (m == (MOVIMIENTO)-1)
+		return;
+
+	origen = OBT_MOV_ORIGEN(m);
+	destino = OBT_MOV_DESTINO(m);
+	pieza = ESCAQUES[origen];
+	captura = ESCAQUES[destino];
+	if (captura == VACIO && ES_MOV_CAPTURA(m))
+		captura = OBT_MOV_CAPTURA(m);
+
+	hacerMovimiento(m);
+	if (juego.colorTurno)
+		esJaque = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
+	else
+		esJaque = esAtacadoPor(juego.tablero[NEGRO][REY], BLANCO);
+	if (esJaque) {
+		desHacerMovimiento(m);
+		return;
+	}
+
+	printf("fact move %s piece %c color %c from %s to %s capture ",
+	       uciTok,
+	       uciTipoLetra(pieza),
+	       uciPiezaBlanca(pieza) ? 'w' : 'b',
+	       NOMBRE_ESCAQUES[origen],
+	       NOMBRE_ESCAQUES[destino]);
+	if (captura == VACIO)
+		printf("-\n");
+	else
+		printf("%c\n", uciVictimLetra(captura));
+
+	ocupante = ESCAQUES[destino];
+	enemy = juego.colorTurno ? juego.negros : juego.blancos;
+	ataques = uciAtaquesPieza(destino, ocupante) & enemy;
+	if (!ataques)
+		printf("fact attack %s none\n", uciTok);
+	else {
+		while (ataques) {
+			to = bitScanForwardBruijn(ataques);
+			printf("fact attack %s to %s victim %c",
+			       uciTok,
+			       NOMBRE_ESCAQUES[to],
+			       uciVictimLetra(ESCAQUES[to]));
+			if (uciEsDeslizante(ocupante))
+				uciImprimirRayo(destino, to);
+			printf("\n");
+			ataques ^= BITSET[to];
+			printed = 1;
+		}
+		(void)printed;
+	}
+
+	desHacerMovimiento(m);
+}
+
+static void uciFacts(char *linea)
+{
+	char tok[16];
+	char *p = linea;
+
+	juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
+	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+	while (1) {
+		p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+		if (tok[0] == '\0')
+			break;
+		uciFactsUnMov(tok);
+	}
+	printf("fact material w %d b %d\n", uciMaterialBando(BLANCO), uciMaterialBando(NEGRO));
+	printf("factsok\n");
+	fflush(stdout);
+}
+
+static void uciPrintAlts(MOVIMIENTO best)
+{
+	int k;
+	int rank = 2;
+
+	if (uciMultiPV < 2)
+		return;
+	for (k = 0; k < uciAltCount && rank <= uciMultiPV; k++)
+	{
+		if (!uciAltMov[k] || uciAltMov[k] == best)
+			continue;
+		printf("info multipv %d depth 1 score cp %d pv ", rank, uciAltScore[k]);
+		imprimirMovimiento(uciAltMov[k]);
+		printf("\n");
+		rank++;
+	}
 	fflush(stdout);
 }
 
@@ -199,6 +483,7 @@ static void uciGo(char *linea)
 	esConsola = FALSO;
 	esUCI = VERDADERO;
 	tipoDeBusqueda = TIPO_BUSQUEDA_NORMAL;
+	uciAltCount = 0;
 
 	juego.profundidadBusquedad = MAX_CAPAS;
 	juego.maxTiempo = 2000;
@@ -227,6 +512,7 @@ static void uciGo(char *linea)
 	m = pensarRapido();
 
 	if (m && m != (MOVIMIENTO)-1) {
+		uciPrintAlts(m);
 		printf("bestmove ");
 		imprimirMovimiento(m);
 		printf("\n");
@@ -267,9 +553,13 @@ void uci(void)
 		} else if (!strcmp(cmd, "go")) {
 			uciGo(linea);
 		} else if (!strcmp(cmd, "setoption")) {
-			continue;
+			uciSetOption(linea);
+		} else if (!strcmp(cmd, "legal")) {
+			uciLegal();
+		} else if (!strcmp(cmd, "facts")) {
+			uciFacts(linea);
 		} else if (!strcmp(cmd, "stop")) {
-			continue;
+			tiempoVencido = VERDADERO;
 		} else if (!strcmp(cmd, "quit")) {
 			CLOSE_BOOK();
 #ifdef COMPILAR_CON_EGBB
