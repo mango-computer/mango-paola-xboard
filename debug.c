@@ -342,6 +342,7 @@ void debugMov(char *llamado, MOVIMIENTO mov)
 
 
 	uint64 llave=0;
+	uint64 llavePeones=0;
 	int posX=0;
 	
 	for (;posX<64;posX++)
@@ -349,6 +350,8 @@ void debugMov(char *llamado, MOVIMIENTO mov)
 		if (ESCAQUES[posX] != VACIO)
 		{
 			llave ^= arrayHash.llaves[posX][ESCAQUES[posX]];
+			if (ESCAQUES[posX] == PEON_BLANCO || ESCAQUES[posX] == PEON_NEGRO)
+				llavePeones ^= arrayHash.llaves[posX][ESCAQUES[posX]];
 		}
 	}
 
@@ -372,6 +375,11 @@ void debugMov(char *llamado, MOVIMIENTO mov)
 		}
 		mostrarTablero();
 		printf("Inconsistencia en la llave hash: %s\n", llamado);
+		exit(0);
+	}
+	if (juego.llavePeones != llavePeones)
+	{
+		printf("Inconsistencia en la llave de peones: %s\n", llamado);
 		exit(0);
 	}
 	

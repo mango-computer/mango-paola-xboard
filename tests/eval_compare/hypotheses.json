@@ -1,0 +1,29 @@
+{
+  "teacher_report": "report.json",
+  "performance_report": "performance.json",
+  "selfplay_report": "selfplay-smoke.json",
+  "hypotheses": [
+    {"id":"pawn-state","status":"bug-confirmed-fixed","fen":["pawn-01","pawn-02"],"decision":"reset all per-pawn flags at the start of the evaluation loop"},
+    {"id":"fifty-move","status":"bug-confirmed-fixed","fen":["fifty-80","fifty-95"],"decision":"scale hash hits, full eval and every early return"},
+    {"id":"lazy-exact-cache","status":"bug-confirmed-fixed","fen":["quiet-02"],"decision":"partial lazy returns never enter hash_eval"},
+    {"id":"eval-hash-identity","status":"bug-confirmed-fixed","fen":["opening-03"],"decision":"include historical castling state in the evaluation-only key"},
+    {"id":"opposition","status":"bug-confirmed-fixed","fen":["passed-02","passed-03"],"decision":"require king alignment and parity"},
+    {"id":"passed-race-symmetry","status":"bug-confirmed-fixed","fen":["passed-01","passed-03"],"decision":"make the black promotion branch symmetric"},
+    {"id":"opposite-bishops","status":"bug-confirmed-fixed","fen":["opposite-01"],"decision":"remove the phase predicate that was tautologically true"},
+    {"id":"safe-mobility","status":"accepted","fen":["quiet-01","quiet-02"],"decision":"exclude enemy pawn attacks and pinned off-ray moves without a second move-generation pass"},
+    {"id":"see","status":"rejected-for-eval","fen":[],"decision":"EET/EETPOS remains in search; selective defended-rook/queen scoring worsened validation MAE and RMSE"},
+    {"id":"threats","status":"accepted-retuned","fen":["king-01","quiet-01"],"decision":"use correct one-sided accounting with explicit 150 percent weights; scored 50.75 percent in 1000 diverse paired smoke games"},
+    {"id":"king-danger","status":"accepted","fen":["king-01","king-02","king-03"],"decision":"replace geometric tropism with attacker weights, weak ring and double attacks"},
+    {"id":"pins","status":"bug-confirmed-fixed","fen":["king-02"],"decision":"calculate exact per-square king-to-pinner rays and keep pseudo/effective attack maps"},
+    {"id":"pawn-hash-king-context","status":"bug-confirmed-fixed","fen":[],"decision":"cache pawn structure only and rebuild pawn attacks against the current king ring"},
+    {"id":"lazy-disabled","status":"rejected","fen":[],"decision":"full evaluation increased measured search elapsed time by about 5 percent; keep lazy enabled"},
+    {"id":"backward-pawn","status":"deferred","fen":["pawn-02","pawn-03"],"decision":"the compact replacement worsened unseen teacher MAE; keep the tested legacy structure"},
+    {"id":"doubled-pawn","status":"deferred","fen":["pawn-01"],"decision":"n-1 prototype was part of a rejected pawn ablation"},
+    {"id":"passed-pawn-column-gate","status":"accepted-correctness","fen":["passed-01"],"decision":"recognize passed pawns from enemy pawns ahead, independently of enemy pawns behind on the same file"},
+    {"id":"passed-dynamics","status":"accepted","fen":["passed-01","passed-02"],"decision":"score safe path and defended blocker after complete attack maps exist"},
+    {"id":"material-cache","status":"rejected","fen":["material-01","material-02"],"decision":"direct count arithmetic is cheaper than key construction and a cache lookup; no cache retained"},
+    {"id":"material-imbalance","status":"accepted","fen":["material-01","material-02"],"decision":"add compact knight-pawn, rook-pair and queen-knight interactions"},
+    {"id":"endgame-scale","status":"accepted","fen":["opposite-01","rook-01","rook-02"],"decision":"ablation was statistically inconclusive; retain the small existing low-pawn, rook and one-flank factors"},
+    {"id":"mobility-retune","status":"deferred","fen":[],"decision":"75 and 125 percent scales gave conflicting held-out signals with overlapping confidence intervals; retain 100 percent"}
+  ]
+}

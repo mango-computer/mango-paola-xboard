@@ -55,11 +55,13 @@ Lo implementé en `uci.c`. El motor responde al subconjunto que usan las GUI hab
 
 **Handshake**
 
-- `uci` → `id name Mango AC 1.1.1`, `id author Jose Andres Morales Linares`, `uciok`
+- `uci` → `id name Mango AC 1.2.0`, `id author Jose Andres Morales Linares`, `uciok`
 - `isready` → `readyok`
 - `ucinewgame` → `nuevo_juego()` (tablero inicial, hash, generador)
 - `quit` → cierra recursos y `exit(0)`
 - `setoption name MultiPV value N` (1–3). En análisis la GUI pide 3; en partida 1.
+- `setoption name Hash value MB` reserva la TT antes del siguiente `isready`
+  (1–8192 MB en 64 bits); `setoption name Clear Hash` la invalida en O(1).
 - `legal` → `legalmoves e2e4 …` y `legalok` (UCI largo).
 - `facts d1f3 g1f3` (posición ya fijada con `position`) → líneas `fact …` y `factsok`. Tokens, no frases:
   - `fact move d1f3 piece Q color w from d1 to f3 capture -`
@@ -117,11 +119,11 @@ En `protover` declaro:
 
 ```
 feature setboard=1 analyze=0 ping=1 colors=0 draw=0 sigint=0 sigterm=0 usermove=0
-         variants="normal" myname="Mango AC 1.1.1"
+         variants="normal" myname="Mango AC 1.2.0"
 feature done=1
 ```
 
-El único cambio de protocolo aquí es **`myname`**: ya no me identifico como Mango Paola, sino como **Mango AC 1.1.1**. El diálogo (`move e2e4`, `post` con `profundidad score tiempo nodos pv`) sigue siendo CECP.
+El único cambio de protocolo aquí es **`myname`**: ya no me identifico como Mango Paola, sino como **Mango AC 1.2.0**. El diálogo (`move e2e4`, `post` con `profundidad score tiempo nodos pv`) sigue siendo CECP.
 
 La GUI envía jugadas en notación algebraica larga; yo las parseo, compruebo legalidad (rey en jaque) y, si me toca, busco y respondo `move`.
 
@@ -175,7 +177,17 @@ Con EET (`eet.c`) estimo el intercambio en una casilla (SEE) para no perseguir c
 
 ### Tablas hash (transposición)
 
-Uso Zobrist: pieza×casilla, turno, enroques y *en passant*. La entrada guarda puntuación, profundidad, mejor movimiento y bandera (`EXACTO`, `ARRIBA`/`ABAJO` = cota, `EVITAR_NULL`). El tamaño se elige en `mangoac.ini` (`TamanioTablaHash` 1–9, de 18 a 26 bits; por defecto 22 bits ≈ 96 MB). Hay una tabla aparte de evaluaciones estáticas (`LARGO_HASH_EVAL`).
+Uso Zobrist: pieza×casilla, turno, enroques y *en passant*. La entrada guarda
+puntuación, profundidad, mejor movimiento, bandera y generación. La memoria se
+solicita en MB mediante `HashMB` o la opción UCI estándar `Hash`: 256 MB por
+defecto y hasta 8192 MB en procesos de 64 bits. El motor redondea al mayor
+número de entradas potencia de dos que cabe en el presupuesto e informa del
+tamaño real. `TamanioTablaHash` 1–9 se conserva solo para configuraciones
+antiguas que no incluyan `HashMB`.
+
+`ucinewgame` y `Clear Hash` avanzan una generación en O(1), sin borrar cientos
+de MB con `memset`. Hay una tabla aparte de evaluaciones estáticas
+(`LARGO_HASH_EVAL`) que utiliza la misma generación.
 
 ### Evaluación
 
@@ -186,6 +198,9 @@ El libro de aperturas usa el formato Polyglot estándar y el lector C99 de
 `polyglotbooks/mangoac-book.bin`. El libro se genera de forma reproducible con
 datos CC0 de Lichess; su procedencia, licencia y SHA-256 están documentados
 dentro de `polyglotbooks/`. Mango AC no incluye ni soporta libros Rebel/ProDeo.
+El archivo se valida y se carga por completo en RAM al arrancar; las consultas
+posteriores no realizan acceso a disco. El hash Polyglot se calcula directamente
+desde el estado interno, sin generar y volver a analizar un FEN.
 Las bitbases de finales (EGBB/Nalimov) son opcionales en compilación
 (`COMPILAR_CON_EGBB`); por defecto las dejo desactivadas.
 
@@ -223,6 +238,13 @@ El fixture puede regenerarse desde el mismo `.bin` con
 `tests/generate_polyglot_fixture.py`; esa tarea de mantenimiento requiere
 `python-chess==1.11.2`, pero la ejecución normal de los tests usa solo la
 biblioteca estándar de Python.
+
+El benchmark manual de carga, escalado 200× y búsqueda a profundidad fija no
+forma parte de la puerta de CI:
+
+```bash
+python3 tests/benchmark_memory.py
+```
 
 Los binarios no van en este git. Cuando publique una versión, estarán en [Releases](https://github.com/mango-computer/mango-paola-xboard/releases).
 

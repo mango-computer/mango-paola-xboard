@@ -41,8 +41,11 @@ int abrirLibro3(void);
 int abrirLibro3Ruta(const char *ruta);
 void cerrarLibro3(void);
 uint64_t libro3HashFen(const char *fen, int *ok);
+uint64_t libro3HashJuego(int *ok);
 int buscarMovimientoLibro3(const char *fen, char uci[6]);
 int buscarMovimientoLibro3ConSemilla(const char *fen, char uci[6], uint32_t seed);
+int buscarMovimientoLibro3DesdeEstado(char uci[6]);
+int buscarMovimientoLibro3DesdeEstadoConSemilla(char uci[6], uint32_t seed);
 
 int converTabler2FEN(char *string, size_t capacidad);
 void depurarLibro(FILE *libro);
@@ -74,6 +77,7 @@ void evalConteoPeones();
 BOOLEANO esPosibilidadVictoria(COLOR colorEval);
 void evaluarMate(COLOR colorEval);
 int transformarSegunEmpate(int puedeGanar, int puntaje);
+int ajustarReglaCincuenta(int puntaje);
 
 void evalDesarrollo(COLOR colorEval);
 void evalPeonesBloqueados(COLOR colorEval);
@@ -86,6 +90,12 @@ void evalCaballo(COLOR colorEval);
 void evalAlfil(COLOR colorEval);
 void evalTorre(COLOR colorEval);
 void evalDama(COLOR colorEval);
+void registrarAtaquesEval(COLOR colorEval, PIEZA tipo, uint64 ataques, int peso);
+void registrarAtaquesPeonesEval(void);
+void calcularMapasClavadas(void);
+uint64 ataquesEfectivosEval(COLOR colorEval, int origen, uint64 ataques);
+uint64 areaMovilidadUtil(COLOR colorEval, int origen, uint64 ataques);
+int puntajeAmenazas(COLOR colorAtacante);
 void evalInterCambioPiezas(COLOR colorEval);
 void evalAfilMalo(COLOR colorEval);
 void evalReyNegro();
@@ -114,6 +124,11 @@ static inline uint32 bitScanLast(uint64 bitmap);
 
 void inicializarTablero();
 void inicializarVar();
+unsigned int maxHashMBPermitido(void);
+BOOLEANO calcularDimensionTablaHash(unsigned int mb, size_t *entradas, uint64 *mascara, size_t *bytes, unsigned int *mbReales);
+BOOLEANO redimensionarTablaHashMB(unsigned int mb);
+void limpiarTablasHash(void);
+void aplicarCambioHashPendiente(void);
 void actualizarTablerosUtil(COLOR color);
 BOOLEANO esAtacadoPor(uint64 targetBitmap, const COLOR fromSide);
 uint32 generarTodosMov(uint32 indice);
@@ -156,6 +171,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 void cerrarTablas();
 void seleccionarMov(int capa, int i, uint32 profundidad);
 void iniciarHash();
+void recalcularLlavePeones(void);
 uint64 rand64();
 void iniHashTablero();
 int busquedadTranquilidad(int capa, int alfa, int beta);
@@ -177,6 +193,8 @@ int contarMovLegales();
 //**************** tabla hash *****************
 void agregarEvalTablaHash(int valor);
 BOOLEANO verificarEvalTablaHash(int *valor);
+BOOLEANO cargarHashPeones(void);
+void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior);
 
 int obtMayorValorPiezaDeBando(COLOR color);
 int obtSegundoValorPiezaDeBando(COLOR color);

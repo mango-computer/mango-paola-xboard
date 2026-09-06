@@ -28,10 +28,10 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#define 	VERSION_MANGO_AJEDREZ 		"Mango AC Ajedrez 1.1, (c) 2013. Creado por Jose Andres Morales Linares. comprasmangocomputer@gmail.com"
+#define 	VERSION_MANGO_AJEDREZ 		"Mango AC Ajedrez 1.2.0, (c) 2013. Creado por Jose Andres Morales Linares. comprasmangocomputer@gmail.com"
 
 #define NOMBRE_MANGO_AC			"Mango AC"
-#define VERSION_MANGO_AC			"1.1.1"
+#define VERSION_MANGO_AC			"1.2.0"
 
 
 //#define		DEBUG_MANGO_AJEDREZ
@@ -59,27 +59,17 @@
 #define		INCREMENTO_PROMO_DELTA_CORTE	875
 
 #define		LARGO_HASH_EVAL			1048575
-//#define		LARGO_TABLA_HASH	4194303
-/*
-	Llave Hash de 26 bits = posiciones 67.108.863 * (24 Bytes del Registro Tabla Hash) = 1536 MB
-	Llave Hash de 25 bits = posiciones 33.554.431 * (24 Bytes del Registro Tabla Hash) =  768 MB
-	Llave Hash de 24 bits = posiciones 16.777.215 * (24 Bytes del Registro Tabla Hash) =  384 MB
-	Llave Hash de 23 bits = posiciones  8.388.607 * (24 Bytes del Registro Tabla Hash) =  192 MB
-	Llave Hash de 22 bits = posiciones  4.194.303 * (24 Bytes del Registro Tabla Hash) =   96 MB
-	Llave Hash de 21 bits = posiciones  2.097.151 * (24 Bytes del Registro Tabla Hash) =   48 MB
-	Llave Hash de 20 bits = posiciones  1.048.575 * (24 Bytes del Registro Tabla Hash) =   24 MB
-	Llave Hash de 19 bits = posiciones    262.143 * (24 Bytes del Registro Tabla Hash) =    6 MB
+#define		LARGO_HASH_PEONES		16383
 
-*/
-#define		LARGO_TABLA_HASH_LLAVE_18BIT	262143
-#define		LARGO_TABLA_HASH_LLAVE_19BIT	524287
-#define		LARGO_TABLA_HASH_LLAVE_20BIT	1048575
-#define		LARGO_TABLA_HASH_LLAVE_21BIT	2097151
-#define		LARGO_TABLA_HASH_LLAVE_22BIT	4194303
-#define		LARGO_TABLA_HASH_LLAVE_23BIT	8388607
-#define		LARGO_TABLA_HASH_LLAVE_24BIT	16777215
-#define		LARGO_TABLA_HASH_LLAVE_25BIT	33554431
-#define		LARGO_TABLA_HASH_LLAVE_26BIT	67108863
+#ifndef MOVILIDAD_ESCALA
+#define		MOVILIDAD_ESCALA		100
+#endif
+
+#define		HASH_MB_PREDETERMINADO		256u
+#define		HASH_MB_MAX_64			8192u
+#define		HASH_MB_MAX_32			1024u
+#define		MEBIBYTE			1048576u
+#define		MAX_LIBRO_POLYGLOT_MB		64u
 
 #define		BANDERA_HASH_ARRIBA		1
 #define		BANDERA_HASH_ABAJO		2
@@ -536,8 +526,8 @@
 #define		de_Enfrente(c,r,p) ((c)? r<p:r>p)
 #define		de_Atras(c,r,p)    ((c)? r>p:r<p)
 
-#define FileDistancia(a,b) abs(FILES[a] - FILES[b])
-#define RankDistancia(a,b) abs(RANKS[a] - RANKS[b])
+#define FileDistancia(a,b) abs((int)FILES[a] - (int)FILES[b])
+#define RankDistancia(a,b) abs((int)RANKS[a] - (int)RANKS[b])
 
 
 #endif

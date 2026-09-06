@@ -100,6 +100,12 @@ static void uciIdentificarse(void)
 	printf("id name %s %s\n", NOMBRE_MANGO_AC, VERSION_MANGO_AC);
 	printf("id author Jose Andres Morales Linares\n");
 	printf("option name MultiPV type spin default 1 min 1 max 3\n");
+	printf(
+		"option name Hash type spin default %u min 1 max %u\n",
+		HASH_MB_PREDETERMINADO,
+		maxHashMBPermitido()
+	);
+	printf("option name Clear Hash type button\n");
 	printf("uciok\n");
 	fflush(stdout);
 }
@@ -108,25 +114,52 @@ static void uciSetOption(char *linea)
 {
 	char tok[64];
 	char *p = linea;
-	int value;
+	char *fin;
+	long value;
 
 	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
 	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
 	if (strcmp(tok, "name"))
 		return;
 	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
-	if (strcmp(tok, "MultiPV"))
+	if (!strcmp(tok, "Clear")) {
+		p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+		if (!strcmp(tok, "Hash"))
+			limpiarTablasHash();
 		return;
-	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
-	if (strcmp(tok, "value"))
+	}
+
+	if (strcmp(tok, "MultiPV") && strcmp(tok, "Hash"))
 		return;
-	p = uciSiguienteToken(p, tok, (int)sizeof(tok));
-	value = atoi(tok);
-	if (value < 1)
-		value = 1;
-	if (value > 3)
-		value = 3;
-	uciMultiPV = value;
+	{
+		char nombre[64];
+		strncpy(nombre, tok, sizeof(nombre) - 1);
+		nombre[sizeof(nombre) - 1] = '\0';
+
+		p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+		if (strcmp(tok, "value"))
+			return;
+		p = uciSiguienteToken(p, tok, (int)sizeof(tok));
+		value = strtol(tok, &fin, 10);
+		if (!tok[0] || *fin)
+			return;
+
+		if (!strcmp(nombre, "MultiPV")) {
+			if (value < 1)
+				value = 1;
+			if (value > 3)
+				value = 3;
+			uciMultiPV = (int)value;
+			return;
+		}
+
+		if (value < 1)
+			value = 1;
+		if ((unsigned long)value > maxHashMBPermitido())
+			value = (long)maxHashMBPermitido();
+		hashMBPendientes = (unsigned int)value;
+		hashResizePendiente = VERDADERO;
+	}
 }
 
 static void uciLegal(void)
@@ -625,9 +658,11 @@ void uci(void)
 		if (!strcmp(cmd, "uci")) {
 			uciIdentificarse();
 		} else if (!strcmp(cmd, "isready")) {
+			aplicarCambioHashPendiente();
 			printf("readyok\n");
 			fflush(stdout);
 		} else if (!strcmp(cmd, "ucinewgame")) {
+			aplicarCambioHashPendiente();
 			nuevo_juego();
 		} else if (!strcmp(cmd, "position")) {
 			uciPosition(linea);
@@ -643,6 +678,7 @@ void uci(void)
 			tiempoVencido = VERDADERO;
 		} else if (!strcmp(cmd, "quit")) {
 			cerrarLibro3();
+			cerrarTablas();
 #ifdef COMPILAR_CON_EGBB
 			cerrarBitbases();
 #endif

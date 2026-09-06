@@ -77,20 +77,67 @@ uint64 rand64()
 	return rand()^((uint64)rand()<<15)^((uint64)rand()<<30)^((uint64)rand()<<45)^((uint64)rand()<<60);
 }
 
+void recalcularLlavePeones(void)
+{
+	uint64 peones;
+	int escaque;
+
+	juego.llavePeones = 0;
+	peones = juego.tablero[BLANCO][PEON];
+	while (peones)
+	{
+		escaque = bitScanForwardBruijn(peones);
+		juego.llavePeones ^= arrayHash.llaves[escaque][PEON_BLANCO];
+		peones ^= BITSET[escaque];
+	}
+	peones = juego.tablero[NEGRO][PEON];
+	while (peones)
+	{
+		escaque = bitScanForwardBruijn(peones);
+		juego.llavePeones ^= arrayHash.llaves[escaque][PEON_NEGRO];
+		peones ^= BITSET[escaque];
+	}
+}
+
+static uint64 llaveEvaluacion(void)
+{
+	uint64 llave = juego.llaveHash;
+
+	/* El hecho histórico de haber enrocado afecta evalRey pero no la llave UCI. */
+	if (juego.ENROQUEB == ENROQUE_OO)
+		llave ^= 0x9e3779b97f4a7c15ull;
+	else if (juego.ENROQUEB == ENROQUE_OOO)
+		llave ^= 0xbf58476d1ce4e5b9ull;
+	if (juego.ENROQUEN == ENROQUE_OO)
+		llave ^= 0x94d049bb133111ebull;
+	else if (juego.ENROQUEN == ENROQUE_OOO)
+		llave ^= 0xd6e8feb86659fd93ull;
+	return llave;
+}
+
 void agregarEvalTablaHash(int valor)
 {
-	HASH_EVAL *ptabla 	= hash_eval + (juego.llaveHash & LARGO_HASH_EVAL);
+	uint64 llave;
+	if (!hash_eval)
+		return;
+	llave = llaveEvaluacion();
+	HASH_EVAL *ptabla 	= hash_eval + (llave & LARGO_HASH_EVAL);
 
-	ptabla->id 		= juego.llaveHash;
+	ptabla->id 		= llave;
 	ptabla->valor		= valor;
+	ptabla->generacion	= generacionHash;
 }
 
 BOOLEANO verificarEvalTablaHash(int *valor)
 {
-	HASH_EVAL *ptabla 	= hash_eval + (juego.llaveHash & LARGO_HASH_EVAL);
+	uint64 llave;
+	if (!hash_eval)
+		return FALSO;
+	llave = llaveEvaluacion();
+	HASH_EVAL *ptabla 	= hash_eval + (llave & LARGO_HASH_EVAL);
 	BOOLEANO esEncontrado 	= FALSO;
 
-	if (ptabla->id == juego.llaveHash)
+	if (ptabla->generacion == generacionHash && ptabla->id == llave)
 	{
 		*valor 		= ptabla->valor;
 		esEncontrado 	= VERDADERO;
@@ -99,14 +146,75 @@ BOOLEANO verificarEvalTablaHash(int *valor)
 	return esEncontrado;	
 }
 
+static HASH_PEONES *entradaHashPeones(void)
+{
+	return hash_peones + (juego.llavePeones & LARGO_HASH_PEONES);
+}
+
+BOOLEANO cargarHashPeones(void)
+{
+	HASH_PEONES *entrada;
+	int color;
+
+	consultasHashPeones++;
+	if (!hash_peones)
+		return FALSO;
+	entrada = entradaHashPeones();
+	if (entrada->generacion != generacionHash ||
+	    entrada->peonesBlancos != juego.tablero[BLANCO][PEON] ||
+	    entrada->peonesNegros != juego.tablero[NEGRO][PEON])
+		return FALSO;
+
+	aciertosHashPeones++;
+	for (color = BLANCO; color <= NEGRO; color++)
+	{
+		puntaje_m[color] += entrada->puntaje_m[color];
+		puntaje_f[color] += entrada->puntaje_f[color];
+		peonesDebiles[color] = entrada->debiles[color];
+		peonesPasados[color] = entrada->pasados[color];
+		peonesCandidatos[color] = entrada->candidatos[color];
+		peonesMapaFila[color] = entrada->filas[color];
+		peonesPasadosMapaFila[color] = entrada->filasPasados[color];
+	}
+	return VERDADERO;
+}
+
+void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior)
+{
+	HASH_PEONES *entrada;
+	int color;
+
+	if (!hash_peones)
+		return;
+	entrada = entradaHashPeones();
+	entrada->peonesBlancos = juego.tablero[BLANCO][PEON];
+	entrada->peonesNegros = juego.tablero[NEGRO][PEON];
+	for (color = BLANCO; color <= NEGRO; color++)
+	{
+		entrada->puntaje_m[color] = puntaje_m[color] - puntajeMAnterior[color];
+		entrada->puntaje_f[color] = puntaje_f[color] - puntajeFAnterior[color];
+		entrada->debiles[color] = peonesDebiles[color];
+		entrada->pasados[color] = peonesPasados[color];
+		entrada->candidatos[color] = peonesCandidatos[color];
+		entrada->filas[color] = peonesMapaFila[color];
+		entrada->filasPasados[color] = peonesPasadosMapaFila[color];
+	}
+	entrada->generacion = generacionHash;
+}
+
 
 //**************************************************************************
 
 void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOVIMIENTO mov)
 {
+	if (!tabla_hash || !entradasTablaHash)
+		return;
 	REGISTRO_TABLA_HASH *ptabla 	= tabla_hash + (juego.llaveHash & LARGO_TABLA_HASH);
 
-	if ((ptabla->profundidad > profundidad) && (ptabla->id == juego.llaveHash)) return;
+	if ((ptabla->generacion == generacionHash) &&
+	    (ptabla->profundidad > profundidad) &&
+	    (ptabla->id == juego.llaveHash))
+		return;
 
 	if ((valor > VALOR_ALTO) || (valor < VALOR_BAJO))
 	{
@@ -120,6 +228,7 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 
 	ptabla->id 		= (uint64)juego.llaveHash;
 	ptabla->profundidad	= profundidad;
+	ptabla->generacion	= generacionHash;
 	ptabla->puntaje		= valor;
 	ptabla->mov		= mov;
 	ptabla->banderas	= banderas;
@@ -127,6 +236,10 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 
 int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *banderas, MOVIMIENTO *mov)
 {
+	if (!tabla_hash || !entradasTablaHash) {
+		*banderas = BANDERA_HASH_VACIO;
+		return 0;
+	}
 	REGISTRO_TABLA_HASH *ptabla = tabla_hash + (juego.llaveHash & LARGO_TABLA_HASH);
 
 	int valor = 0;
@@ -134,7 +247,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 
 	*banderas = BANDERA_HASH_VACIO;
 
-	if (ptabla->id == juego.llaveHash)
+	if (ptabla->generacion == generacionHash && ptabla->id == juego.llaveHash)
 	{
 		valor 		= ptabla->puntaje;
 		flag	 	= ptabla->banderas;

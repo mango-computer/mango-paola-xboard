@@ -1,0 +1,1153 @@
+{
+  "binaries": {
+    "base": {
+      "path": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_base",
+      "sha256": "eee95cc8bb0813fab2fbf45bc1d782d161148b264750053dcae54e1fd14ce91d"
+    },
+    "candidate": {
+      "path": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_candidato",
+      "sha256": "af0b32c04a9ca578097fc550481d2a949faf5bfa3064ed6bfec11cdac2317be1"
+    },
+    "stockfish": {
+      "path": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/eval_compare/.stockfish-build/src/stockfish",
+      "sha256": "0055f41e827702e9ab51bc3d08357153f73ab1a380275b7993b23fb1a78bf826"
+    },
+    "stockfish_commit": "6a8767a0d5d9502e6d4de1bef97468b5d6fab80a"
+  },
+  "calibration": {
+    "intercept": -9.854531088634962,
+    "slope": 0.49046877204312167,
+    "trained_on": 277
+  },
+  "elapsed_ms": {
+    "base": 162.61389300052542,
+    "candidate": 164.3503849991248,
+    "stockfish": 166.73425400222186
+  },
+  "families": {
+    "fifty_move": {
+      "base": {
+        "mae": 47.783,
+        "mae_ci95": [
+          47.783,
+          47.783
+        ],
+        "median": 47.783,
+        "p90": 47.783,
+        "p99": 47.783,
+        "pearson": 0.0,
+        "rmse": 47.783,
+        "sign_error": 0.0,
+        "spearman": 0.0
+      },
+      "candidate": {
+        "mae": 49.745,
+        "mae_ci95": [
+          49.745,
+          49.745
+        ],
+        "median": 49.745,
+        "p90": 49.745,
+        "p99": 49.745,
+        "pearson": 0.0,
+        "rmse": 49.745,
+        "sign_error": 0.0,
+        "spearman": 0.0
+      }
+    },
+    "imbalance": {
+      "base": {
+        "mae": 19.378,
+        "mae_ci95": [
+          19.378,
+          19.378
+        ],
+        "median": 19.378,
+        "p90": 19.378,
+        "p99": 19.378,
+        "pearson": 0.0,
+        "rmse": 19.378,
+        "sign_error": 0.0,
+        "spearman": 0.0
+      },
+      "candidate": {
+        "mae": 19.378,
+        "mae_ci95": [
+          19.378,
+          19.378
+        ],
+        "median": 19.378,
+        "p90": 19.378,
+        "p99": 19.378,
+        "pearson": 0.0,
+        "rmse": 19.378,
+        "sign_error": 0.0,
+        "spearman": 0.0
+      }
+    },
+    "king_safety": {
+      "base": {
+        "mae": 44.851,
+        "mae_ci95": [
+          34.931,
+          56.171
+        ],
+        "median": 34.974,
+        "p90": 96.494,
+        "p99": 133.614,
+        "pearson": 0.94754,
+        "rmse": 55.706,
+        "sign_error": 0.17949,
+        "spearman": 0.90402
+      },
+      "candidate": {
+        "mae": 42.757,
+        "mae_ci95": [
+          32.932,
+          53.839
+        ],
+        "median": 34.575,
+        "p90": 94.041,
+        "p99": 134.595,
+        "pearson": 0.95205,
+        "rmse": 53.931,
+        "sign_error": 0.15385,
+        "spearman": 0.90382
+      }
+    },
+    "middlegame": {
+      "base": {
+        "mae": 57.526,
+        "mae_ci95": [
+          43.423,
+          72.926
+        ],
+        "median": 50.977,
+        "p90": 114.849,
+        "p99": 172.73,
+        "pearson": 0.8171,
+        "rmse": 70.375,
+        "sign_error": 0.25,
+        "spearman": 0.7101
+      },
+      "candidate": {
+        "mae": 55.022,
+        "mae_ci95": [
+          40.943,
+          69.968
+        ],
+        "median": 42.431,
+        "p90": 112.887,
+        "p99": 172.239,
+        "pearson": 0.83916,
+        "rmse": 68.035,
+        "sign_error": 0.25,
+        "spearman": 0.75253
+      }
+    },
+    "minor_endgame": {
+      "base": {
+        "mae": 19.816,
+        "mae_ci95": [
+          6.722,
+          38.025
+        ],
+        "median": 10.313,
+        "p90": 29.038,
+        "p99": 70.48,
+        "pearson": 0.00947,
+        "rmse": 29.739,
+        "sign_error": 0.0,
+        "spearman": -0.12613
+      },
+      "candidate": {
+        "mae": 18.345,
+        "mae_ci95": [
+          4.651,
+          37.135
+        ],
+        "median": 8.872,
+        "p90": 29.038,
+        "p99": 70.48,
+        "pearson": -0.00599,
+        "rmse": 29.47,
+        "sign_error": 0.0,
+        "spearman": -0.18019
+      }
+    },
+    "opening": {
+      "base": {
+        "mae": 42.989,
+        "mae_ci95": [
+          30.847,
+          57.379
+        ],
+        "median": 34.721,
+        "p90": 64.788,
+        "p99": 129.236,
+        "pearson": 0.72809,
+        "rmse": 52.389,
+        "sign_error": 0.17647,
+        "spearman": 0.67892
+      },
+      "candidate": {
+        "mae": 43.71,
+        "mae_ci95": [
+          31.2,
+          58.36
+        ],
+        "median": 34.721,
+        "p90": 68.544,
+        "p99": 129.236,
+        "pearson": 0.7264,
+        "rmse": 53.069,
+        "sign_error": 0.17647,
+        "spearman": 0.65931
+      }
+    },
+    "rook_endgame": {
+      "base": {
+        "mae": 45.56,
+        "mae_ci95": [
+          30.847,
+          59.725
+        ],
+        "median": 40.632,
+        "p90": 74.047,
+        "p99": 77.964,
+        "pearson": 0.93307,
+        "rmse": 51.159,
+        "sign_error": 0.22222,
+        "spearman": 0.76473
+      },
+      "candidate": {
+        "mae": 45.887,
+        "mae_ci95": [
+          29.8,
+          61.337
+        ],
+        "median": 36.218,
+        "p90": 77.964,
+        "p99": 84.346,
+        "pearson": 0.92571,
+        "rmse": 52.076,
+        "sign_error": 0.22222,
+        "spearman": 0.76473
+      }
+    }
+  },
+  "positions": [
+    {
+      "base": -118,
+      "candidate": -117,
+      "candidate_abs_error": 172.2393774176802,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-84",
+      "stockfish": 105
+    },
+    {
+      "base": 423,
+      "candidate": 425,
+      "candidate_abs_error": 134.59469702969176,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-60",
+      "stockfish": 64
+    },
+    {
+      "base": -512,
+      "candidate": -516,
+      "candidate_abs_error": 130.93641746288574,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-72",
+      "stockfish": -132
+    },
+    {
+      "base": 43,
+      "candidate": 43,
+      "candidate_abs_error": 129.23562610921928,
+      "family": "opening",
+      "id": "pgn-kasparov_bagirov-1-12",
+      "stockfish": -118
+    },
+    {
+      "base": 50,
+      "candidate": 52,
+      "candidate_abs_error": 121.35015494239263,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-92",
+      "stockfish": 137
+    },
+    {
+      "base": -468,
+      "candidate": -461,
+      "candidate_abs_error": 119.03936499948594,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-40",
+      "stockfish": -355
+    },
+    {
+      "base": 136,
+      "candidate": 132,
+      "candidate_abs_error": 112.8873468210571,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-80",
+      "stockfish": -58
+    },
+    {
+      "base": -852,
+      "candidate": -849,
+      "candidate_abs_error": 111.73748144675471,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-48",
+      "stockfish": -538
+    },
+    {
+      "base": 96,
+      "candidate": 96,
+      "candidate_abs_error": 98.7695289724953,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-104",
+      "stockfish": 136
+    },
+    {
+      "base": 388,
+      "candidate": 371,
+      "candidate_abs_error": 97.10938333936318,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-56",
+      "stockfish": 75
+    },
+    {
+      "base": -89,
+      "candidate": -94,
+      "candidate_abs_error": 94.0414043393116,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-44",
+      "stockfish": -150
+    },
+    {
+      "base": -178,
+      "candidate": -171,
+      "candidate_abs_error": 84.72469110800876,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-72",
+      "stockfish": -9
+    },
+    {
+      "base": -147,
+      "candidate": -126,
+      "candidate_abs_error": 84.34640363393171,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-76",
+      "stockfish": -156
+    },
+    {
+      "base": 122,
+      "candidate": 116,
+      "candidate_abs_error": 79.03984646836716,
+      "family": "middlegame",
+      "id": "pgn-kasparov_bagirov-1-48",
+      "stockfish": -32
+    },
+    {
+      "base": 124,
+      "candidate": 124,
+      "candidate_abs_error": 77.96359664471213,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_lutikov-1-108",
+      "stockfish": -27
+    },
+    {
+      "base": -61,
+      "candidate": -61,
+      "candidate_abs_error": 71.77312618326539,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-100",
+      "stockfish": 32
+    },
+    {
+      "base": -15,
+      "candidate": -1,
+      "candidate_abs_error": 71.65500013932191,
+      "family": "opening",
+      "id": "pgn-kasparov_bagirov-1-16",
+      "stockfish": -82
+    },
+    {
+      "base": 46,
+      "candidate": 50,
+      "candidate_abs_error": 70.66890751352112,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-40",
+      "stockfish": -56
+    },
+    {
+      "base": -354,
+      "candidate": -354,
+      "candidate_abs_error": 70.48047639190003,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-108",
+      "stockfish": -113
+    },
+    {
+      "base": 42,
+      "candidate": 42,
+      "candidate_abs_error": 70.25484266282385,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-32",
+      "stockfish": 81
+    },
+    {
+      "base": 161,
+      "candidate": 161,
+      "candidate_abs_error": 69.11094121030763,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_lutikov-1-112",
+      "stockfish": 0
+    },
+    {
+      "base": 158,
+      "candidate": 168,
+      "candidate_abs_error": 68.54422261460948,
+      "family": "opening",
+      "id": "pgn-kasparov_bagirov-1-20",
+      "stockfish": 4
+    },
+    {
+      "base": 19,
+      "candidate": 19,
+      "candidate_abs_error": 67.46437558018435,
+      "family": "opening",
+      "id": "pgn-kasparov_nikolaevsky-1-12",
+      "stockfish": -68
+    },
+    {
+      "base": 332,
+      "candidate": 328,
+      "candidate_abs_error": 64.98077385849106,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-36",
+      "stockfish": 216
+    },
+    {
+      "base": 315,
+      "candidate": 299,
+      "candidate_abs_error": 63.79563175225843,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-52",
+      "stockfish": 73
+    },
+    {
+      "base": -23,
+      "candidate": -30,
+      "candidate_abs_error": 62.43140575007139,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-56",
+      "stockfish": -87
+    },
+    {
+      "base": 16,
+      "candidate": 16,
+      "candidate_abs_error": 60.992969264054985,
+      "family": "opening",
+      "id": "pgn-kasparov_nikolaevsky-1-16",
+      "stockfish": -63
+    },
+    {
+      "base": -483,
+      "candidate": -485,
+      "candidate_abs_error": 60.731885529548975,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-28",
+      "stockfish": -187
+    },
+    {
+      "base": -243,
+      "candidate": -239,
+      "candidate_abs_error": 59.92343239305896,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-24",
+      "stockfish": -187
+    },
+    {
+      "base": -76,
+      "candidate": -76,
+      "candidate_abs_error": 56.13015776391221,
+      "family": "opening",
+      "id": "pgn-kasparov_gulko-1-16",
+      "stockfish": 9
+    },
+    {
+      "base": -14,
+      "candidate": -20,
+      "candidate_abs_error": 55.663906529497396,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-96",
+      "stockfish": 36
+    },
+    {
+      "base": 55,
+      "candidate": 59,
+      "candidate_abs_error": 53.91687353809078,
+      "family": "opening",
+      "id": "pgn-kasparov_rostislav-1-16",
+      "stockfish": 73
+    },
+    {
+      "base": 352,
+      "candidate": 352,
+      "candidate_abs_error": 53.79047667054388,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-64",
+      "stockfish": 109
+    },
+    {
+      "base": -84,
+      "candidate": -88,
+      "candidate_abs_error": 53.015783028429674,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-84",
+      "stockfish": 0
+    },
+    {
+      "base": 171,
+      "candidate": 200,
+      "candidate_abs_error": 52.76077668001062,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-44",
+      "stockfish": 141
+    },
+    {
+      "base": 393,
+      "candidate": 393,
+      "candidate_abs_error": 50.89969632431186,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-68",
+      "stockfish": 132
+    },
+    {
+      "base": 45,
+      "candidate": 41,
+      "candidate_abs_error": 49.74531143486698,
+      "family": "fifty_move",
+      "id": "fifty-95",
+      "stockfish": 60
+    },
+    {
+      "base": 113,
+      "candidate": 113,
+      "candidate_abs_error": 48.431559847762216,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-80",
+      "stockfish": 94
+    },
+    {
+      "base": 245,
+      "candidate": 265,
+      "candidate_abs_error": 47.11969350279227,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-40",
+      "stockfish": 73
+    },
+    {
+      "base": 124,
+      "candidate": 155,
+      "candidate_abs_error": 46.83187142195109,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-32",
+      "stockfish": 113
+    },
+    {
+      "base": 139,
+      "candidate": 139,
+      "candidate_abs_error": 45.32062822535895,
+      "family": "opening",
+      "id": "pgn-kasparov_dunne-1-20",
+      "stockfish": 13
+    },
+    {
+      "base": 273,
+      "candidate": 291,
+      "candidate_abs_error": 45.12811842408655,
+      "family": "middlegame",
+      "id": "pgn-kasparov_nikolaevsky-1-56",
+      "stockfish": 178
+    },
+    {
+      "base": -218,
+      "candidate": -227,
+      "candidate_abs_error": 44.80905765757642,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-80",
+      "stockfish": -166
+    },
+    {
+      "base": -1138,
+      "candidate": -1151,
+      "candidate_abs_error": 40.61591228973202,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-52",
+      "stockfish": -615
+    },
+    {
+      "base": 271,
+      "candidate": 279,
+      "candidate_abs_error": 40.01374368860402,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-40",
+      "stockfish": 167
+    },
+    {
+      "base": -155,
+      "candidate": -275,
+      "candidate_abs_error": 39.73344340049343,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-104",
+      "stockfish": -105
+    },
+    {
+      "base": -707,
+      "candidate": -670,
+      "candidate_abs_error": 37.46860835752648,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-76",
+      "stockfish": -301
+    },
+    {
+      "base": -42,
+      "candidate": -44,
+      "candidate_abs_error": 36.56484294146768,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-76",
+      "stockfish": -68
+    },
+    {
+      "base": 278,
+      "candidate": 309,
+      "candidate_abs_error": 36.29968052731036,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-28",
+      "stockfish": 178
+    },
+    {
+      "base": -156,
+      "candidate": -165,
+      "candidate_abs_error": 36.218121524249966,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-72",
+      "stockfish": -127
+    },
+    {
+      "base": -285,
+      "candidate": -285,
+      "candidate_abs_error": 35.63813112092464,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-88",
+      "stockfish": -114
+    },
+    {
+      "base": 18,
+      "candidate": 18,
+      "candidate_abs_error": 34.97390680814123,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-32",
+      "stockfish": -36
+    },
+    {
+      "base": -168,
+      "candidate": -168,
+      "candidate_abs_error": 34.746715208120605,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-68",
+      "stockfish": -127
+    },
+    {
+      "base": -14,
+      "candidate": -14,
+      "candidate_abs_error": 34.72109389723867,
+      "family": "opening",
+      "id": "pgn-kasparov_gulko-1-20",
+      "stockfish": 18
+    },
+    {
+      "base": -146,
+      "candidate": -150,
+      "candidate_abs_error": 34.5751531048968,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-24",
+      "stockfish": -118
+    },
+    {
+      "base": -122,
+      "candidate": -115,
+      "candidate_abs_error": 34.25843987359396,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-68",
+      "stockfish": -32
+    },
+    {
+      "base": 333,
+      "candidate": 353,
+      "candidate_abs_error": 33.28094544258698,
+      "family": "middlegame",
+      "id": "pgn-kasparov_nikolaevsky-1-52",
+      "stockfish": 130
+    },
+    {
+      "base": -176,
+      "candidate": -186,
+      "candidate_abs_error": 32.91827731134441,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-60",
+      "stockfish": -134
+    },
+    {
+      "base": 2,
+      "candidate": 2,
+      "candidate_abs_error": 32.12640645545128,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-52",
+      "stockfish": -41
+    },
+    {
+      "base": 73,
+      "candidate": 63,
+      "candidate_abs_error": 30.0450015500817,
+      "family": "middlegame",
+      "id": "pgn-kasparov_bagirov-1-52",
+      "stockfish": -9
+    },
+    {
+      "base": -59,
+      "candidate": -172,
+      "candidate_abs_error": 29.784840119948115,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-100",
+      "stockfish": -124
+    },
+    {
+      "base": 62,
+      "candidate": 62,
+      "candidate_abs_error": 29.554532778038585,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-44",
+      "stockfish": -9
+    },
+    {
+      "base": -243,
+      "candidate": -243,
+      "candidate_abs_error": 29.03844269511353,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-112",
+      "stockfish": -100
+    },
+    {
+      "base": -368,
+      "candidate": -363,
+      "candidate_abs_error": 28.89469534028811,
+      "family": "opening",
+      "id": "pgn-kasparov_lutikov-1-12",
+      "stockfish": -159
+    },
+    {
+      "base": -251,
+      "candidate": -238,
+      "candidate_abs_error": 28.41390116510209,
+      "family": "rook_endgame",
+      "id": "pgn-kasparov_dunne-1-64",
+      "stockfish": -155
+    },
+    {
+      "base": 157,
+      "candidate": 165,
+      "candidate_abs_error": 27.92718370151988,
+      "family": "opening",
+      "id": "pgn-kasparov_dunne-1-16",
+      "stockfish": 99
+    },
+    {
+      "base": 204,
+      "candidate": 204,
+      "candidate_abs_error": 27.79890159183813,
+      "family": "opening",
+      "id": "pgn-kasparov_lutikov-1-16",
+      "stockfish": 118
+    },
+    {
+      "base": -63,
+      "candidate": -63,
+      "candidate_abs_error": 27.754063727351628,
+      "family": "opening",
+      "id": "pgn-kasparov_gulko-1-12",
+      "stockfish": -13
+    },
+    {
+      "base": 48,
+      "candidate": 48,
+      "candidate_abs_error": 27.312030030565126,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-24",
+      "stockfish": 41
+    },
+    {
+      "base": 47,
+      "candidate": 47,
+      "candidate_abs_error": 26.19750119739176,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-36",
+      "stockfish": -13
+    },
+    {
+      "base": 70,
+      "candidate": 61,
+      "candidate_abs_error": 24.064064005995462,
+      "family": "middlegame",
+      "id": "pgn-kasparov_bagirov-1-56",
+      "stockfish": -4
+    },
+    {
+      "base": -309,
+      "candidate": -297,
+      "candidate_abs_error": 23.523756385442084,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-36",
+      "stockfish": -132
+    },
+    {
+      "base": -58,
+      "candidate": -58,
+      "candidate_abs_error": 20.301719867136022,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-64",
+      "stockfish": -18
+    },
+    {
+      "base": 99,
+      "candidate": 108,
+      "candidate_abs_error": 20.116096292022178,
+      "family": "opening",
+      "id": "pgn-kasparov_lutikov-1-20",
+      "stockfish": 23
+    },
+    {
+      "base": 156,
+      "candidate": 183,
+      "candidate_abs_error": 20.098745804743686,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-24",
+      "stockfish": 100
+    },
+    {
+      "base": -27,
+      "candidate": -38,
+      "candidate_abs_error": 19.492344426273583,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-60",
+      "stockfish": -9
+    },
+    {
+      "base": -85,
+      "candidate": -85,
+      "candidate_abs_error": 19.455623287699694,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-40",
+      "stockfish": -71
+    },
+    {
+      "base": 25,
+      "candidate": 25,
+      "candidate_abs_error": 19.40718821244308,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-36",
+      "stockfish": -17
+    },
+    {
+      "base": 133,
+      "candidate": 133,
+      "candidate_abs_error": 19.377815593100216,
+      "family": "imbalance",
+      "id": "material-02",
+      "stockfish": 36
+    },
+    {
+      "base": 94,
+      "candidate": 85,
+      "candidate_abs_error": 18.835314535030378,
+      "family": "middlegame",
+      "id": "pgn-kasparov_bagirov-1-60",
+      "stockfish": 13
+    },
+    {
+      "base": 12,
+      "candidate": 23,
+      "candidate_abs_error": 16.573749331643164,
+      "family": "king_safety",
+      "id": "pgn-kasparov_nikolaevsky-1-28",
+      "stockfish": 18
+    },
+    {
+      "base": -57,
+      "candidate": -57,
+      "candidate_abs_error": 15.8112510950929,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-32",
+      "stockfish": -22
+    },
+    {
+      "base": -79,
+      "candidate": -75,
+      "candidate_abs_error": 14.639688991869086,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-48",
+      "stockfish": -32
+    },
+    {
+      "base": -16,
+      "candidate": 0,
+      "candidate_abs_error": 13.854531088634962,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-24",
+      "stockfish": 4
+    },
+    {
+      "base": 1,
+      "candidate": 1,
+      "candidate_abs_error": 13.364062316591841,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-28",
+      "stockfish": 4
+    },
+    {
+      "base": -202,
+      "candidate": -202,
+      "candidate_abs_error": 13.070776958654463,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-88",
+      "stockfish": -122
+    },
+    {
+      "base": 49,
+      "candidate": 63,
+      "candidate_abs_error": 12.0450015500817,
+      "family": "king_safety",
+      "id": "pgn-kasparov_bagirov-1-28",
+      "stockfish": 9
+    },
+    {
+      "base": -176,
+      "candidate": -186,
+      "candidate_abs_error": 11.081722688655589,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-108",
+      "stockfish": -90
+    },
+    {
+      "base": 160,
+      "candidate": 173,
+      "candidate_abs_error": 10.996566474825087,
+      "family": "opening",
+      "id": "pgn-kasparov_dunne-1-12",
+      "stockfish": 64
+    },
+    {
+      "base": 181,
+      "candidate": 185,
+      "candidate_abs_error": 9.117808260657455,
+      "family": "middlegame",
+      "id": "pgn-kasparov_lutikov-1-88",
+      "stockfish": 90
+    },
+    {
+      "base": -208,
+      "candidate": -208,
+      "candidate_abs_error": 8.872035673604259,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-104",
+      "stockfish": -103
+    },
+    {
+      "base": 94,
+      "candidate": 98,
+      "candidate_abs_error": 7.211408571590958,
+      "family": "opening",
+      "id": "pgn-kasparov_rostislav-1-12",
+      "stockfish": 31
+    },
+    {
+      "base": 51,
+      "candidate": 51,
+      "candidate_abs_error": 6.840623714435756,
+      "family": "king_safety",
+      "id": "pgn-kasparov_gulko-1-32",
+      "stockfish": 22
+    },
+    {
+      "base": -106,
+      "candidate": -106,
+      "candidate_abs_error": 5.84422092520586,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-44",
+      "stockfish": -56
+    },
+    {
+      "base": -99,
+      "candidate": -99,
+      "candidate_abs_error": 4.589060479095991,
+      "family": "king_safety",
+      "id": "pgn-kasparov_dunne-1-36",
+      "stockfish": -63
+    },
+    {
+      "base": 11,
+      "candidate": 11,
+      "candidate_abs_error": 4.4593745961606235,
+      "family": "rook_endgame",
+      "id": "rook-01",
+      "stockfish": 0
+    },
+    {
+      "base": -18,
+      "candidate": -26,
+      "candidate_abs_error": 4.393280838243875,
+      "family": "opening",
+      "id": "pgn-kasparov_nikolaevsky-1-20",
+      "stockfish": -27
+    },
+    {
+      "base": 170,
+      "candidate": 194,
+      "candidate_abs_error": 4.296410687730642,
+      "family": "king_safety",
+      "id": "pgn-kasparov_lutikov-1-48",
+      "stockfish": 81
+    },
+    {
+      "base": -221,
+      "candidate": -221,
+      "candidate_abs_error": 3.7518702898351535,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-96",
+      "stockfish": -122
+    },
+    {
+      "base": -165,
+      "candidate": -165,
+      "candidate_abs_error": 1.7818784757500339,
+      "family": "middlegame",
+      "id": "pgn-kasparov_gulko-1-92",
+      "stockfish": -89
+    },
+    {
+      "base": -214,
+      "candidate": -224,
+      "candidate_abs_error": 1.7195360262942074,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-84",
+      "stockfish": -118
+    },
+    {
+      "base": -175,
+      "candidate": -193,
+      "candidate_abs_error": 1.4849959070425598,
+      "family": "minor_endgame",
+      "id": "pgn-kasparov_dunne-1-92",
+      "stockfish": -106
+    }
+  ],
+  "test": {
+    "base": {
+      "mae": 46.144,
+      "mae_ci95": [
+        39.388,
+        52.841
+      ],
+      "median": 37.428,
+      "p90": 96.494,
+      "p99": 133.614,
+      "pearson": 0.89454,
+      "rmse": 57.629,
+      "sign_error": 0.18627,
+      "spearman": 0.84579
+    },
+    "candidate": {
+      "mae": 44.723,
+      "mae_ci95": [
+        38.191,
+        51.339
+      ],
+      "median": 35.306,
+      "p90": 94.041,
+      "p99": 134.595,
+      "pearson": 0.89959,
+      "rmse": 56.382,
+      "sign_error": 0.17647,
+      "spearman": 0.85156
+    }
+  },
+  "train": {
+    "base": {
+      "mae": 38.925,
+      "mae_ci95": [
+        34.416,
+        44.421
+      ],
+      "median": 27.74,
+      "p90": 87.945,
+      "p99": 185.069,
+      "pearson": 0.78416,
+      "rmse": 56.303,
+      "sign_error": 0.24188,
+      "spearman": 0.70004
+    },
+    "candidate": {
+      "mae": 38.5,
+      "mae_ci95": [
+        33.954,
+        43.874
+      ],
+      "median": 28.033,
+      "p90": 88.475,
+      "p99": 181.145,
+      "pearson": 0.7874,
+      "rmse": 55.931,
+      "sign_error": 0.23466,
+      "spearman": 0.7104
+    }
+  },
+  "validation": {
+    "candidate_deterministic": true,
+    "group_split": "source-or-id, md5 modulo 5",
+    "tested_on": 102,
+    "validation_positions": 121
+  },
+  "validation_set": {
+    "base": {
+      "mae": 55.281,
+      "mae_ci95": [
+        44.866,
+        67.158
+      ],
+      "median": 40.674,
+      "p90": 107.782,
+      "p99": 305.317,
+      "pearson": 0.84195,
+      "rmse": 83.141,
+      "sign_error": 0.20661,
+      "spearman": 0.7926
+    },
+    "candidate": {
+      "mae": 53.9,
+      "mae_ci95": [
+        43.76,
+        65.398
+      ],
+      "median": 38.311,
+      "p90": 106.088,
+      "p99": 286.679,
+      "pearson": 0.84855,
+      "rmse": 81.649,
+      "sign_error": 0.21488,
+      "spearman": 0.80453
+    }
+  }
+}

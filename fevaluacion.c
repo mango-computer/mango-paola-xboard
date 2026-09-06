@@ -42,6 +42,7 @@ int evaluacionTablero(int alfa, int beta)
 //*
 	if (verificarEvalTablaHash(&puntaje)) 
 	{	
+		puntaje = ajustarReglaCincuenta(puntaje);
 		puntaje = (juego.colorTurno)?-puntaje:puntaje;
 		return puntaje;
 	}
@@ -54,10 +55,12 @@ int evaluacionTablero(int alfa, int beta)
 //*
 	int EvalFlojo =  (juego.colorTurno ? -juego.material_total : juego.material_total);
 //*
+#ifndef DESHABILITAR_LAZY_EVAL
 	if (((EvalFlojo + LIMITE_MOV_NULL) < alfa) || (beta < (EvalFlojo - LIMITE_MOV_NULL)))
 	{
-		return EvalFlojo;
+		return ajustarReglaCincuenta(EvalFlojo);
 	} 
+#endif
 //*/
 //****************************************************************************************************************
 
@@ -90,9 +93,6 @@ int evaluacionTablero(int alfa, int beta)
 	entornoRey[BLANCO] 		= mascaraRey[escaqueRey[BLANCO]];
 	entornoRey[NEGRO] 		= mascaraRey[escaqueRey[NEGRO]];
 
-	tropismo[BLANCO]		= 0;
-	tropismo[NEGRO]			= 0;
-
 	mapaTodosPeones			= (juego.tablero[BLANCO][PEON] | juego.tablero[NEGRO][PEON]);
 
 	int puntajeNegro		= 0;
@@ -105,6 +105,13 @@ int evaluacionTablero(int alfa, int beta)
 
 	memset(mapaPosAtacadasXPza,	0, sizeof(uint64)*2*6);
 	memset(mapaPosAtacadas,		0, sizeof(uint64)*2);
+	memset(mapaPosAtacadasPseudo,	0, sizeof(uint64)*2);
+	memset(mapaPosAtacadasDoble,	0, sizeof(uint64)*2);
+	memset(mapaClavadas,		0, sizeof(uint64)*2);
+	memset(mapaClavadasRey,		0, sizeof(uint64)*2);
+	memset(mapaRayosClavada,		0, sizeof(uint64)*64);
+	memset(atacantesRey,		0, sizeof(int)*2);
+	memset(pesoAtaqueRey,		0, sizeof(int)*2);
 
 	juego.desOcupados		= ~juego.ocupados;
 
@@ -150,6 +157,8 @@ int evaluacionTablero(int alfa, int beta)
 	int mn				= 0;
 	int my				= 0;
 	int puntajeTemporal		= 0;
+	int puntajeMAntesPeones[2]	= {0,0};
+	int puntajeFAntesPeones[2]	= {0,0};
 
 //****************************************************************************************************************
 //****************************************************************************************************************
@@ -157,6 +166,7 @@ int evaluacionTablero(int alfa, int beta)
 //****************************************************************************************************************
 //****************************************************************************************************************
 
+	calcularMapasClavadas();
 	ini_material();
 
 	// Determinar si un lado es peligroso
@@ -217,22 +227,32 @@ int evaluacionTablero(int alfa, int beta)
 			if ((puntajeTemporal < 0) && !(puedeGanar & 2))
 				puntajeTemporal = puntajeTemporal/4;
 
+			puntajeTemporal = ajustarReglaCincuenta(puntajeTemporal);
 			return (juego.colorTurno) ? -puntajeTemporal:puntajeTemporal;
 		}
 	} 
 
 	//Peones
-	evalPeones(BLANCO);
-	evalPeones(NEGRO);
+	registrarAtaquesPeonesEval();
+	puntajeMAntesPeones[BLANCO] = puntaje_m[BLANCO];
+	puntajeMAntesPeones[NEGRO] = puntaje_m[NEGRO];
+	puntajeFAntesPeones[BLANCO] = puntaje_f[BLANCO];
+	puntajeFAntesPeones[NEGRO] = puntaje_f[NEGRO];
+	if (!cargarHashPeones())
+	{
+		evalPeones(BLANCO);
+		evalPeones(NEGRO);
+		guardarHashPeones(puntajeMAntesPeones, puntajeFAntesPeones);
+	}
+#ifdef VERVALORES
+	printf("******Peones*******\n");
+	printf("m[B]=%d f[B]=%d m[N]=%d f[N]=%d\n",
+	       puntaje_m[BLANCO], puntaje_f[BLANCO],
+	       puntaje_m[NEGRO], puntaje_f[NEGRO]);
+#endif
 
 	if (peonesPasados[NEGRO] || peonesPasados[BLANCO])
 	{
-		if (peonesPasados[BLANCO])
-			evalPeonesPasados(BLANCO);
-
-		if (peonesPasados[NEGRO])
-			evalPeonesPasados(NEGRO);
-
 		if (((fase[BLANCO]==0) &&  peonesPasados[NEGRO]) || ((fase[NEGRO]==0) &&  peonesPasados[BLANCO]))
 		{
 			evalCarreraPeonesPasados();
@@ -251,7 +271,15 @@ int evaluacionTablero(int alfa, int beta)
 
 	int corteMargen = ((esPeligroso[BLANCO] || esPeligroso[NEGRO]) ? 114+FASE:102)+FASE;
 
-	BOOLEANO esEvaluarTodo = ((EvalFlojo + corteMargen) > alfa && (EvalFlojo - corteMargen) < beta);
+	BOOLEANO esEvaluarTodo;
+#ifdef DESHABILITAR_LAZY_EVAL
+	esEvaluarTodo = VERDADERO;
+#else
+	esEvaluarTodo = ((EvalFlojo + corteMargen) > alfa && (EvalFlojo - corteMargen) < beta);
+#endif
+
+	if (!esEvaluarTodo)
+		return ajustarReglaCincuenta(EvalFlojo);
 
 	if (esEvaluarTodo)
 	{
@@ -271,6 +299,17 @@ int evaluacionTablero(int alfa, int beta)
 		evalDama(NEGRO);
 		evalDama(BLANCO);
 	}
+
+	if (peonesPasados[BLANCO])
+		evalPeonesPasados(BLANCO);
+	if (peonesPasados[NEGRO])
+		evalPeonesPasados(NEGRO);
+#ifdef VERVALORES
+	printf("******Pasados*******\n");
+	printf("m[B]=%d f[B]=%d m[N]=%d f[N]=%d\n",
+	       puntaje_m[BLANCO], puntaje_f[BLANCO],
+	       puntaje_m[NEGRO], puntaje_f[NEGRO]);
+#endif
 
 	evalFilaRey(NEGRO);
 	evalFilaRey(BLANCO);
@@ -304,94 +343,7 @@ int evaluacionTablero(int alfa, int beta)
 	{
 		int contCB 		= 0;
 		int contCN 		= 0;
-		uint64 clavadas[2]	= {0,0};
-		uint64 tempDestinos	= 0;
-		int escaqueOrigen	= 0;
-
-
-		// CLAVADAS NEGRAS*****
-		//obtener clavadas con respecto al REY
-		clavadas[NEGRO] = 
-			obtPiezasClavadasPor(escaqueRey[NEGRO], BLANCO,
-			(juego.tablero[NEGRO][DAMA]  | juego.tablero[NEGRO][TORRE] | 
-			 juego.tablero[NEGRO][ALFIL] | juego.tablero[NEGRO][CABALLO]), 
-			(juego.tablero[BLANCO][DAMA]  | juego.tablero[BLANCO][ALFIL]),
-			(juego.tablero[BLANCO][DAMA]  | juego.tablero[BLANCO][TORRE]));
-
-
-		//obtener clavadas con respecto a la  DAMA
-		tempDestinos   = juego.tablero[NEGRO][DAMA];
-		// analizar todas las damas negras presentes en el tablero
-		while (tempDestinos)
-		{		
-			escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-			clavadas[NEGRO] |= 
-				obtPiezasClavadasPor(escaqueOrigen, BLANCO,
-				(juego.tablero[NEGRO][TORRE] |juego.tablero[NEGRO][ALFIL] | juego.tablero[NEGRO][CABALLO]),
-				 juego.tablero[BLANCO][ALFIL], juego.tablero[BLANCO][TORRE]);
-
-
-			tempDestinos ^= BITSET[escaqueOrigen];
-		}
-
-		//obtener clavadas con respecto a la TORRE
-		tempDestinos   = juego.tablero[NEGRO][TORRE];
-		// analizar todas las torres negras presentes en el tablero
-		while (tempDestinos)
-		{		
-			escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-			clavadas[NEGRO] |= 
-				obtPiezasClavadasPor(escaqueOrigen, BLANCO,
-				(juego.tablero[NEGRO][ALFIL] | juego.tablero[NEGRO][CABALLO]),
-				 juego.tablero[BLANCO][ALFIL], 0);
-
-			tempDestinos ^= BITSET[escaqueOrigen];
-		}
-
-
-	// **********************************CLAVADAS BLANCAS**************************************************************
-
-		//obtener clavadas con respecto al REY
-		clavadas[BLANCO] = 
-			obtPiezasClavadasPor(escaqueRey[BLANCO], NEGRO,
-			(juego.tablero[BLANCO][DAMA]  | juego.tablero[BLANCO][TORRE] | 
-			 juego.tablero[BLANCO][ALFIL] | juego.tablero[BLANCO][CABALLO]), 
-			(juego.tablero[NEGRO][DAMA]  | juego.tablero[NEGRO][ALFIL]),
-			(juego.tablero[NEGRO][DAMA]  | juego.tablero[NEGRO][TORRE]));
-
-
-		//obtener clavadas con respecto a la  DAMA
-		tempDestinos   = juego.tablero[BLANCO][DAMA];
-		// analizar todas las damas negras presentes en el tablero
-		while (tempDestinos)
-		{		
-			escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-			clavadas[BLANCO] |= 
-				obtPiezasClavadasPor(escaqueOrigen, NEGRO,
-				(juego.tablero[BLANCO][TORRE] |juego.tablero[BLANCO][ALFIL] | juego.tablero[BLANCO][CABALLO]),
-				 juego.tablero[NEGRO][ALFIL], juego.tablero[NEGRO][TORRE]);
-
-			tempDestinos ^= BITSET[escaqueOrigen];
-		}
-
-		//obtener clavadas con respecto a la TORRE
-		tempDestinos   = juego.tablero[BLANCO][TORRE];
-		// analizar todas las torres negras presentes en el tablero
-		while (tempDestinos)
-		{		
-			escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-			clavadas[BLANCO] |= 
-				obtPiezasClavadasPor(escaqueOrigen, NEGRO,
-				(juego.tablero[BLANCO][ALFIL] | juego.tablero[BLANCO][CABALLO]),
-				 juego.tablero[NEGRO][ALFIL], 0);
-
-			tempDestinos ^= BITSET[escaqueOrigen];
-		}
-
+		uint64 clavadas[2]	= {mapaClavadas[BLANCO],mapaClavadas[NEGRO]};
 		// Análisis de las piezas clavadas
 		//Blanco
 		puntajeBlanco -= (cuentaBit(juego.tablero[BLANCO][CABALLO] & clavadas[BLANCO]) * DESCUENTO_CABALLO_CLAVADO);
@@ -408,106 +360,10 @@ int evaluacionTablero(int alfa, int beta)
 
 	// ****************************************** PIEZAS COLGADAS (piezas atacadas y no defendidas) *****************************
 
-			//Piezas negras colgadas
-			tempDestinos = mapaPosAtacadas[BLANCO] & juego.tablero[NEGRO][CABALLO];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[NEGRO] & BITSET[escaqueOrigen]))
-				{
-					contCN++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[BLANCO] & juego.tablero[NEGRO][ALFIL];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[NEGRO] & BITSET[escaqueOrigen]))
-				{
-					contCN++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[BLANCO] & juego.tablero[NEGRO][TORRE];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[NEGRO] & BITSET[escaqueOrigen]))
-				{
-					contCN++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[BLANCO] & juego.tablero[NEGRO][DAMA];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[NEGRO] & BITSET[escaqueOrigen]))
-				{
-					contCN++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			//Piezas blancas colgadas
-			tempDestinos = mapaPosAtacadas[NEGRO] & juego.tablero[BLANCO][CABALLO];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[BLANCO] & BITSET[escaqueOrigen]))
-				{
-					contCB++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[NEGRO] & juego.tablero[BLANCO][ALFIL];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[BLANCO] & BITSET[escaqueOrigen]))
-				{
-					contCB++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[NEGRO] & juego.tablero[BLANCO][TORRE];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[BLANCO] & BITSET[escaqueOrigen]))
-				{
-					contCB++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			tempDestinos = mapaPosAtacadas[NEGRO] & juego.tablero[BLANCO][DAMA];
-			while (tempDestinos)
-			{		
-				escaqueOrigen = bitScanForwardBruijn(tempDestinos);
-
-				if (!(mapaPosAtacadas[BLANCO] & BITSET[escaqueOrigen]))
-				{
-					contCB++;
-				}
-				tempDestinos ^= BITSET[escaqueOrigen];
-			}
-
-			puntajeNegro	+= ((contCB - contCN) * BONO_PIEZAS_COLGADAS);
-			puntajeBlanco	+= ((contCN - contCB) * BONO_PIEZAS_COLGADAS);
+			contCN = puntajeAmenazas(BLANCO);
+			contCB = puntajeAmenazas(NEGRO);
+			puntajeNegro += contCB;
+			puntajeBlanco += contCN;
 	}
 //*/
 
@@ -533,9 +389,10 @@ int evaluacionTablero(int alfa, int beta)
 	printf("puntajeTemporal=%d\n",puntajeTemporal);
 #endif
 
-	puntaje = (juego.colorTurno)?-puntajeTemporal:puntajeTemporal;
-
 	agregarEvalTablaHash(puntajeTemporal);
+
+	puntajeTemporal = ajustarReglaCincuenta(puntajeTemporal);
+	puntaje = (juego.colorTurno)?-puntajeTemporal:puntajeTemporal;
 
 	return 	puntaje; 		
 	
@@ -621,6 +478,7 @@ void evalPeonesPasados(COLOR colorEval)
 	int mgsc		= 0;
 	int egsc		= 0;
 	uint64 mapa		= 0;	
+	uint64 mapaCamino	= 0;
 	int filaPeon		= 0;
 	unsigned char mapaPP	= 0;
 
@@ -664,6 +522,7 @@ void evalPeonesPasados(COLOR colorEval)
 
 		sqAdelante = sq + DIR[colorEval];
 		mapa = ((colorEval)?menos8dir[sq]:mas8dir[sq]);
+		mapaCamino = mapa & FILEMASK[sq];
 
 		if (mapa & juego.ocupados)
 		{
@@ -685,6 +544,17 @@ void evalPeonesPasados(COLOR colorEval)
 			egsc +=(CARRERA_PEONES[colorEval][juego.colorTurno][sq] & juego.tablero[xcolorEval][REY])?25:40;
 
 		}
+
+		/* Camino libre y no atacado: término dinámico, calculado tras las piezas. */
+		if (!(mapaCamino & juego.ocupados))
+		{
+			int seguras = cuentaBit(mapaCamino & ~mapaPosAtacadas[xcolorEval]);
+			mgsc += seguras * 3;
+			egsc += seguras * 8;
+		}
+		if ((BITSET[sqAdelante] & (colorEval ? juego.blancos : juego.negros)) &&
+		    (BITSET[sqAdelante] & mapaPosAtacadas[colorEval]))
+			egsc += 15;
 		
 		puntaje_m[colorEval] += ((BONO_PEON_CC[rank_sq] * mgsc) / 100);
 		puntaje_f[colorEval] += ((BONO_PEON_CC[rank_sq] * egsc) / 100);
@@ -853,7 +723,7 @@ void evalCarreraPeonesPasados()
 		puntaje_f[BLANCO] += (PEON_PUEDE_CORONAR + ((5-damer[BLANCO])*10));
 		return;
 
-	} else if ((damer[NEGRO] < damer[BLANCO]) && f[NEGRO] && f[BLANCO]){
+	} else if ((damer[NEGRO] < damer[BLANCO]) && f[NEGRO] && !f[BLANCO]){
 
 		puntaje_f[NEGRO] += (PEON_PUEDE_CORONAR + ((5-damer[NEGRO])*10));
 		return;
@@ -861,6 +731,167 @@ void evalCarreraPeonesPasados()
 
 }
 
+
+void registrarAtaquesEval(COLOR colorEval, PIEZA tipo, uint64 ataques, int peso)
+{
+	COLOR contrario = !colorEval;
+
+	mapaPosAtacadasDoble[colorEval] |= mapaPosAtacadas[colorEval] & ataques;
+	mapaPosAtacadas[colorEval] |= ataques;
+	mapaPosAtacadasXPza[colorEval][tipo] |= ataques;
+	if (ataques & entornoRey[contrario])
+	{
+		atacantesRey[colorEval]++;
+		pesoAtaqueRey[colorEval] += peso;
+	}
+}
+
+void registrarAtaquesPeonesEval(void)
+{
+	COLOR color;
+	uint64 peones;
+	uint64 peonesLibres;
+	uint64 peonesClavados;
+	uint64 ataqueA;
+	uint64 ataqueH;
+	uint64 ataques;
+	uint64 efectivos;
+	uint64 candidatosRey;
+	int origen;
+	int nAtacantes;
+
+	for (color = BLANCO; color <= NEGRO; color++)
+	{
+		peones = juego.tablero[color][PEON];
+		peonesLibres = peones & ~mapaClavadasRey[color];
+		peonesClavados = peones & mapaClavadasRey[color];
+		if (color == BLANCO)
+		{
+			ataqueA = (peones & ~FILEBIT[1]) << 7;
+			ataqueH = (peones & ~FILEBIT[8]) << 9;
+			efectivos = ((peonesLibres & ~FILEBIT[1]) << 7) |
+				    ((peonesLibres & ~FILEBIT[8]) << 9);
+			candidatosRey =
+				(((entornoRey[NEGRO] >> 7) & ~FILEBIT[1]) |
+				 ((entornoRey[NEGRO] >> 9) & ~FILEBIT[8])) & peonesLibres;
+		} else {
+			ataqueA = (peones & ~FILEBIT[1]) >> 9;
+			ataqueH = (peones & ~FILEBIT[8]) >> 7;
+			efectivos = ((peonesLibres & ~FILEBIT[1]) >> 9) |
+				    ((peonesLibres & ~FILEBIT[8]) >> 7);
+			candidatosRey =
+				(((entornoRey[BLANCO] << 9) & ~FILEBIT[1]) |
+				 ((entornoRey[BLANCO] << 7) & ~FILEBIT[8])) & peonesLibres;
+		}
+		ataques = ataqueA | ataqueH;
+		mapaPosAtacadasPseudo[color] |= ataques;
+		nAtacantes = cuentaBit(candidatosRey);
+		while (peonesClavados)
+		{
+			origen = bitScanForwardBruijn(peonesClavados);
+			ataques = mascaraCapturarPeon[origen][color] & mapaRayosClavada[origen];
+			mapaPosAtacadasDoble[color] |= efectivos & ataques;
+			efectivos |= ataques;
+			if (ataques & entornoRey[!color])
+				nAtacantes++;
+			peonesClavados ^= BITSET[origen];
+		}
+		mapaPosAtacadasDoble[color] |=
+			(color == BLANCO) ?
+			(((peonesLibres & ~FILEBIT[1]) << 7) &
+			 ((peonesLibres & ~FILEBIT[8]) << 9)) :
+			(((peonesLibres & ~FILEBIT[1]) >> 9) &
+			 ((peonesLibres & ~FILEBIT[8]) >> 7));
+		mapaPosAtacadas[color] |= efectivos;
+		mapaPosAtacadasXPza[color][PEON] |= efectivos;
+		atacantesRey[color] += nAtacantes;
+		pesoAtaqueRey[color] += nAtacantes;
+	}
+}
+
+void calcularMapasClavadas(void)
+{
+	COLOR color;
+	COLOR contrario;
+	uint64 clavadores;
+	uint64 entre;
+	uint64 propias;
+	int clavador;
+	int clavada;
+
+	for (color = BLANCO; color <= NEGRO; color++)
+	{
+		contrario = !color;
+		propias = color == BLANCO ? juego.blancos : juego.negros;
+		propias ^= juego.tablero[color][REY];
+		clavadores =
+			(MATRIZ_MOV_ALFIL[escaqueRey[color]] &
+			 (juego.tablero[contrario][DAMA] | juego.tablero[contrario][ALFIL])) |
+			(MATRIZ_MOV_TORRE[escaqueRey[color]] &
+			 (juego.tablero[contrario][DAMA] | juego.tablero[contrario][TORRE]));
+		while (clavadores)
+		{
+			clavador = bitScanForwardBruijn(clavadores);
+			entre = ESCAQUES_INTERMEDIOS[escaqueRey[color]][clavador] & juego.ocupados;
+			if (cuentaBit(entre) == 1 && (entre & propias))
+			{
+				clavada = bitScanForwardBruijn(entre);
+				mapaClavadasRey[color] |= BITSET[clavada];
+				mapaRayosClavada[clavada] =
+					ESCAQUES_INTERMEDIOS[escaqueRey[color]][clavador] |
+					BITSET[clavador];
+			}
+			clavadores ^= BITSET[clavador];
+		}
+		mapaClavadas[color] = mapaClavadasRey[color];
+	}
+}
+
+uint64 ataquesEfectivosEval(COLOR colorEval, int origen, uint64 ataques)
+{
+	if (BITSET[origen] & mapaClavadasRey[colorEval])
+		return ataques & mapaRayosClavada[origen];
+	return ataques;
+}
+
+uint64 areaMovilidadUtil(COLOR colorEval, int origen, uint64 ataques)
+{
+	COLOR contrario = !colorEval;
+	uint64 excluidas = mapaPosAtacadasXPza[contrario][PEON] |
+			   juego.tablero[colorEval][REY] |
+			   juego.tablero[colorEval][DAMA];
+	uint64 bloqueados;
+
+	if (colorEval == BLANCO)
+		bloqueados = juego.tablero[BLANCO][PEON] & (juego.ocupados >> 8);
+	else
+		bloqueados = juego.tablero[NEGRO][PEON] & (juego.ocupados << 8);
+	excluidas |= bloqueados;
+
+	ataques &= ~excluidas;
+	if (BITSET[origen] & mapaClavadasRey[colorEval])
+		ataques &= mapaRayosClavada[origen];
+	return ataques;
+}
+
+int puntajeAmenazas(COLOR colorAtacante)
+{
+	COLOR victima = !colorAtacante;
+	uint64 seguras = mapaPosAtacadas[colorAtacante] &
+			 ~mapaPosAtacadas[victima];
+	int puntaje = 0;
+
+	puntaje += cuentaBit(seguras & juego.tablero[victima][CABALLO]) * 12;
+	puntaje += cuentaBit(seguras & juego.tablero[victima][ALFIL]) * 12;
+	puntaje += cuentaBit(seguras & juego.tablero[victima][TORRE]) * 21;
+	puntaje += cuentaBit(seguras & juego.tablero[victima][DAMA]) * 33;
+	puntaje += cuentaBit(mapaPosAtacadasDoble[colorAtacante] &
+			     (juego.tablero[victima][CABALLO] |
+			      juego.tablero[victima][ALFIL] |
+			      juego.tablero[victima][TORRE] |
+			      juego.tablero[victima][DAMA])) * 6;
+	return puntaje;
+}
 
 void evalPeones(COLOR colorEval)
 {
@@ -887,6 +918,10 @@ void evalPeones(COLOR colorEval)
 	while (tempOrigenes)
 	{
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
+		esAislado = FALSO;
+		esAtrasado = FALSO;
+		esDebil = FALSO;
+		salidaXbreak = FALSO;
 		peonesMapaFila[colorEval] |= 1 << (FILES[escaqueOrigen]-1); 
 
 		for (esq=escaqueOrigen;esq != POSRANK7[colorEval][escaqueOrigen];esq+=DIR[colorEval])
@@ -909,18 +944,17 @@ void evalPeones(COLOR colorEval)
 	while (tempOrigenes)
 	{
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
-
-		//Marcar las plazas atacadas por los peones
-		mapaPosAtacadas[colorEval] 		|= mascaraCapturarPeon[escaqueOrigen][colorEval];
-		mapaPosAtacadasXPza[colorEval][PEON] 	|= mascaraCapturarPeon[escaqueOrigen][colorEval];
+		esAislado = FALSO;
+		esAtrasado = FALSO;
+		esDebil = FALSO;
+		salidaXbreak = FALSO;
+		esPeonAbierto = FALSO;
 
 		//Evaluar la posicion del Peon en tablero
 		puntaje_m[colorEval] += PEON_PUNTAJE_POS[colorEval][escaqueOrigen];
 		puntaje_f[colorEval] += PEON_PUNTAJE_POS[colorEval][escaqueOrigen];
 
 		//Peones Aislados
-		esAislado  = FALSO;
-		esAtrasado = FALSO;
 		pos 	   = (colorEval?escaqueOrigen-8:escaqueOrigen+8);
 
 		//Evaluar peones aislados
@@ -999,44 +1033,44 @@ void evalPeones(COLOR colorEval)
 				puntaje_m[colorEval] -=  peon_aislado[MEDIO_JUEGO]/2;  
 				puntaje_f[colorEval] -=  peon_aislado[FINAL_JUEGO]/2;  
 			}
+		}
 
-			//Evaluar peones pasados	
-			if (!(PASADO[colorEval][escaqueOrigen] & juego.tablero[xcolorEval][PEON]))
+		// La definición de pasado solo depende de peones enemigos por delante.
+		if (!(PASADO[colorEval][escaqueOrigen] & juego.tablero[xcolorEval][PEON]))
+		{
+
+			peonesPasados[colorEval]         |= BITSET[escaqueOrigen];
+			peonesPasadosMapaFila[colorEval] |= 1 << (FILES[escaqueOrigen]-1); 
+
+
+		} else if (esPeonAbierto) { //Peon Candidato a Pasado
+
+			if ((AISLADO[escaqueOrigen] & juego.tablero[colorEval][PEON]) && 
+			    !(mascaraCapturarPeon[escaqueOrigen][colorEval] & juego.tablero[xcolorEval][PEON]))
 			{
-
-				peonesPasados[colorEval]         |= BITSET[escaqueOrigen];
-				peonesPasadosMapaFila[colorEval] |= 1 << (FILES[escaqueOrigen]-1); 
-
-
-			} else { //Peon Candidato a Pasado
-
-				if ((AISLADO[escaqueOrigen] & juego.tablero[colorEval][PEON]) && 
-				    !(mascaraCapturarPeon[escaqueOrigen][colorEval] & juego.tablero[xcolorEval][PEON]))
+				for (esq=escaqueOrigen;esq != POSRANK7[colorEval][escaqueOrigen];esq+=DIR[colorEval])
 				{
-					for (esq=escaqueOrigen;esq != POSRANK7[colorEval][escaqueOrigen];esq+=DIR[colorEval])
-					{
-						if (BITSET[esq+DIR[colorEval]] & mapaTodosPeones) break;
+					if (BITSET[esq+DIR[colorEval]] & mapaTodosPeones) break;
 
-						defensa = 
-						cuentaBit(mascaraCapturarPeon[esq][xcolorEval] & peonMov[colorEval]);
+					defensa = 
+					cuentaBit(mascaraCapturarPeon[esq][xcolorEval] & peonMov[colorEval]);
 
-						ataque = 
-						cuentaBit(mascaraCapturarPeon[esq][colorEval] & juego.tablero[xcolorEval][PEON]);
+					ataque = 
+					cuentaBit(mascaraCapturarPeon[esq][colorEval] & juego.tablero[xcolorEval][PEON]);
 					
-						if (ataque) break;
-					}
+					if (ataque) break;
+				}
 
-					if (ataque <= defensa)
+				if (ataque <= defensa)
+				{
+					if (!(PASADO[colorEval][esq+DIR[colorEval]] & juego.tablero[xcolorEval][PEON]))
 					{
-						if (!(PASADO[colorEval][esq+DIR[colorEval]] & juego.tablero[xcolorEval][PEON]))
-						{
-							puntaje_m[colorEval] += 
-							  peon_pasado_candidato[MEDIO_JUEGO][colorEval][RANKS[escaqueOrigen]];
-							puntaje_f[colorEval] += 
-							  peon_pasado_candidato[FINAL_JUEGO][colorEval][RANKS[escaqueOrigen]];
+						puntaje_m[colorEval] += 
+						  peon_pasado_candidato[MEDIO_JUEGO][colorEval][RANKS[escaqueOrigen]];
+						puntaje_f[colorEval] += 
+						  peon_pasado_candidato[FINAL_JUEGO][colorEval][RANKS[escaqueOrigen]];
 
-							peonesCandidatos[colorEval] |= BITSET[escaqueOrigen];
-						}
+						peonesCandidatos[colorEval] |= BITSET[escaqueOrigen];
 					}
 				}
 			}
@@ -1077,21 +1111,17 @@ void evalCaballo(COLOR colorEval)
 
 		// Evaluar la posición del caballo en el tablero
 		puntaje_m[colorEval] += (CABALLO_PUNTAJE_POS[colorEval][escaqueOrigen]);
-		puntaje_f[colorEval] += (CABALLO_PUNTAJE_POS_FINAL[escaqueOrigen]);
+		puntaje_f[colorEval] +=
+			CABALLO_PUNTAJE_POS_FINAL[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
 		// Ajuste del caballo según el número de peones
 		puntaje_m[colorEval] += adjuste_caballo[nPeones[colorEval]];
 		puntaje_f[colorEval] += adjuste_caballo[nPeones[colorEval]];
 //*/
-		//tropismo
-		if (esPeligroso[colorEval])
-		{
-			tropismo[colorEval] += CABALLO_TROPISMO[DISTANCIA[escaqueOrigen][escaqueRey[xcolorEval]]];
-		}
-
 		tempDestinos   		 		 = genCaballoAtaqueTablero(escaqueOrigen, juego);
-		mapaPosAtacadas[colorEval] 		|= tempDestinos;
-		mapaPosAtacadasXPza[colorEval][CABALLO]	|= tempDestinos;
+		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
+		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
+		registrarAtaquesEval(colorEval, CABALLO, tempDestinos, 2);
 
 		// Puesto avanzado
 		i = CABALLO_PUESTO_AVANZADA[colorEval][escaqueOrigen];
@@ -1121,8 +1151,9 @@ void evalCaballo(COLOR colorEval)
 			}
 		}
 
-		puntaje_m[colorEval] += movilidadCaballo[cuentaBit(tempDestinos)]; 
-		puntaje_f[colorEval] += movilidadCaballo[cuentaBit(tempDestinos)]; 
+		i = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
+		puntaje_m[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
+		puntaje_f[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1139,7 +1170,6 @@ void evalAlfil(COLOR colorEval)
 	int esqA7[2]		= {48,8};
 	int esqB6[2]		= {41,17};
 	int esqG6[2]		= {46,22};
-	int indicador;
 
 	if (colorEval)
 		juego.destinos	= (juego.desOcupados | juego.blancos);
@@ -1153,11 +1183,13 @@ void evalAlfil(COLOR colorEval)
 
 		//Evaluar la posicion del Alfil en el tablero
 		puntaje_m[colorEval] += (ALFIL_PUNTAJE_POS[colorEval][escaqueOrigen]);
-		puntaje_f[colorEval] += (ALFIL_PUNTAJE_POS_FINAL[escaqueOrigen]);
+		puntaje_f[colorEval] +=
+			ALFIL_PUNTAJE_POS_FINAL[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
 		tempDestinos  		 		 = genAlfilAtaqueTablero(escaqueOrigen, juego);
-		mapaPosAtacadas[colorEval] 		|= tempDestinos;
-		mapaPosAtacadasXPza[colorEval][ALFIL]	|= tempDestinos;
+		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
+		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
+		registrarAtaquesEval(colorEval, ALFIL, tempDestinos, 2);
 
 		//Con peones Ganadores
 		if ((mapaTodosPeones & mascaraFGH) && (mapaTodosPeones & mascaraABC))
@@ -1218,20 +1250,9 @@ void evalAlfil(COLOR colorEval)
                     }
 		}
 
-		//tropismo
-		if (esPeligroso[colorEval])
-		{
-			indicador = ((MATRIZ_MOV_ALFIL[escaqueOrigen] & entornoRey[xcolorEval]) &&
-			genAlfilAtaqueTableroX(escaqueOrigen, 
-			(juego.ocupados^juego.tablero[colorEval][DAMA]),
-			entornoRey[xcolorEval])) ?
-			1 : DISTANCIA[escaqueOrigen][escaqueRey[xcolorEval]];
-
-			tropismo[colorEval] += ALFIL_TROPISMO[indicador];
-		}
-
-		puntaje_m[colorEval] += movilidadAlfil[cuentaBit(tempDestinos)]; 
-		puntaje_f[colorEval] += movilidadAlfil[cuentaBit(tempDestinos)]; 
+		i = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
+		puntaje_m[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
+		puntaje_f[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1256,28 +1277,19 @@ void evalTorre(COLOR colorEval)
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
 
 		tempDestinos  		 		 = genTorreAtaqueTablero(escaqueOrigen, juego);
-		mapaPosAtacadas[colorEval] 		|= tempDestinos;
-		mapaPosAtacadasXPza[colorEval][TORRE]	|= tempDestinos;
+		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
+		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
+		registrarAtaquesEval(colorEval, TORRE, tempDestinos, 3);
 
 		//Evaluar la posicion de la Torre en el tablero
-		puntaje_m[colorEval] += (TORRE_PUNTAJE_POS[escaqueOrigen]);
-		puntaje_f[colorEval] += (TORRE_PUNTAJE_POS[escaqueOrigen]);
+		puntaje_m[colorEval] +=
+			TORRE_PUNTAJE_POS[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
+		puntaje_f[colorEval] +=
+			TORRE_PUNTAJE_POS[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
 		// Ajuste de la torre según el número de peones
 		puntaje_m[colorEval] += adjuste_torre[nPeones[colorEval]];
 		puntaje_f[colorEval] += adjuste_torre[nPeones[colorEval]];
-
-
-		//tropismo
-		if (esPeligroso[colorEval])
-		{
-			indicador = ((MATRIZ_MOV_TORRE[escaqueOrigen] & entornoRey[xcolorEval]) &&
-			genTorreAtaqueTableroX(escaqueOrigen, 
-			(juego.ocupados^(juego.tablero[colorEval][DAMA]|juego.tablero[colorEval][TORRE])),
-			entornoRey[xcolorEval])) ?
-			1 : DISTANCIA[escaqueOrigen][escaqueRey[xcolorEval]];
-			tropismo[colorEval] += TORRE_TROPISMO[indicador];
-		}
 
 
 		//Evaluar torre en columna semi-abierta
@@ -1342,8 +1354,9 @@ void evalTorre(COLOR colorEval)
 		}
 
 		// Analisis Movilidad
-		puntaje_m[colorEval] += movilidadTorre[cuentaBit(tempDestinos)]; 
-		puntaje_f[colorEval] += movilidadTorreFinal[cuentaBit(tempDestinos)]; 
+		indicador = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
+		puntaje_m[colorEval] += movilidadTorre[indicador] * MOVILIDAD_ESCALA / 100;
+		puntaje_f[colorEval] += movilidadTorreFinal[indicador] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1351,7 +1364,6 @@ void evalTorre(COLOR colorEval)
 
 void evalDama(COLOR colorEval)
 {
-	COLOR xcolorEval 	= !colorEval;
 	uint64 tempOrigenes	= 0; 
 	uint64 tempDestinos	= 0;
 	int escaqueOrigen	= 0;
@@ -1370,25 +1382,17 @@ void evalDama(COLOR colorEval)
 
 		//Evaluar la posicion de la dama en el tablero
 		puntaje_m[colorEval] += (DAMA_PUNTAJE_POS[colorEval][escaqueOrigen]);
-		puntaje_f[colorEval] += (DAMA_PUNTAJE_POS_FINAL[escaqueOrigen]);
+		puntaje_f[colorEval] +=
+			DAMA_PUNTAJE_POS_FINAL[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
 		tempDestinos  		 		 = genDamaAtaqueTablero(escaqueOrigen, juego);
-		mapaPosAtacadas[colorEval] 		|= tempDestinos;
-		mapaPosAtacadasXPza[colorEval][DAMA]	|= tempDestinos;
+		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
+		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
+		registrarAtaquesEval(colorEval, DAMA, tempDestinos, 5);
 
-		//tropismo
-		if (esPeligroso[colorEval])
-		{
-			tropismo[colorEval] += DAMA_TROPISMO[DISTANCIA[escaqueOrigen][escaqueRey[xcolorEval]]];
-			valor = 8 - (RankDistancia(escaqueOrigen, escaqueRey[xcolorEval]) + 
-				     FileDistancia(escaqueOrigen, escaqueRey[xcolorEval]));
-
-			puntaje_m[colorEval] += valor;
-			puntaje_f[colorEval] += valor;
-		}
-
-		puntaje_m[colorEval] += movilidadDama[cuentaBit(tempDestinos)];
-		puntaje_f[colorEval] += movilidadDamaFinal[cuentaBit(tempDestinos)];
+		valor = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
+		puntaje_m[colorEval] += movilidadDama[valor] * MOVILIDAD_ESCALA / 100;
+		puntaje_f[colorEval] += movilidadDamaFinal[valor] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1482,6 +1486,22 @@ void ini_material()
 		puntaje_f[NEGRO] += 56;
 	}
 
+	/* Interacciones compactas por pares de tipos, una vez por evaluación. */
+#ifndef DESHABILITAR_INTERACCIONES_MATERIAL
+	puntaje_m[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO] * 2;
+	puntaje_f[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO];
+	puntaje_m[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO] * 2;
+	puntaje_f[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO];
+	if (nTorres[BLANCO] > 1)
+		puntaje_m[BLANCO] -= 8;
+	if (nTorres[NEGRO] > 1)
+		puntaje_m[NEGRO] -= 8;
+	if (nDama[BLANCO] && nCaballos[BLANCO])
+		puntaje_m[BLANCO] += 6;
+	if (nDama[NEGRO] && nCaballos[NEGRO])
+		puntaje_m[NEGRO] += 6;
+#endif
+
 #ifdef VERVALORES
 	printf("******Material base + bono de turno + desequilibrio + ajuste de alfil*******\n");
 	printf("m[B]=%d\n",puntaje_m[BLANCO]);
@@ -1529,6 +1549,7 @@ void evalRey(COLOR colorEval)
 {
 	COLOR xcolorEval = !colorEval;
 	int defectos	 = 0;
+	int peligro	 = 0;
 	BOOLEANO E_OO; 			
 	BOOLEANO E_OOO;
 	BOOLEANO HUBO_ENROQUE;
@@ -1549,7 +1570,7 @@ void evalRey(COLOR colorEval)
 		}
 	}
 
-	if (esPeligroso[xcolorEval])
+	if (atacantesRey[xcolorEval] > 0)
 	{
 		defectos = 0;
 		HUBO_ENROQUE = (colorEval)?juego.ENROQUEN:juego.ENROQUEB;
@@ -1594,31 +1615,37 @@ void evalRey(COLOR colorEval)
 			if (defectos < 3) defectos = 3;
 		}
 
-		if (tropismo[xcolorEval] < 0) tropismo[xcolorEval]  = 0;
-		if (tropismo[xcolorEval] > 15) tropismo[xcolorEval] = 15;
 		if (defectos > 15) defectos = 15;
 		if (defectos < 0)  defectos = 0;
 
-		puntaje_m[colorEval] -= MATRIZ_SEGURIDAD_REY[defectos][tropismo[xcolorEval]];
+		peligro = pesoAtaqueRey[xcolorEval] +
+			  (atacantesRey[xcolorEval] * 2) +
+			  (cuentaBit(mapaPosAtacadasDoble[xcolorEval] &
+				     entornoRey[colorEval]) * 2) +
+			  MAXIMO(0, defectos - 3);
+		if (atacantesRey[xcolorEval] < 2)
+			peligro /= 2;
+		peligro = MINIMO(31, peligro);
+		puntaje_m[colorEval] -= INSEGURIDAD_REY[peligro];
 	}
 }
 
 BOOLEANO evalOposicionReyes(COLOR colorEval)
 {
 	COLOR xcolorEval   = !colorEval;
-	int distancia_file  = abs(FILES[escaqueRey[colorEval]] - FILES[escaqueRey[xcolorEval]]);
-	int distancia_rank = abs(RANKS[escaqueRey[colorEval]] - RANKS[escaqueRey[xcolorEval]]);
+	int distancia_file = FileDistancia(escaqueRey[colorEval], escaqueRey[xcolorEval]);
+	int distancia_rank = RankDistancia(escaqueRey[colorEval], escaqueRey[xcolorEval]);
 
-	if (distancia_rank < 2) return VERDADERO;
+	/* Oposición directa: reyes alineados y separados por una casilla. */
+	if ((distancia_file == 0 && distancia_rank == 2) ||
+	    (distancia_rank == 0 && distancia_file == 2))
+		return juego.colorTurno != colorEval;
 
-	if (juego.colorTurno==colorEval)
-	{
-		if (distancia_rank & 1) distancia_rank--;
-		if (distancia_file & 1) distancia_file--;
-	}
-
-	if (!(distancia_file & 1) && !(distancia_rank & 1)) return VERDADERO;
-
+	/* Oposición distante: alineación, distancia par y turno contrario. */
+	if (distancia_file == 0)
+		return !(distancia_rank & 1) && juego.colorTurno != colorEval;
+	if (distancia_rank == 0)
+		return !(distancia_file & 1) && juego.colorTurno != colorEval;
 	return FALSO;
 }
 
@@ -1810,8 +1837,7 @@ int transformarSegunEmpate(int puedeGanar, int puntaje)
 			    ((juego.tablero[BLANCO][ALFIL] & ESCAQUES_BLANCOS) && (juego.tablero[NEGRO][ALFIL] & ESCAQUES_NEGROS ))) 
 			{
 				if (fase[BLANCO]==3 && fase[NEGRO]==3 &&
-				   ((nPeones[BLANCO] < 4 && nPeones[NEGRO] < 4) ||
-				    abs(fase[BLANCO]-fase[NEGRO])<2))
+				    nPeones[BLANCO] < 4 && nPeones[NEGRO] < 4)
 				{
 					puntaje = puntaje / 2;
 	
@@ -1823,6 +1849,24 @@ int transformarSegunEmpate(int puedeGanar, int puntaje)
 			}
 		} 
 	}
+
+#ifndef DESHABILITAR_NUEVOS_SCALERS
+	if (totalPeones <= 2 && abs(fase[BLANCO] - fase[NEGRO]) <= 3)
+		puntaje = 3 * puntaje / 4;
+
+	if (nTorres[BLANCO] == 1 && nTorres[NEGRO] == 1 &&
+	    !nDama[BLANCO] && !nDama[NEGRO] &&
+	    PIEZAS_MENORES[BLANCO] == PIEZAS_MENORES[NEGRO] &&
+	    abs(nPeones[BLANCO] - nPeones[NEGRO]) <= 1)
+		puntaje = 7 * puntaje / 8;
+
+	if (((peonesMapaFila[BLANCO] | peonesMapaFila[NEGRO]) & 0x0f) == 0 ||
+	    ((peonesMapaFila[BLANCO] | peonesMapaFila[NEGRO]) & 0xf0) == 0)
+	{
+		if (FASE <= 16)
+			puntaje = 7 * puntaje / 8;
+	}
+#endif
 
 	if (puedeGanar != 3)
 	{
@@ -1836,13 +1880,21 @@ int transformarSegunEmpate(int puedeGanar, int puntaje)
 		} 
 	}
 
-	if (juego.reglaCincuentaMov>80)
-	{
-		puntaje = puntaje * ((101-juego.reglaCincuentaMov)/20);
-	}
-
 	return puntaje;
 
+}
+
+int ajustarReglaCincuenta(int puntaje)
+{
+	int restante;
+
+	if (juego.reglaCincuentaMov <= 80)
+		return puntaje;
+
+	restante = 100 - juego.reglaCincuentaMov;
+	if (restante < 0)
+		restante = 0;
+	return puntaje * restante / 20;
 }
 
 #endif

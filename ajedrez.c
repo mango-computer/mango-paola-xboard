@@ -831,8 +831,22 @@ void hacerMovimiento(MOVIMIENTO mov)
 	juego.historicoJuego[juego.indiceHJuego].totalMov		= juego.totalMov;
 	juego.historicoJuego[juego.indiceHJuego].mov			= mov;
 	juego.historicoJuego[juego.indiceHJuego].llaveHash		= juego.llaveHash;
+	juego.historicoJuego[juego.indiceHJuego].llavePeones		= juego.llavePeones;
 
 	juego.llaveHash ^= (arrayHash.llaves[origen][pieza] ^ arrayHash.llaves[destino][pieza]);
+	if (pieza == PEON_BLANCO || pieza == PEON_NEGRO)
+	{
+		juego.llavePeones ^= arrayHash.llaves[origen][pieza];
+		if (!ES_MOV_PROMOCION(mov))
+			juego.llavePeones ^= arrayHash.llaves[destino][pieza];
+	}
+	if (captura == PEON_BLANCO || captura == PEON_NEGRO)
+	{
+		postmp = destino;
+		if (ES_MOV_CAPT_PEON_PASO(mov))
+			postmp = (pieza == PEON_BLANCO) ? destino - 8 : destino + 8;
+		juego.llavePeones ^= arrayHash.llaves[postmp][captura];
+	}
 
 	if (juego.posPeonPaso != SIN_POS_VALIDA)
 	{
@@ -1570,6 +1584,7 @@ void desHacerMovimiento(MOVIMIENTO mov)
 	juego.totalMov		= juego.historicoJuego[juego.indiceHJuego].totalMov;
 	mov			= juego.historicoJuego[juego.indiceHJuego].mov;
 	juego.llaveHash		= juego.historicoJuego[juego.indiceHJuego].llaveHash;
+	juego.llavePeones	= juego.historicoJuego[juego.indiceHJuego].llavePeones;
 
 
 #ifdef DEBUG_MANGO_AJEDREZ 

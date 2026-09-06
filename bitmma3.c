@@ -102,6 +102,7 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 
 int main(int np, char* param[])
 {
+	BOOLEANO hashMBConfigurado = FALSO;
 	const char *R  = "\033[0m";
 	const char *mx = "\033[38;5;83m";
 	const char *mn = "\033[38;5;203m";
@@ -136,7 +137,6 @@ int main(int np, char* param[])
 
 
 
-	LARGO_TABLA_HASH 	= LARGO_TABLA_HASH_LLAVE_22BIT;
 	esUsoTablaHash		= VERDADERO;
 	usarLibroAperturas 	= VERDADERO;
 
@@ -164,20 +164,19 @@ int main(int np, char* param[])
 				} else if (!strncmp(lineaINI, "TamanioTablaHash",16)) {
 					int t=0;
 					sscanf(lineaINI, "TamanioTablaHash %d", &t);
-		
-					switch(t)
-					{
-						case 1: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_18BIT;break;
-						case 2: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_19BIT;break;
-						case 3: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_20BIT;break;
-						case 4: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_21BIT;break;
-						case 5: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_22BIT;break;
-						case 6: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_23BIT;break;
-						case 7: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_24BIT;break;
-						case 8: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_25BIT;break;
-						case 9: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_26BIT;break;
-						default: LARGO_TABLA_HASH = LARGO_TABLA_HASH_LLAVE_22BIT;break;
-					};
+
+					if (!hashMBConfigurado && t >= 1 && t <= 9)
+						hashMBSolicitados = 3u << t;
+
+				} else if (!strncmp(lineaINI, "HashMB",6)) {
+					unsigned int mb = HASH_MB_PREDETERMINADO;
+					sscanf(lineaINI, "HashMB %u", &mb);
+					if (mb < 1)
+						mb = 1;
+					if (mb > maxHashMBPermitido())
+						mb = maxHashMBPermitido();
+					hashMBSolicitados = mb;
+					hashMBConfigurado = VERDADERO;
 
 				} else if (!strncmp(lineaINI, "UsarLibroAperturas",18)) {
 					int u=0;
@@ -188,6 +187,12 @@ int main(int np, char* param[])
 				} else if (!strncmp(lineaINI, "RutaLibroPolyglot",17)) {
 					memset(rutaLibroPolyglot,'\0',512);
 					sscanf(lineaINI, "RutaLibroPolyglot %511s", rutaLibroPolyglot);
+
+				} else if (!strncmp(lineaINI, "MaxLibroPolyglotMB",18)) {
+					unsigned int mb = MAX_LIBRO_POLYGLOT_MB;
+					sscanf(lineaINI, "MaxLibroPolyglotMB %u", &mb);
+					if (mb >= 1 && mb <= 1024)
+						maxLibroPolyglotMB = mb;
 #ifdef COMPILAR_CON_EGBB
 				} else if (!strncmp(lineaINI, "UsarTablaFinalesNalimov",23)) {
 					int u=0;

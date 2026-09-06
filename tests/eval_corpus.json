@@ -1,0 +1,3454 @@
+[
+  {
+    "id": "opening-01",
+    "family": "opening",
+    "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+  },
+  {
+    "id": "opening-02",
+    "family": "opening",
+    "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3"
+  },
+  {
+    "id": "opening-03",
+    "family": "opening",
+    "fen": "rnbqk2r/pp2bppp/2p1pn2/3p4/2PP4/2N1PN2/PP2BPPP/R1BQK2R w KQkq - 4 7"
+  },
+  {
+    "id": "quiet-01",
+    "family": "quiet",
+    "fen": "r2q1rk1/pp2bppp/2n1pn2/2pp4/3P4/2PBPN2/PPQ2PPP/R1B1K2R w KQ - 4 10"
+  },
+  {
+    "id": "quiet-02",
+    "family": "quiet",
+    "fen": "2rq1rk1/pp1nbppp/2p1pn2/3p4/3P4/2NBPN2/PPQ2PPP/2RR2K1 w - - 7 14"
+  },
+  {
+    "id": "quiet-03",
+    "family": "quiet",
+    "fen": "r3r1k1/pp1q1ppp/2pbbn2/3p4/3P4/2NBPN2/PPQ2PPP/R3R1K1 w - - 3 16"
+  },
+  {
+    "id": "king-01",
+    "family": "king_safety",
+    "fen": "r3r1k1/ppp2ppp/2n2n2/3q4/3P4/2P1BQN1/PP3PPP/R3R1K1 w - - 2 16"
+  },
+  {
+    "id": "king-02",
+    "family": "king_safety",
+    "fen": "2kr3r/ppp2pp1/2n1bn1p/3qp3/3P4/2P1BN1P/PPQ2PP1/2KR3R w - - 4 15"
+  },
+  {
+    "id": "king-03",
+    "family": "king_safety",
+    "fen": "r4rk1/ppp2ppp/2n2n2/2b1q3/4P3/2P1BQN1/PP3PPP/R3R1K1 b - - 1 15"
+  },
+  {
+    "id": "pawn-01",
+    "family": "pawns",
+    "fen": "8/2p2pk1/3p2p1/1p1Pp2p/1P2P2P/2P2PP1/5K2/8 w - - 0 35"
+  },
+  {
+    "id": "pawn-02",
+    "family": "pawns",
+    "fen": "8/5pk1/2p3p1/3pP2p/3P3P/2P3P1/5K2/8 w - - 0 38"
+  },
+  {
+    "id": "pawn-03",
+    "family": "pawns",
+    "fen": "8/2p2pk1/2p3p1/3pP2p/3P3P/2P3P1/5K2/8 b - - 0 38"
+  },
+  {
+    "id": "passed-01",
+    "family": "passed",
+    "fen": "8/5pk1/3p2p1/4P2p/3P3P/5PP1/5K2/8 w - - 0 40"
+  },
+  {
+    "id": "passed-02",
+    "family": "passed",
+    "fen": "8/8/3k4/3P4/4K3/8/8/8 w - - 0 50"
+  },
+  {
+    "id": "passed-03",
+    "family": "passed",
+    "fen": "8/8/4k3/4p3/3P4/3K4/8/8 b - - 0 50"
+  },
+  {
+    "id": "minor-01",
+    "family": "minor_endgame",
+    "fen": "8/5pk1/3b2p1/3P3p/4P2P/3B2P1/5K2/8 w - - 0 42"
+  },
+  {
+    "id": "minor-02",
+    "family": "minor_endgame",
+    "fen": "8/5pk1/3n2p1/3P3p/4P2P/3B2P1/5K2/8 w - - 0 42"
+  },
+  {
+    "id": "opposite-01",
+    "family": "opposite_bishops",
+    "fen": "8/5pk1/3b2p1/7p/3P3P/4B1P1/5PK1/8 w - - 0 45"
+  },
+  {
+    "id": "rook-01",
+    "family": "rook_endgame",
+    "fen": "8/5pk1/3p2p1/7p/3P3P/5PP1/4RK2/r7 w - - 0 42"
+  },
+  {
+    "id": "rook-02",
+    "family": "rook_endgame",
+    "fen": "8/4rpk1/3p2p1/7p/3P3P/5PP1/4RK2/8 b - - 0 42"
+  },
+  {
+    "id": "material-01",
+    "family": "imbalance",
+    "fen": "4k3/8/8/8/8/8/3BB3/4K1n1 w - - 0 40"
+  },
+  {
+    "id": "material-02",
+    "family": "imbalance",
+    "fen": "4k3/8/8/8/8/7q/3RR3/4K3 w - - 0 40"
+  },
+  {
+    "id": "fifty-80",
+    "family": "fifty_move",
+    "fen": "8/5pk1/3p2p1/4P2p/3P3P/5PP1/5K2/8 w - - 80 80"
+  },
+  {
+    "id": "fifty-95",
+    "family": "fifty_move",
+    "fen": "8/5pk1/3p2p1/4P2p/3P3P/5PP1/5K2/8 w - - 95 80"
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-12",
+    "family": "opening",
+    "fen": "rnbq1rk1/pp2ppbp/3p1np1/2p3B1/2PPP3/2N5/PP2BPPP/R2QK1NR w KQ - 0 7",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-16",
+    "family": "opening",
+    "fen": "rnbq1rk1/pp3pb1/3ppnpp/2pP4/2P1PB2/2N5/PP2BPPP/R2QK1NR w KQ - 0 9",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-20",
+    "family": "opening",
+    "fen": "rn1qr1k1/pp3pb1/3Bbnpp/2p5/2P1P3/2N5/PP2BPPP/R2QK1NR w KQ - 1 11",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-24",
+    "family": "king_safety",
+    "fen": "r3r1k1/pp3pb1/2nBbnpp/q1p5/2P1P3/2N2N2/PP2BPPP/R2Q1RK1 w - - 5 13",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-28",
+    "family": "king_safety",
+    "fen": "r2r2k1/pp3pb1/1qnBbnpp/2p5/2P1P3/1NN5/PP2BPPP/R2Q1RK1 w - - 9 15",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-32",
+    "family": "king_safety",
+    "fen": "r2r2k1/pp3pb1/2nB1npp/2N5/Nqb1P3/8/PP2BPPP/R2Q1RK1 w - - 0 17",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-36",
+    "family": "king_safety",
+    "fen": "r2r2k1/pN3pb1/2nB2pp/8/N1q1n3/8/PP3PPP/R2Q1RK1 w - - 0 19",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-40",
+    "family": "king_safety",
+    "fen": "3r2k1/p4pb1/2nB2pp/1q6/N3n3/8/PP3PPP/2RQ1RK1 w - - 0 21",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-48",
+    "family": "king_safety",
+    "fen": "6k1/p4pb1/3r2pp/1q6/N3Q3/8/PP3PPP/2R4K w - - 0 25",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-52",
+    "family": "king_safety",
+    "fen": "6k1/p4pb1/3r2pp/5q2/N7/8/PPQ2PPP/3R3K w - - 4 27",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-56",
+    "family": "king_safety",
+    "fen": "6k1/p4pb1/6pp/8/N7/8/PP3qPP/3Q3K w - - 0 29",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-60",
+    "family": "king_safety",
+    "fen": "6k1/p4pb1/6pp/8/N7/1P6/q5PP/6QK w - - 0 31",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-64",
+    "family": "middlegame",
+    "fen": "6k1/p4p2/6pp/2N5/3b4/1P6/3q2PP/1Q5K w - - 4 33",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-68",
+    "family": "middlegame",
+    "fen": "6k1/p4p2/6p1/7p/1N1b4/1P2q3/6PP/1Q5K w - - 0 35",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-72",
+    "family": "middlegame",
+    "fen": "6k1/p4p2/6p1/8/3b3p/1q6/2N3PP/3Q3K w - - 0 37",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-76",
+    "family": "middlegame",
+    "fen": "6k1/p4p2/6p1/8/7p/8/2q3PP/6QK w - - 0 39",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-84",
+    "family": "pawn_endgame",
+    "fen": "8/5p2/5kp1/8/7p/8/5KPP/8 w - - 3 43",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-88",
+    "family": "pawn_endgame",
+    "fen": "8/8/6p1/4kp2/7p/5K2/6PP/8 w - - 0 45",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-92",
+    "family": "pawn_endgame",
+    "fen": "8/8/8/3k1pp1/7p/4K2P/6P1/8 w - - 1 47",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-96",
+    "family": "pawn_endgame",
+    "fen": "8/8/8/2k2p2/6pp/2K4P/6P1/8 w - - 0 49",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 96
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-100",
+    "family": "pawn_endgame",
+    "fen": "8/8/8/3k1p2/7p/3K3P/8/8 w - - 1 51",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 100
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-104",
+    "family": "pawn_endgame",
+    "fen": "8/8/8/4k3/5p1p/5K1P/8/8 w - - 0 53",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_alburt-1-112",
+    "family": "pawn_endgame",
+    "fen": "8/8/8/4k3/7p/5p1P/8/6K1 w - - 4 57",
+    "source": "Kasparov_Alburt.pgn",
+    "ply": 112
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp1n1ppp/2p1pn2/6N1/2BP4/8/PPP2PPP/R1BQK1NR w KQkq - 0 7",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-16",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp3pp1/1np1pn1p/6N1/3P4/3B4/PPP1QPPP/R1B1K1NR w KQkq - 0 9",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-20",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp1n1pp1/4pn1p/2P5/8/3B1N2/PPP1QPPP/R1B1K1NR w KQkq - 1 11",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-24",
+    "family": "king_safety",
+    "fen": "r1bqkb1r/p4pp1/1p2pn1p/2n5/1P1N4/3B4/P1P1QPPP/R1B1K1NR w KQkq - 0 13",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-28",
+    "family": "king_safety",
+    "fen": "r2qkb1r/pb1n1pp1/1p2pn1p/1B6/1P1N4/P7/2P1QPPP/R1B1K1NR w KQkq - 1 15",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-32",
+    "family": "king_safety",
+    "fen": "r2qk2r/1b1nbpp1/pp2pn1p/8/1P1N4/P2B1N2/2P1QPPP/R1B1K2R w KQkq - 2 17",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-36",
+    "family": "king_safety",
+    "fen": "r2qr1k1/1b1nbpp1/pp2pn1p/8/1P1N4/P2B1N2/1BP1QPPP/R4RK1 w - - 6 19",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-40",
+    "family": "king_safety",
+    "fen": "r3rbk1/1bqn1pp1/pp2pn1p/8/1PBN4/P4N2/1BP1QPPP/3R1RK1 w - - 10 21",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-44",
+    "family": "king_safety",
+    "fen": "r3rbk1/1bqn1pp1/p3pn1p/8/1PpN4/PB3N2/1B2QPPP/3R1RK1 w - - 0 23",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-48",
+    "family": "middlegame",
+    "fen": "r3rbk1/3n1pp1/p3pn1p/3b4/1PBN4/P4N2/1B3PPP/3R1RK1 w - - 1 25",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-52",
+    "family": "middlegame",
+    "fen": "r3r1k1/3nbpp1/p3p2p/3n4/1P6/PN3N2/1B3PPP/3R1RK1 w - - 2 27",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-56",
+    "family": "middlegame",
+    "fen": "r1r2k2/3nbpp1/p3p2p/3n4/1P6/PN3NP1/1B3P1P/2R2RK1 w - - 3 29",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_bagirov-1-60",
+    "family": "middlegame",
+    "fen": "r1r2k2/3n1p2/p3pp1p/N2n4/1P6/P4NP1/5P1P/2R2RK1 w - - 0 31",
+    "source": "Kasparov_Bagirov.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-12",
+    "family": "opening",
+    "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p2B1/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 7",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-16",
+    "family": "opening",
+    "fen": "rn1q1rk1/pbp1bpp1/1p2pn1p/3p4/2PP3B/1QN1PN2/PP3PPP/R3KB1R w KQ - 2 9",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-20",
+    "family": "opening",
+    "fen": "rn1q1rk1/pbp2pp1/1p3b1p/3p4/3P4/1QN1PN2/PP3PPP/R3KB1R w KQ - 0 11",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-24",
+    "family": "king_safety",
+    "fen": "rn1qr1k1/pb3pp1/1p3b1p/2pp4/3P4/1QNBPN2/PP3PPP/3RK2R w K - 0 13",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-28",
+    "family": "king_safety",
+    "fen": "r2qr1k1/p2n1pp1/1pb2b1p/3p4/8/1QNBPN2/PP3PPP/3RK2R w K - 0 15",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-32",
+    "family": "king_safety",
+    "fen": "r2qr1k1/p4pp1/1pb2b1p/2n5/3p4/Q1NBPN2/PP3PPP/3R1RK1 w - - 0 17",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-36",
+    "family": "king_safety",
+    "fen": "r3r1k1/p4pp1/1pb4p/2n3q1/3P4/Q1NB4/PP3PPP/3R1RK1 w - - 1 19",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-40",
+    "family": "king_safety",
+    "fen": "r3r1k1/3b1pp1/1p5p/p1nP2q1/8/Q1N5/PP2BPPP/3R1RK1 w - - 0 21",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-44",
+    "family": "king_safety",
+    "fen": "r3r1k1/3b1pp1/1p5p/p1nP4/1q6/Q4B2/PP2NPPP/3R1RK1 w - - 4 23",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-48",
+    "family": "middlegame",
+    "fen": "r3r1k1/3b1pp1/1p5p/p2P4/3Nn3/P4B2/P4PPP/3R1RK1 w - - 1 25",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-52",
+    "family": "middlegame",
+    "fen": "2r1r1k1/3b1pp1/1p1n3p/p2P4/3N3P/P4B2/P4PP1/3RR1K1 w - - 3 27",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-56",
+    "family": "rook_endgame",
+    "fen": "4r1k1/3b1pp1/1p5p/p2P4/2nN3P/P4B2/P4PP1/1R4K1 w - - 2 29",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-60",
+    "family": "rook_endgame",
+    "fen": "6k1/3b1pp1/1p5p/p2P4/3Nr2P/P7/P2nBPP1/2R3K1 w - - 6 31",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-64",
+    "family": "rook_endgame",
+    "fen": "6k1/2R2pp1/1p5p/p2P4/3r2BP/P7/P2n1PP1/6K1 w - - 0 33",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-68",
+    "family": "rook_endgame",
+    "fen": "6k1/2R2pp1/1p5p/p1r5/7P/P4P2/P2nB1P1/6K1 w - - 1 35",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-72",
+    "family": "minor_endgame",
+    "fen": "6k1/5pp1/7p/p7/2p4P/P2B1P2/P2n2P1/6K1 w - - 0 37",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-76",
+    "family": "minor_endgame",
+    "fen": "6k1/5pp1/7p/p7/2n4P/P1p2P2/P1B2KP1/8 w - - 2 39",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_beliavsky-1-80",
+    "family": "minor_endgame",
+    "fen": "6k1/5pp1/7p/pn6/7P/2pK1P2/P1B3P1/8 w - - 2 41",
+    "source": "Kasparov_Beliavsky.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-12",
+    "family": "opening",
+    "fen": "rn1q1rk1/pbpp1ppp/1p2pn2/8/1bPP4/3BPN2/PP1N1PPP/R1BQK2R w KQ - 2 7",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-16",
+    "family": "opening",
+    "fen": "rn1q1rk1/pbp2ppp/1p2pn2/3p4/2PP4/P2BPN2/1P1b1PPP/R1BQ1RK1 w - - 0 9",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-20",
+    "family": "opening",
+    "fen": "r2q1rk1/p1pn1ppp/1p2pn2/3b4/3P4/P2BPN2/1P1B1PPP/R2Q1RK1 w - - 0 11",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-24",
+    "family": "king_safety",
+    "fen": "r2q1rk1/p2n1ppp/1p2pn2/3b4/1P1p4/P2BPN2/3B1PPP/2RQ1RK1 w - - 0 13",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-28",
+    "family": "king_safety",
+    "fen": "r2q1rk1/p4ppp/Bp2p3/3bn3/1P1Nn3/P3P3/3B1PPP/2RQ1RK1 w - - 3 15",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-32",
+    "family": "king_safety",
+    "fen": "r4rk1/p4ppp/Bp2p1q1/3bn3/1P1NnP2/P3P3/6PP/2RQBRK1 w - - 1 17",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-36",
+    "family": "king_safety",
+    "fen": "r4rk1/p4ppp/np2p1q1/3bP3/1P1N4/P3P1B1/6PP/2RQ1RK1 w - - 0 19",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-40",
+    "family": "king_safety",
+    "fen": "5rk1/p3rppp/np1Np1q1/3bP3/1P6/P3P1B1/6PP/2RQ1RK1 w - - 4 21",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-44",
+    "family": "king_safety",
+    "fen": "b4rk1/p3rpp1/np1Np1q1/4P2p/1P2PR2/P5B1/6PP/2RQ2K1 w - - 1 23",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-48",
+    "family": "king_safety",
+    "fen": "b4rk1/p2r1pp1/np1Np2q/4P2p/1P2PR1B/P1R5/6PP/3Q2K1 w - - 5 25",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-52",
+    "family": "king_safety",
+    "fen": "b4rk1/p1nr2p1/1p1Np2q/4Pp1p/1P2PR1B/P4R2/6PP/5QK1 w - f6 0 27",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-56",
+    "family": "king_safety",
+    "fen": "b4r2/p1n2Ppk/1p1rp2q/7p/1P2PR1B/P4R2/6PP/5QK1 w - - 1 29",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-60",
+    "family": "king_safety",
+    "fen": "b4B2/p1n2Ppk/1p1r3q/7p/1P2Pp2/P4R2/6PP/5QK1 w - - 0 31",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-64",
+    "family": "middlegame",
+    "fen": "b7/p1n1qPpk/1p6/7p/1P2Pp2/P2Q1R2/6PP/6K1 w - - 2 33",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-68",
+    "family": "middlegame",
+    "fen": "b7/p3qPp1/1p2n2k/7p/1PQ1PR2/P7/6PP/6K1 w - - 1 35",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_butnorius-1-72",
+    "family": "middlegame",
+    "fen": "b6Q/p4Pp1/1p1qn1k1/7p/1P2PR2/P7/6PP/6K1 w - - 5 37",
+    "source": "Kasparov_Butnorius.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-12",
+    "family": "opening",
+    "fen": "rnb1kb1r/ppp1qppp/3p1n2/8/8/3P1N2/PPP1QPPP/RNB1KB1R w KQkq - 1 7",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-20",
+    "family": "opening",
+    "fen": "r1b1kb1r/pppn1p2/3p1npp/8/7B/2NP1N2/PPP1BPPP/R3K2R w KQkq - 0 11",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-24",
+    "family": "middlegame",
+    "fen": "r1b1k2r/1ppn1pb1/p2p1npp/8/3P3B/2N2N2/PPP1BPPP/2KR3R w kq - 2 13",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-28",
+    "family": "middlegame",
+    "fen": "r1b2rk1/2pn1pb1/p2p1npp/1p6/2BP3B/2N2N2/PPP2PPP/2KRR3 w - - 0 15",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-32",
+    "family": "middlegame",
+    "fen": "1rb2rk1/2p2pb1/pnBp1npp/1p6/3P3B/2N2N2/PPP2PPP/2KRR3 w - - 4 17",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_cramling-1-36",
+    "family": "middlegame",
+    "fen": "5rk1/1rp2pb1/pn1p1npp/1p6/3P3B/P1N2N2/1PP2PPP/2KRR3 w - - 0 19",
+    "source": "Kasparov_Cramling.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-12",
+    "family": "opening",
+    "fen": "r1bqk2r/2ppbppp/p1n2n2/1p2p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 w kq - 0 7",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-16",
+    "family": "opening",
+    "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-20",
+    "family": "opening",
+    "fen": "r2qr1k1/1bp1bppp/p1np1n2/1p2p3/3PP3/1BP2N1P/PP3PP1/RNBQR1K1 w - - 1 11",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-24",
+    "family": "king_safety",
+    "fen": "r2qrbk1/1bp2pp1/p1np1n1p/1p2p3/P2PP3/1BP2N1P/1P1N1PP1/R1BQR1K1 w - - 0 13",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-28",
+    "family": "king_safety",
+    "fen": "rn1qrbk1/1b3pp1/p1pp1n1p/1p1Pp3/P1P1P3/1B3N1P/1P1N1PP1/R1BQR1K1 w - - 0 15",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-32",
+    "family": "king_safety",
+    "fen": "bn1qrbk1/5pp1/2pp1n1p/1p1Pp3/2P1P3/1B3N1P/1P1N1PP1/2BQR1K1 w - - 0 17",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-36",
+    "family": "king_safety",
+    "fen": "b2qrbk1/5pp1/2np1n1p/4p3/BpP1P3/5N1P/1P1N1PP1/2BQR1K1 w - - 0 19",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-40",
+    "family": "king_safety",
+    "fen": "bqr2bk1/5pp1/2np1n1p/4p3/BpP1P1P1/5N1P/1P3P2/2BQRNK1 w - - 1 21",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-44",
+    "family": "king_safety",
+    "fen": "bqrn1bk1/5pp1/3p1n2/4p1p1/BpP1P3/5NNP/1P3P2/2BQR1K1 w - - 0 23",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-48",
+    "family": "king_safety",
+    "fen": "bq1n1bk1/5pp1/3p1n2/4p1N1/1p1rP3/1B4NP/1P3P2/2BQR1K1 w - - 2 25",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-52",
+    "family": "king_safety",
+    "fen": "bq1n1bk1/5pp1/3p4/2n1p1N1/1p1rP3/1B2B1NP/1PQ2P2/4R1K1 w - - 6 27",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-56",
+    "family": "king_safety",
+    "fen": "bq1n2k1/4bpp1/3p4/2nB2N1/1p1pP3/6NP/1PQ2P2/4R1K1 w - - 2 29",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-60",
+    "family": "king_safety",
+    "fen": "bq4k1/4b1p1/3pp3/2n3N1/1p1pP2P/6N1/1PQ2P2/4R1K1 w - - 0 31",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-64",
+    "family": "middlegame",
+    "fen": "bq4k1/4b1p1/3pN3/2n5/1pQ1P2P/6N1/1P1p1P2/4R1K1 w - - 0 33",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-68",
+    "family": "middlegame",
+    "fen": "bq4k1/4b1p1/4n3/3P4/1pQ4P/6N1/1P1p1P2/3R2K1 w - - 0 35",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-72",
+    "family": "middlegame",
+    "fen": "bq5k/6p1/4Q3/2bP4/1p5P/6N1/1P1p1P2/3R2K1 w - - 1 37",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_dorfman-1-76",
+    "family": "middlegame",
+    "fen": "b1Q5/6pk/8/2bP4/1p3q1P/6N1/1P1p1PK1/3R4 w - - 5 39",
+    "source": "Kasparov_Dorfman.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp1n1ppp/3p1n2/1B2p3/3QP3/2N2N2/PPP2PPP/R1B1K2R w KQkq - 0 7",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-16",
+    "family": "opening",
+    "fen": "r1bqk2r/pp1nbpp1/3p1n1p/1B2p3/4P3/2NQBN2/PPP2PPP/R3K2R w KQkq - 2 9",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-20",
+    "family": "opening",
+    "fen": "r1bq1rk1/1p1nbpp1/p2p1n1p/1B2p3/4P3/2NQBN2/PPP2PPP/3R1RK1 w - - 0 11",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-24",
+    "family": "king_safety",
+    "fen": "r1b2rk1/1pq1bpp1/p2p1n1p/2n1p3/P1B1P3/2NQBN2/1PP2PPP/3R1RK1 w - - 1 13",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-28",
+    "family": "king_safety",
+    "fen": "r1b2rk1/1p2bpp1/p2p3p/2qnp3/P1B1P3/3Q1N2/1PP2PPP/3R1RK1 w - - 0 15",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-32",
+    "family": "king_safety",
+    "fen": "1r3rk1/1p1bbpp1/p2p3p/2qBp3/P3P3/3Q4/1PPN1PPP/3R1RK1 w - - 3 17",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-36",
+    "family": "king_safety",
+    "fen": "2r2rk1/3bbpp1/p2p3p/Ppq1p3/4P3/1B1Q4/1PPN1PPP/3R1RK1 w - - 1 19",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-40",
+    "family": "king_safety",
+    "fen": "2rr2k1/4bpp1/p2pb2p/Ppq1p3/4P3/1B1Q1N2/1PP2PPP/3RR1K1 w - - 5 21",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-44",
+    "family": "king_safety",
+    "fen": "2r3k1/2r1bpp1/p2pb2p/Ppq1p3/4P3/1B1Q1N2/1PPR1PPP/3R2K1 w - - 9 23",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-48",
+    "family": "king_safety",
+    "fen": "2r3k1/2r1b1p1/p2pp2p/Pp2p3/1q2P3/3Q1N1P/1PPR1PP1/3R2K1 w - - 0 25",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-52",
+    "family": "king_safety",
+    "fen": "2r3k1/4b1p1/p2pp2p/Pp2p3/2r1P3/1q3N1P/1PP1RPP1/3R2K1 w - - 0 27",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-60",
+    "family": "rook_endgame",
+    "fen": "3b4/5kp1/p2pp2p/Pp2p3/4P3/1P5P/1P2RPPK/2r1N3 w - - 4 31",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-64",
+    "family": "rook_endgame",
+    "fen": "8/5kp1/p2pp2p/bp2p3/1N2P3/1P5P/1P2RPPK/3r4 w - - 0 33",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-68",
+    "family": "rook_endgame",
+    "fen": "8/5kp1/Nb1pp2p/1p2p3/1P2P3/7P/1P2RPPK/2r5 w - - 1 35",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-72",
+    "family": "rook_endgame",
+    "fen": "8/5kp1/Nb1pp2p/1p2p3/1P2P3/1r5P/R4PPK/8 w - - 0 37",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-76",
+    "family": "rook_endgame",
+    "fen": "8/2R3p1/N2ppk1p/1p2p3/1P1bP3/1r5P/5PPK/8 w - - 4 39",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-80",
+    "family": "rook_endgame",
+    "fen": "8/6p1/N1Rppk1p/1p2p3/1P1bP3/2r2P1P/6PK/8 w - - 3 41",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-84",
+    "family": "minor_endgame",
+    "fen": "8/2N3p1/3ppk1p/1p2p3/1P2P3/2b2P1P/6PK/8 w - - 1 43",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-88",
+    "family": "minor_endgame",
+    "fen": "8/N4kp1/3pp2p/4p3/1b2P3/5P1P/6PK/8 w - - 2 45",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-92",
+    "family": "minor_endgame",
+    "fen": "8/N2k2p1/3pp2p/4p3/1b2P1K1/5P1P/6P1/8 w - - 6 47",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-96",
+    "family": "minor_endgame",
+    "fen": "8/N1k5/3pp1pp/4p3/1b2PPKP/8/6P1/8 w - - 1 49",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 96
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-104",
+    "family": "minor_endgame",
+    "fen": "8/8/1k1p3p/1N2pK2/1b5P/8/6P1/8 w - - 3 53",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-108",
+    "family": "minor_endgame",
+    "fen": "8/8/2kb3p/4pK2/6PP/8/8/8 w - - 1 55",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 108
+  },
+  {
+    "id": "pgn-kasparov_dunne-1-112",
+    "family": "minor_endgame",
+    "fen": "8/8/3b4/3kpKP1/8/8/8/8 w - - 1 57",
+    "source": "Kasparov_Dunne.pgn",
+    "ply": 112
+  },
+  {
+    "id": "pgn-kasparov_galle-1-12",
+    "family": "opening",
+    "fen": "rnbqkb1r/p1p2ppp/1p2p3/4P3/3Pp3/4B3/PPP2PPP/R2QKBNR w KQkq - 0 7",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_galle-1-16",
+    "family": "opening",
+    "fen": "rn1qkb1r/pb3ppp/1p2p3/2p1P3/3Pp3/4B1N1/PPP2PPP/R2QKB1R w KQkq - 0 9",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_galle-1-20",
+    "family": "opening",
+    "fen": "rn2k2r/pb3ppp/1p2p3/2b1P3/4p3/4B1N1/PPP2PPP/3RKB1R w Kkq - 0 11",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_galle-1-24",
+    "family": "middlegame",
+    "fen": "rn5r/pb2kppp/4p3/1Bp1P3/4p3/6N1/PPP2PPP/3RK2R w K - 2 13",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_galle-1-28",
+    "family": "rook_endgame",
+    "fen": "r6r/p3kppp/2n1p3/2p1P3/4p3/6N1/PPP2PPP/3R1RK1 w - - 0 15",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_galle-1-32",
+    "family": "rook_endgame",
+    "fen": "2r4r/p3kppp/4p3/2N1n3/8/8/PPP2PPP/3R1RK1 w - - 1 17",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_galle-1-36",
+    "family": "rook_endgame",
+    "fen": "2rr4/4kppp/4p3/p1N1n3/1P6/5P2/P1P3PP/3R1RK1 w - - 0 19",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_galle-1-40",
+    "family": "rook_endgame",
+    "fen": "2rr4/4kppp/2n1p3/2N5/1P6/5P2/P5PP/3R1RK1 w - - 1 21",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_galle-1-44",
+    "family": "rook_endgame",
+    "fen": "3r4/4kppp/4p3/1PN5/1n6/5P2/P5PP/5RK1 w - - 1 23",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_galle-1-48",
+    "family": "rook_endgame",
+    "fen": "1r6/4kppp/1P2p3/2Nn4/8/5P2/P5PP/1R4K1 w - - 1 25",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_galle-1-52",
+    "family": "rook_endgame",
+    "fen": "1r1k4/1Pn2ppp/1R2p3/2N5/8/5P2/P5PP/6K1 w - - 3 27",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_galle-1-56",
+    "family": "rook_endgame",
+    "fen": "1r6/1Pk2ppp/3Rp3/2Nn4/8/5P2/P4KPP/8 w - - 7 29",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_galle-1-60",
+    "family": "rook_endgame",
+    "fen": "1r6/1k3ppp/N7/3p4/8/5P2/P4KPP/8 w - - 0 31",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_galle-1-64",
+    "family": "pawn_endgame",
+    "fen": "8/2k2ppp/8/3p4/8/4KP2/P5PP/8 w - - 2 33",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_galle-1-68",
+    "family": "pawn_endgame",
+    "fen": "8/5ppp/1k6/3p4/P2K4/5P2/6PP/8 w - - 1 35",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_galle-1-72",
+    "family": "pawn_endgame",
+    "fen": "8/5ppp/3K4/8/k7/5P2/6PP/8 w - - 0 37",
+    "source": "Kasparov_Galle.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-12",
+    "family": "opening",
+    "fen": "rn1qkbnr/pp2ppp1/2p3bp/8/3P3P/6N1/PPP2PP1/R1BQKBNR w KQkq - 0 7",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-16",
+    "family": "opening",
+    "fen": "r2qkbnr/pp1npppb/2p4p/7P/3P4/5NN1/PPP2PP1/R1BQKB1R w KQkq - 1 9",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-20",
+    "family": "opening",
+    "fen": "r3kbnr/ppqnppp1/2p4p/7P/3P4/3Q1NN1/PPP2PP1/R1B1K2R w KQkq - 1 11",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-24",
+    "family": "king_safety",
+    "fen": "r3kb1r/ppqn1pp1/2p1pn1p/7P/3P4/3Q1NN1/PPPB1PP1/2KR3R w kq - 0 13",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-28",
+    "family": "king_safety",
+    "fen": "2kr1b1r/ppqn1pp1/2p1p2p/7P/3Pn3/3Q1NP1/PPPB1P2/2KR3R w - - 0 15",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-32",
+    "family": "king_safety",
+    "fen": "2krr3/ppqnbpp1/2p1p2p/7P/3PQ3/5NP1/PPPB1P2/1K1R3R w - - 3 17",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-36",
+    "family": "king_safety",
+    "fen": "2krr3/ppq2pp1/2pbpn1p/7P/3P4/5NP1/PPPBQP2/1K1RR3 w - - 7 19",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-40",
+    "family": "king_safety",
+    "fen": "2krr3/ppq2pp1/4pn1p/2P1b2P/8/6P1/PPPBQP2/1K1RR3 w - - 0 21",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-44",
+    "family": "rook_endgame",
+    "fen": "2k1r3/pp3pp1/4pn1p/2P1R2P/3r4/6P1/PPPB1P2/1K1R4 w - - 1 23",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-48",
+    "family": "rook_endgame",
+    "fen": "2kr4/pp1n1pp1/4p2p/2P1R2P/3r4/5PP1/PPPB4/2KR4 w - - 1 25",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-56",
+    "family": "minor_endgame",
+    "fen": "2k5/pp4p1/4pp1p/2n4P/8/2B2PP1/PPP5/3K4 w - - 0 29",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-60",
+    "family": "minor_endgame",
+    "fen": "3k4/pp1n2p1/4pp1p/7P/1B6/5PP1/PPP1K3/8 w - - 4 31",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-64",
+    "family": "minor_endgame",
+    "fen": "8/pp1n1kp1/4pp1p/7P/1B3PP1/8/PPP1K3/8 w - - 1 33",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-68",
+    "family": "minor_endgame",
+    "fen": "8/pp1n1k2/4pp1p/5PpP/6P1/8/PPPBK3/8 w - - 0 35",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-72",
+    "family": "minor_endgame",
+    "fen": "2n5/pp3k2/4pp1p/5PpP/3B2P1/8/PPP1K3/8 w - - 4 37",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-76",
+    "family": "minor_endgame",
+    "fen": "2n5/p7/1p2kp1p/6pP/3B2P1/5K2/PPP5/8 w - - 0 39",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_geller2-1-80",
+    "family": "minor_endgame",
+    "fen": "8/p3n3/1p2k2p/5ppP/2P3P1/2B2K2/PP6/8 w - - 0 41",
+    "source": "Kasparov_Geller2.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-16",
+    "family": "opening",
+    "fen": "r1bq1rk1/p1pnbpp1/1p2pn1p/3p4/2PP3B/2N1PN2/PPQ2PPP/R3KB1R w KQ - 0 9",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-20",
+    "family": "opening",
+    "fen": "r2q1rk1/pbpnbpp1/1p3n1p/3p4/3P3B/2NBPN2/PPQ2PPP/R3K2R w KQ - 2 11",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-24",
+    "family": "king_safety",
+    "fen": "2rq1rk1/pb1nbpp1/1p3n1p/2pp4/3P3B/2NBPN2/PPQ2PPP/3R1RK1 w - - 2 13",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-28",
+    "family": "king_safety",
+    "fen": "3qr1k1/pb1nbpp1/1p3n1p/2rp4/7B/2NBPN2/PP3PPP/1Q1R1RK1 w - - 2 15",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-32",
+    "family": "king_safety",
+    "fen": "3qr1k1/1b1nbpp1/pp3n1p/3p1B2/2rN3B/2N1P3/PP3PPP/1Q1R1RK1 w - - 2 17",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-36",
+    "family": "king_safety",
+    "fen": "3qr1k1/1b3pp1/pp3n1p/2np1B2/1br5/2N1P1B1/PP2NPPP/1Q1R1RK1 w - - 6 19",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-40",
+    "family": "king_safety",
+    "fen": "3qr1k1/1b3pp1/pp3n1p/3p1B2/2r1n3/P1N1P1B1/1P3PPP/1Q1R1RK1 w - - 1 21",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_giorgadze-1-44",
+    "family": "king_safety",
+    "fen": "3qr1k1/1b3pp1/pp5p/3p4/4r3/P3P1B1/1P3PPP/1Q1R1RK1 w - - 0 23",
+    "source": "Kasparov_Giorgadze.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-12",
+    "family": "opening",
+    "fen": "r2qkb1r/pp1n1ppp/2p1pn2/3p4/6b1/3P1NP1/PPPNPPBP/R1BQ1RK1 w kq - 0 7",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-16",
+    "family": "opening",
+    "fen": "r2qk2r/pp1n1ppp/2pbpn2/3p3b/8/1P1P1NPP/P1PNPPB1/R1BQ1RK1 w kq - 1 9",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-20",
+    "family": "opening",
+    "fen": "r2q1rk1/1p1n1ppp/2pbpn2/p2p3b/2P5/1P1P1NPP/PB1NPPB1/R2Q1RK1 w - - 0 11",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-24",
+    "family": "king_safety",
+    "fen": "r2q1rk1/1p1n1ppp/2pbpnb1/p7/2P1p3/PP1P1NPP/1B1N1PB1/R2Q1RK1 w - - 0 13",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-28",
+    "family": "king_safety",
+    "fen": "r4rk1/1pqn1ppp/2pb1nb1/p3p3/2P1P3/PP3NPP/1B1NQPB1/R4RK1 w - - 0 15",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-32",
+    "family": "king_safety",
+    "fen": "r3rnk1/1pq2ppp/2pb1nb1/p3p3/2P1P2N/PP4PP/1B1NQPB1/3R1RK1 w - - 4 17",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-36",
+    "family": "king_safety",
+    "fen": "r3r1k1/1pq2ppp/2p1nnb1/p1b1pN2/2P1P3/PP4PP/1B1NQPBK/3R1R2 w - - 8 19",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-40",
+    "family": "king_safety",
+    "fen": "r3r1k1/1pq2ppp/2p1nn2/p1b1pN2/2P1P3/PP3bPP/1BQ2PBK/3R1R2 w - - 0 21",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-44",
+    "family": "king_safety",
+    "fen": "r3r3/1pq2pkp/2p1nnpN/p1b1p3/2P1P3/PP3BPP/1BQ2P1K/3R1R2 w - - 2 23",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-52",
+    "family": "king_safety",
+    "fen": "r3r3/1p2qpkp/2p3p1/p3p3/2PbP1BP/PP4P1/2Q2P1K/3R1R2 w - - 1 27",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-56",
+    "family": "king_safety",
+    "fen": "3rr3/1p2qpk1/2p3p1/p3p2p/P1PbP1BP/1P4P1/2Q2PK1/3R1R2 w - - 0 29",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-60",
+    "family": "king_safety",
+    "fen": "4r3/1p3pk1/2pr2p1/p1q1p2p/P1PbP2P/1P4PB/4QPK1/3R1R2 w - - 4 31",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-64",
+    "family": "middlegame",
+    "fen": "4r3/5pk1/2pr2p1/pp2p2p/PqPbP2P/1P1R2PB/4QPK1/5R2 w - - 0 33",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-68",
+    "family": "middlegame",
+    "fen": "4r3/5pk1/3r2p1/pq2p2p/3bP2P/1P1R2PB/4QPK1/5R2 w - - 0 35",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-72",
+    "family": "middlegame",
+    "fen": "8/4rpk1/5rp1/pq2p2p/3bP2P/1P1R1PPB/4Q1K1/3R4 w - - 1 37",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-76",
+    "family": "middlegame",
+    "fen": "8/4rpk1/3r2p1/1q2p2p/p1RbP2P/1P1R1PPB/4Q1K1/8 w - - 0 39",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-80",
+    "family": "middlegame",
+    "fen": "8/b3rpk1/1q1r2p1/4p2p/R3P2P/1P3PPB/3RQ1K1/8 w - - 3 41",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-84",
+    "family": "middlegame",
+    "fen": "8/b3rpk1/6p1/4p2p/4P2P/1q3PPB/3Q2K1/R7 w - - 0 43",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-88",
+    "family": "middlegame",
+    "fen": "8/4rpk1/6p1/4p2p/3bP2P/5qPB/R2Q3K/8 w - - 0 45",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-92",
+    "family": "middlegame",
+    "fen": "4r3/5pk1/R5p1/4p2p/3bP2P/1q4P1/3Q2BK/8 w - - 4 47",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-100",
+    "family": "middlegame",
+    "fen": "8/5pk1/R5p1/4p2p/2QbP2P/6PK/6B1/1r4q1 w - - 12 51",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 100
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-104",
+    "family": "middlegame",
+    "fen": "8/5pk1/2R3p1/4p2p/3bP2P/3Q2PK/1q4B1/1r6 w - - 16 53",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_gulko-1-108",
+    "family": "middlegame",
+    "fen": "8/1q3p1k/2R2Qp1/4p2p/3bP2P/6PK/6B1/1r6 w - - 20 55",
+    "source": "Kasparov_Gulko.pgn",
+    "ply": 108
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-12",
+    "family": "opening",
+    "fen": "r1bqk1nr/pp2ppbp/2np2p1/8/2PNP3/4B3/PP3PPP/RN1QKB1R w KQkq - 0 7",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-16",
+    "family": "opening",
+    "fen": "r1bq1rk1/pp2ppbp/2np2pn/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 4 9",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-20",
+    "family": "opening",
+    "fen": "r2q1rk1/pp2ppbp/2np2p1/8/2PNP1b1/2N1B3/PP1Q1PPP/R3K2R w KQ - 0 11",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-24",
+    "family": "king_safety",
+    "fen": "r1r3k1/pp2ppbp/2np2p1/q7/2PNP1b1/2N1B3/PP1Q1PPP/2R2RK1 w - - 4 13",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-28",
+    "family": "king_safety",
+    "fen": "r5k1/1p2ppbp/p1rp2p1/q7/2P1P1b1/1PN1B3/P2Q1PPP/2R2RK1 w - - 0 15",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-32",
+    "family": "king_safety",
+    "fen": "2r5/1p2ppkp/p1rp2p1/q7/2P1P1b1/1PN5/P2Q1PPP/2R2RK1 w - - 0 17",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-36",
+    "family": "king_safety",
+    "fen": "2r5/4p1kp/p1rp1pp1/qp6/2P1PPb1/1PN5/P2Q2PP/2R2R1K w - - 0 19",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-40",
+    "family": "king_safety",
+    "fen": "2r5/4p1kp/p1rp1p2/q4Pp1/2p1P1b1/1PN5/P4QPP/2R2R1K w - - 0 21",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-44",
+    "family": "king_safety",
+    "fen": "8/4p1kp/p1rp1p2/q2N1Pp1/4P1b1/1p6/P4QPP/5R1K w - - 0 23",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-48",
+    "family": "king_safety",
+    "fen": "3q4/Q3p1kp/p1rp1p2/3N1Pp1/4P3/1P6/4b1PP/5R1K w - - 1 25",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-52",
+    "family": "king_safety",
+    "fen": "3q4/Q3p1kp/p1rp1p2/1b1N1P2/4P2p/1P6/6P1/4R2K w - - 0 27",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-56",
+    "family": "king_safety",
+    "fen": "3q3k/4p2p/p2p1p2/1b1N1P2/4P2Q/1P6/2r3P1/4R2K w - - 1 29",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-60",
+    "family": "king_safety",
+    "fen": "7k/4p1qp/p2p1p2/1b1N1P2/4P2Q/1P5R/2r3P1/7K w - - 5 31",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-64",
+    "family": "middlegame",
+    "fen": "4bq1k/4p2p/p2p1p2/5P2/4PN1Q/1P4R1/2r3P1/7K w - - 9 33",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-68",
+    "family": "middlegame",
+    "fen": "4b2k/4p2p/p2pNp2/5P1q/4P2Q/1P4R1/2r3P1/6K1 w - - 13 35",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-72",
+    "family": "rook_endgame",
+    "fen": "7k/4p1Rp/p2pNp2/5P1b/4P3/1P6/4r1P1/6K1 w - - 2 37",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_ivanov-1-76",
+    "family": "rook_endgame",
+    "fen": "7k/R7/p2pNp1p/5P1b/4r3/1P6/6P1/6K1 w - - 0 39",
+    "source": "Kasparov_Ivanov.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-24",
+    "family": "king_safety",
+    "fen": "r3kb1r/ppqn1pp1/2p1pn1p/7P/3P4/5NN1/PPPBQPP1/R3K2R w KQkq - 0 13",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-28",
+    "family": "king_safety",
+    "fen": "r4rk1/ppqn1pp1/2pbpn1p/5N1P/2PP4/5N2/PP1BQPP1/R3K2R w KQ - 3 15",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-32",
+    "family": "king_safety",
+    "fen": "r4rk1/p2n1pp1/2pqpn1p/1p5P/2PP4/2B2N2/PP2QPP1/R3K2R w KQ - 0 17",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-36",
+    "family": "king_safety",
+    "fen": "r4rk1/p2n1pp1/3qp2p/1Q1n3P/3P4/2B2N2/PP3PP1/R3K2R w KQ - 1 19",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-40",
+    "family": "king_safety",
+    "fen": "r4rk1/p4pp1/3qp2p/1Q2P2P/8/2n5/PP3PP1/R3K2R w KQ - 0 21",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-44",
+    "family": "king_safety",
+    "fen": "r2r2k1/p1q2pp1/4p2p/1Q2P2P/8/2P4R/P4PP1/R3K3 w Q - 3 23",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-48",
+    "family": "king_safety",
+    "fen": "3r2k1/p1q2pp1/4p2p/3rP2P/5P2/2P4R/P3Q1P1/R3K3 w Q - 1 25",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-52",
+    "family": "king_safety",
+    "fen": "3r2k1/p4pp1/1q2p2p/1r2P2P/5P2/2P1R3/P3Q1P1/2R1K3 w - - 5 27",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-56",
+    "family": "king_safety",
+    "fen": "3r2k1/p4pp1/1q2p2p/4P2P/5P2/2P1R3/P1R1QKP1/1r6 w - - 9 29",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-60",
+    "family": "king_safety",
+    "fen": "3r2k1/p4pp1/4p2p/2q1P2P/5P2/2P1R1K1/PR2Q1P1/3r4 w - - 13 31",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-64",
+    "family": "middlegame",
+    "fen": "3r2k1/5pp1/4p2p/p3P2P/4QP2/q1P1R1K1/PR4P1/3r4 w - - 2 33",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-68",
+    "family": "middlegame",
+    "fen": "3r2k1/5pp1/4p2p/p1q1P2P/4QPK1/2P1R3/P1R3P1/7r w - - 6 35",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_kapengut-1-72",
+    "family": "middlegame",
+    "fen": "1r4k1/5pp1/4p2p/p1q1P2P/P3QPK1/2P4R/2R3P1/3r4 w - - 1 37",
+    "source": "Kasparov_Kapengut.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-12",
+    "family": "opening",
+    "fen": "r2qkbnr/pp1npppp/2p3b1/8/3P4/5NN1/PPP2PPP/R1BQKB1R w KQkq - 5 7",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-16",
+    "family": "opening",
+    "fen": "r3kbnr/ppqn1ppp/2p1p1b1/8/2BP4/5NN1/PPP1QPPP/R1B1K2R w KQkq - 2 9",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-20",
+    "family": "opening",
+    "fen": "2kr1b1r/ppqn1ppp/2p1pnb1/8/2BP4/2P2NN1/PP2QPPP/R1B2RK1 w - - 1 11",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-24",
+    "family": "king_safety",
+    "fen": "2kr3r/ppqnbppp/2p1p1b1/3n4/P1BP4/2P2NN1/1P2QPPP/R1B1R1K1 w - - 1 13",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-28",
+    "family": "king_safety",
+    "fen": "2krr3/1pqnbppp/p1p1p1b1/P2n4/2BP4/2P2NN1/1P1BQPPP/R3R1K1 w - - 2 15",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-32",
+    "family": "king_safety",
+    "fen": "2krrb2/1pqn2pp/p1p1ppb1/P2n4/1P1P4/2PB1NN1/3BQPPP/R3R1K1 w - - 2 17",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-36",
+    "family": "king_safety",
+    "fen": "2krrb2/1pqn2p1/p1p1pp2/P2n2p1/1P1P3N/2P3N1/3BQPPP/R3R1K1 w - - 0 19",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-40",
+    "family": "king_safety",
+    "fen": "2krrn2/1pq3p1/p1pbppN1/P2n2p1/1P1P2Q1/2P3N1/3B1PPP/R3R1K1 w - - 4 21",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-44",
+    "family": "king_safety",
+    "fen": "2krrb2/1p1q2p1/p1p1Rp2/P2n2p1/1P1P2Q1/2P3N1/3B1PPP/R5K1 w - - 1 23",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-48",
+    "family": "king_safety",
+    "fen": "2kr4/1p1q2p1/p1pbrp2/P2n2p1/1P1P2Q1/2P3NP/3B1PP1/4R1K1 w - - 0 25",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-52",
+    "family": "rook_endgame",
+    "fen": "2kr4/1p4p1/p1p1Rp2/P2n2p1/1P1P4/2P3bP/3B1PP1/6K1 w - - 0 27",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-56",
+    "family": "rook_endgame",
+    "fen": "3r4/3k2p1/p1p2p2/Pp1n2p1/1P1P4/2P3PP/3B2P1/4R1K1 w - b6 0 29",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-60",
+    "family": "rook_endgame",
+    "fen": "3r4/3kn1p1/p1p2p2/Pp6/1P1P3p/2P3P1/3B1KP1/4R3 w - - 0 31",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-64",
+    "family": "rook_endgame",
+    "fen": "7r/3kn3/p1p2p2/Pp4p1/1P1P3P/2P3P1/3B1K2/4R3 w - - 0 33",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-68",
+    "family": "rook_endgame",
+    "fen": "7r/3k4/p1pn1p2/Pp4pP/1P1P4/2P3P1/3B1K2/7R w - - 1 35",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-72",
+    "family": "rook_endgame",
+    "fen": "7r/8/p1p1kp2/Pp4pP/1PnP2P1/2P2K2/3B4/7R w - - 1 37",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-76",
+    "family": "rook_endgame",
+    "fen": "3r4/5k2/p1p2p2/Pp4pP/1PnP2P1/2P2K2/3BR3/8 w - - 5 39",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-80",
+    "family": "rook_endgame",
+    "fen": "8/3r1k2/p1p2p2/Pp4pP/1PnP2P1/2P2KB1/4R3/8 w - - 9 41",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-84",
+    "family": "rook_endgame",
+    "fen": "8/3r1k2/p1p2p2/Pp4pP/1PnP2P1/2PK2B1/4R3/8 w - - 13 43",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-88",
+    "family": "rook_endgame",
+    "fen": "7r/5k1P/p1p2p2/Pp4p1/1PnP2P1/2PK2B1/4R3/8 w - - 1 45",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-92",
+    "family": "rook_endgame",
+    "fen": "7r/4k2P/p4p2/Pp1p2p1/1Pn3P1/2PK2B1/7R/8 w - - 0 47",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-96",
+    "family": "rook_endgame",
+    "fen": "7r/2B4P/p3kp2/Pp1p2p1/1PnK2P1/2P5/7R/8 w - - 4 49",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 96
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-104",
+    "family": "rook_endgame",
+    "fen": "7r/2B1k2P/p1K2p2/Pp4pR/1P6/2P1n3/8/8 w - - 2 53",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-108",
+    "family": "rook_endgame",
+    "fen": "7r/7P/p1K1kp2/PpB2npR/1P6/2P5/8/8 w - - 6 55",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 108
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-112",
+    "family": "rook_endgame",
+    "fen": "7r/3k3P/pK1n1p2/PpB3pR/1P6/2P5/8/8 w - - 10 57",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 112
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-116",
+    "family": "rook_endgame",
+    "fen": "7r/3k3P/pK3p1R/Pp6/1P1Bn1p1/2P5/8/8 w - - 0 59",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 116
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-120",
+    "family": "rook_endgame",
+    "fen": "8/3k3r/pK3R2/Pp6/1P4p1/2P5/8/8 w - - 0 61",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 120
+  },
+  {
+    "id": "pgn-kasparov_kholmov-1-128",
+    "family": "rook_endgame",
+    "fen": "8/1K2k3/p2r4/Pp4R1/1P6/2P5/8/8 w - - 5 65",
+    "source": "Kasparov_Kholmov.pgn",
+    "ply": 128
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-12",
+    "family": "opening",
+    "fen": "r1bqk1nr/ppp2ppp/3p4/2b5/2BpP3/8/PPPP1PPP/RNBQ1RK1 w kq - 0 7",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-16",
+    "family": "opening",
+    "fen": "r1bqk1nr/1pp2ppp/pb1p4/8/PPBpP3/8/2PP1PPP/RNBQ1RK1 w kq - 0 9",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-20",
+    "family": "opening",
+    "fen": "r1bq1rk1/1pp1nppp/pb1p4/7Q/PPBpP3/3P4/2P2PPP/RNB2RK1 w - - 3 11",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-24",
+    "family": "king_safety",
+    "fen": "r2q1rk1/1pp1nppp/pb1p4/6BQ/PPbpP3/3P4/2PN1PPP/R4RK1 w - - 0 13",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-28",
+    "family": "king_safety",
+    "fen": "r4rk1/bpp1qppp/p2p4/7Q/PPNpP3/3P4/2P2PPP/R4RK1 w - - 1 15",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-32",
+    "family": "king_safety",
+    "fen": "1r1r2k1/bpp1qppp/p2p4/3Q4/PPNpP3/3P4/2P2PPP/1R3RK1 w - - 5 17",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-36",
+    "family": "king_safety",
+    "fen": "1r1r2k1/1pp1qppp/3p4/1PbQ4/2NpP3/3P4/2P2PPP/1R3RK1 w - - 1 19",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_kupreichik-1-40",
+    "family": "king_safety",
+    "fen": "1r1r2k1/1p1q1ppp/2pp4/1PbQ4/2NpP3/3P4/2P2PPP/RR4K1 w - - 0 21",
+    "source": "Kasparov_Kupreichik.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-20",
+    "family": "opening",
+    "fen": "r1bq1rk1/4bppp/p2p1n2/npp1p3/4P3/2P2N1P/PPBP1PP1/RNBQR1K1 w - - 0 11",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-24",
+    "family": "king_safety",
+    "fen": "r1b2rk1/2q1bppp/p2p1n2/1ppPp3/2n1P3/2P2N1P/PPB2PP1/RNBQR1K1 w - - 1 13",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-28",
+    "family": "king_safety",
+    "fen": "r4rk1/2qbbppp/p2p1n2/nppPp3/P3P3/1PP2N1P/2B2PP1/RNBQR1K1 w - - 1 15",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-32",
+    "family": "king_safety",
+    "fen": "r4rk1/1nqbbppp/3p1n2/1ppPp3/4P3/1PP2N1P/2BN1PP1/R1BQR1K1 w - - 2 17",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-36",
+    "family": "king_safety",
+    "fen": "r4rk1/1nqbbp1p/3p2p1/1ppPp2n/2P1P3/1P3N1P/1BBN1PP1/R2QR1K1 w - - 1 19",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-40",
+    "family": "king_safety",
+    "fen": "r4rk1/1nq1b2p/3p1pp1/1bpPp2n/2N1P3/1P3N1P/1BB2PP1/R2QR1K1 w - - 0 21",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-44",
+    "family": "king_safety",
+    "fen": "rr3bk1/1nq4p/3p1pp1/1bpPp2n/2N1P3/1PB2N1P/2BQ1PP1/R3R1K1 w - - 4 23",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-48",
+    "family": "king_safety",
+    "fen": "rr4k1/1nq3bp/3p1pp1/1bpPp3/2N1PnN1/1PB4P/2BQ1PP1/R3R1K1 w - - 8 25",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-52",
+    "family": "king_safety",
+    "fen": "rrq3k1/1n4bp/3p1pp1/2pPp3/2b1Pn1P/1PB1N3/2BQ1PP1/R3R1K1 w - - 0 27",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-56",
+    "family": "king_safety",
+    "fen": "r1q3k1/1n5p/3p1ppb/2pPp3/2P1Pn1P/2B1N3/2BQ1PP1/4R1K1 w - - 0 29",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-60",
+    "family": "king_safety",
+    "fen": "2q3k1/1n5p/3p1ppb/2pPp2n/2P1P2P/r1B1N1P1/3Q1P2/3BR1K1 w - - 1 31",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-64",
+    "family": "middlegame",
+    "fen": "q5k1/1n5p/3p1pp1/2pPp2B/2P1P2P/r1B1b1P1/1Q3P2/4R1K1 w - - 0 33",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-68",
+    "family": "middlegame",
+    "fen": "q2n2k1/7p/3p1p2/2pPp2p/2P1P2P/r1B1R1P1/1Q3PK1/8 w - - 2 35",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-72",
+    "family": "middlegame",
+    "fen": "6k1/5n1p/q2p1p2/2pPp2Q/2P1P2P/r1B1R1P1/5PK1/8 w - - 1 37",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-76",
+    "family": "middlegame",
+    "fen": "8/1q3nkp/3p1p2/2pPpQ2/2P1P2P/r1B2RP1/5PK1/8 w - - 5 39",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_kuzmin-1-80",
+    "family": "middlegame",
+    "fen": "5k2/4qn1p/3p1p2/2pPpQ2/2P1P2P/r1B2RP1/5PK1/8 w - - 9 41",
+    "source": "Kasparov_Kuzmin.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-12",
+    "family": "opening",
+    "fen": "rnbq1rk1/pp2bppp/4pn2/2pp4/2PP1B2/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 7",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-16",
+    "family": "opening",
+    "fen": "r1bq1rk1/pp3ppp/2n1pn2/2bp4/2P2B2/2N1PN2/PPQ2PPP/R3KB1R w KQ - 2 9",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-20",
+    "family": "opening",
+    "fen": "r1b2rk1/pp2qppp/2n1pn2/2b5/2Pp1B2/P1N1PN2/1PQ2PPP/3RKB1R w K - 0 11",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-24",
+    "family": "king_safety",
+    "fen": "r1br2k1/pp2qppp/2n1pn2/8/2PP1B2/P1N5/1PQ2PPP/3RKB1R w K - 1 13",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-28",
+    "family": "king_safety",
+    "fen": "r1br2k1/pp2qppp/2n5/4p3/2PP2n1/P1N1B3/1PQ1BPPP/3RK2R w K - 0 15",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-32",
+    "family": "king_safety",
+    "fen": "r1br2k1/pp2qppp/8/3P4/2Pp2n1/P1N5/1PQ1BPPP/3RK2R w K - 0 17",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-36",
+    "family": "king_safety",
+    "fen": "r1b1r1k1/pp3ppp/8/3P4/2PQ2nq/P1N5/1P2BPPP/3RK2R w K - 1 19",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-40",
+    "family": "king_safety",
+    "fen": "r3r1k1/pp3ppp/7q/3P1b2/2PQ2n1/P1NR3P/1P2BPP1/4K2R w K - 1 21",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-44",
+    "family": "king_safety",
+    "fen": "3rr1k1/pp3ppp/7q/3Pnb2/2PQ4/P1N4P/1P1RBPP1/5RK1 w - - 5 23",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-48",
+    "family": "king_safety",
+    "fen": "3rr1k1/p4ppp/1p4nq/3P1b2/2P2P2/P1N4P/1P1RBQP1/5RK1 w - - 0 25",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_lputian-1-52",
+    "family": "king_safety",
+    "fen": "3rr1k1/p5pp/1p4nq/3P1p2/1PP1bP2/P1NB3P/3R1QP1/5RK1 w - - 0 27",
+    "source": "Kasparov_Lputian.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-12",
+    "family": "opening",
+    "fen": "r2qkbnr/pppnpppp/3p4/4P3/3P4/2N2b1P/PPP2PP1/R1BQKB1R w KQkq - 0 7",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-16",
+    "family": "opening",
+    "fen": "r2qkbnr/pp1npppp/2p5/3pP3/3P1B2/2N2Q1P/PPP2PP1/R3KB1R w KQkq - 0 9",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-20",
+    "family": "opening",
+    "fen": "r2qkb1r/pp1np1pp/2p1pn2/3p4/3P1B2/2NB1Q1P/PPP2PP1/R3K2R w KQkq - 2 11",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-24",
+    "family": "king_safety",
+    "fen": "r2qk2r/pp1np1bp/2p1Qnp1/3p4/3P1B2/2NB3P/PPP2PP1/R3K2R w KQkq - 1 13",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-28",
+    "family": "king_safety",
+    "fen": "r2qkn1r/pp2p1bp/2p1Q1p1/3p2Bn/3P4/2NB3P/PPP2PP1/R4RK1 w kq - 5 15",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-32",
+    "family": "king_safety",
+    "fen": "r3kn1r/pp2p1bp/2pq1np1/3p2B1/3P4/2NB3P/PPP1QPP1/R4RK1 w kq - 9 17",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-36",
+    "family": "king_safety",
+    "fen": "r4n1r/pp3kbp/2pqpnp1/3p2B1/N2P4/3B3P/PPP1QPP1/4RRK1 w - - 2 19",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-40",
+    "family": "king_safety",
+    "fen": "4rn1r/p4kbp/1ppqpnp1/3p2B1/NP1P4/3B3P/P1PQ1PP1/4RRK1 w - - 2 21",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-44",
+    "family": "king_safety",
+    "fen": "4rn1r/p4kbp/1pp1pnp1/1P1p4/N2P1B2/q2B3P/P1PQ1PP1/4RRK1 w - - 1 23",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-48",
+    "family": "king_safety",
+    "fen": "4rn1r/p4kbp/1p2pnp1/1Ppp4/q2P1B2/3B3P/P1PQ1PP1/1N2RRK1 w - - 2 25",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-52",
+    "family": "king_safety",
+    "fen": "4r2r/p2n1kbp/4pnp1/1Ppp4/q1P2B2/3B3P/P2Q1PP1/1N2RRK1 w - - 1 27",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-56",
+    "family": "king_safety",
+    "fen": "3qr2r/p2n1kbp/4pnp1/1Ppp4/2P2B2/2NB3P/P1Q2PP1/4RRK1 w - - 5 29",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-60",
+    "family": "king_safety",
+    "fen": "3qr2r/p4kbp/1n2pnp1/1Pp3B1/P1p5/2NB3P/2Q2PP1/4RRK1 w - - 0 31",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-64",
+    "family": "middlegame",
+    "fen": "3q3r/p2nrkbp/4pnp1/PPp3B1/2p1B3/2N4P/2Q2PP1/4RRK1 w - - 1 33",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-68",
+    "family": "middlegame",
+    "fen": "1n5r/p3rkbp/2B1pnp1/qPp3B1/2p5/2N4P/2Q2PP1/3R1RK1 w - - 0 35",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-72",
+    "family": "middlegame",
+    "fen": "5r2/p3rkbp/2n1pnp1/qPp5/2p1NB2/7P/2Q2PP1/3R1RK1 w - - 0 37",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-76",
+    "family": "middlegame",
+    "fen": "4nr2/p2r1kbp/2P1p1p1/q1p5/2p1NB2/7P/2Q2PP1/5RK1 w - - 0 39",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-80",
+    "family": "middlegame",
+    "fen": "5r2/p2Pk1bp/3Npnp1/q1p5/2p2B2/7P/2Q2PP1/5RK1 w - - 3 41",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-84",
+    "family": "middlegame",
+    "fen": "5r2/p2k2bp/q2Bpnp1/2p5/2N5/7P/2Q2PP1/5RK1 w - - 0 43",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-88",
+    "family": "middlegame",
+    "fen": "5b2/p3k2p/q3pnp1/2p5/2N5/3Q3P/5PP1/5RK1 w - - 2 45",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-92",
+    "family": "middlegame",
+    "fen": "5b2/p4k1p/q3p1p1/2pn4/2N1Q3/7P/5PP1/3R2K1 w - - 6 47",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-96",
+    "family": "middlegame",
+    "fen": "5bk1/p2N3p/q3p1p1/3n4/2p1Q3/7P/5PP1/3R2K1 w - - 0 49",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 96
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-100",
+    "family": "middlegame",
+    "fen": "5bk1/pR1N3p/3qp1p1/3n4/4Q3/2p4P/5PP1/6K1 w - - 0 51",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 100
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-104",
+    "family": "middlegame",
+    "fen": "5k2/p6R/4p1p1/3n4/4Qq2/2p4P/5PP1/6K1 w - - 1 53",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-108",
+    "family": "rook_endgame",
+    "fen": "5k2/7R/4p1p1/p7/5n2/2p4P/5PP1/5K2 w - - 0 55",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 108
+  },
+  {
+    "id": "pgn-kasparov_lutikov-1-112",
+    "family": "rook_endgame",
+    "fen": "8/5k2/4p1p1/R2n4/8/2p4P/5PP1/5K2 w - - 1 57",
+    "source": "Kasparov_Lutikov.pgn",
+    "ply": 112
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin-1-28",
+    "family": "king_safety",
+    "fen": "2r1kb1r/ppqn1pp1/4pn1p/2p4P/3P3R/5NN1/PPPBQPP1/2KR4 w k - 2 15",
+    "source": "Kasparov_Mikhalchishin.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin-1-32",
+    "family": "king_safety",
+    "fen": "2r1kb1r/pp1n1pp1/4pn1p/5N1P/2qN3R/8/PPPBQPP1/2KR4 w k - 1 17",
+    "source": "Kasparov_Mikhalchishin.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-12",
+    "family": "opening",
+    "fen": "rnbqkb1r/1p3ppp/p2ppn2/8/3NPP2/2N5/PPP3PP/R1BQKB1R w KQkq - 0 7",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-16",
+    "family": "opening",
+    "fen": "rnb1kb1r/1pq2ppp/p2ppn2/8/4PP2/1NN2Q2/PPP3PP/R1B1KB1R w KQkq - 4 9",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-20",
+    "family": "opening",
+    "fen": "rnb1kb1r/2q2ppp/p2ppn2/8/1p2PPP1/1NNB1Q2/PPP4P/R1B1K2R w KQkq - 0 11",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-24",
+    "family": "king_safety",
+    "fen": "rn2kb1r/1bqn1ppp/p2pp3/6P1/1p2PP2/1N1B1Q2/PPP1N2P/R1B1K2R w KQkq - 1 13",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-28",
+    "family": "king_safety",
+    "fen": "r3kb1r/1bq2ppp/p1npp3/2n3P1/1p1NPP2/3B1Q2/PPPBN2P/R3K2R w KQkq - 5 15",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-32",
+    "family": "king_safety",
+    "fen": "r3kb1r/1b1q1ppp/p2pp3/2n3P1/1p1NPP2/3B1Q2/PPPB3P/R3K2R w KQkq - 2 17",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-36",
+    "family": "king_safety",
+    "fen": "r3kb1r/1b3ppp/p2pp3/2n3P1/q2NPP2/1p1B1Q2/PPPB3P/1K1R3R w kq - 0 19",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-40",
+    "family": "king_safety",
+    "fen": "r3kb1r/1b3p1p/p2pp1p1/6P1/q3nP2/1N1B4/PPPB3P/1K1R1Q1R w kq - 0 21",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-44",
+    "family": "king_safety",
+    "fen": "r4rk1/1b3pbp/p2pp1p1/6P1/q3nP1P/1N1B4/PPP5/1K1RBQ1R w - - 1 23",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-48",
+    "family": "king_safety",
+    "fen": "r4rk1/1b3pbp/p2pp1p1/6PP/q4P1R/1N1n4/PPP5/1K1RBQ2 w - - 0 25",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-52",
+    "family": "king_safety",
+    "fen": "r4rk1/6bp/p2pp1p1/6P1/q3bP1R/1N1R4/PPP5/1K2BQ2 w - - 0 27",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-56",
+    "family": "king_safety",
+    "fen": "2r2rk1/6bp/p2pp1p1/5bP1/q4P2/1NR5/PPP4R/1K2BQ2 w - - 4 29",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-60",
+    "family": "king_safety",
+    "fen": "2r2rk1/7p/p2p2p1/4pbP1/q4P2/1NB5/PPP2Q1R/1K6 w - - 0 31",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-72",
+    "family": "middlegame",
+    "fen": "6k1/5b1p/p2P2p1/1q4P1/8/2P1Q3/P1P4R/K1N2r2 w - - 1 37",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-76",
+    "family": "middlegame",
+    "fen": "6k1/5b1p/p2P2p1/6q1/8/2P5/P1P2Q2/K1N5 w - - 0 39",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-80",
+    "family": "middlegame",
+    "fen": "6k1/5b2/p2P2p1/6q1/3Q3p/2P5/PKP5/2N5 w - - 0 41",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-84",
+    "family": "middlegame",
+    "fen": "3q2k1/3P1b2/p5p1/8/3Q4/2PN3p/PKP5/8 w - - 1 43",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 84
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-88",
+    "family": "middlegame",
+    "fen": "6k1/3q1b2/p1N3p1/8/3Q4/2P5/PKP4p/8 w - - 0 45",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-92",
+    "family": "middlegame",
+    "fen": "6k1/3Q1b2/p5p1/4N3/8/2P5/PKP5/5q2 w - - 2 47",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 92
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-96",
+    "family": "middlegame",
+    "fen": "2Q5/5qk1/p5p1/8/8/2P5/PKP5/8 w - - 2 49",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 96
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-100",
+    "family": "middlegame",
+    "fen": "8/5qk1/Q7/8/P5p1/2P5/1KP5/8 w - - 0 51",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 100
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-104",
+    "family": "middlegame",
+    "fen": "8/6k1/6q1/PQ6/8/2P3p1/1KP5/8 w - - 0 53",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 104
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-108",
+    "family": "middlegame",
+    "fen": "8/1Q6/P5qk/8/8/2P5/1KP3p1/8 w - - 2 55",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 108
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-120",
+    "family": "middlegame",
+    "fen": "5Q2/8/6k1/8/2q5/2P5/2P5/K7 w - - 6 61",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 120
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-124",
+    "family": "middlegame",
+    "fen": "8/7k/8/8/1Q6/2P5/1KP5/5q2 w - - 10 63",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 124
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-128",
+    "family": "middlegame",
+    "fen": "7k/8/8/3Q4/8/2P5/1KP5/5q2 w - - 14 65",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 128
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-132",
+    "family": "middlegame",
+    "fen": "7k/8/8/6Q1/8/2P5/1KP5/5q2 w - - 18 67",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 132
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-136",
+    "family": "middlegame",
+    "fen": "6k1/3Q4/8/8/8/2P5/1KP5/5q2 w - - 22 69",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 136
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-140",
+    "family": "middlegame",
+    "fen": "6k1/4Q3/8/8/8/2P5/1KP5/5q2 w - - 26 71",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 140
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-144",
+    "family": "middlegame",
+    "fen": "7k/3Q4/8/8/8/2P5/1KP5/5q2 w - - 30 73",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 144
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-148",
+    "family": "middlegame",
+    "fen": "5qk1/8/8/8/2PQ4/8/1KP5/8 w - - 1 75",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 148
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-152",
+    "family": "middlegame",
+    "fen": "5q2/7k/8/4Q3/2P5/8/1KP5/8 w - - 5 77",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 152
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-156",
+    "family": "middlegame",
+    "fen": "5q2/7k/8/3Q4/2P5/8/1KP5/8 w - - 9 79",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 156
+  },
+  {
+    "id": "pgn-kasparov_mikhalchishin2-1-160",
+    "family": "middlegame",
+    "fen": "1q5k/8/8/2PQ4/8/2K5/2P5/8 w - - 3 81",
+    "source": "Kasparov_Mikhalchishin2.pgn",
+    "ply": 160
+  },
+  {
+    "id": "pgn-kasparov_murray-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp1p1ppp/2n1p3/3nP3/3P4/5N2/PP3PPP/RNBQKB1R w KQkq - 0 7",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_murray-1-20",
+    "family": "opening",
+    "fen": "r1b1kb1r/pp3ppp/1qnpp3/4P3/3P4/P1nB1N2/1P1B1PPP/R2QK2R w KQkq - 0 11",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_murray-1-24",
+    "family": "king_safety",
+    "fen": "r1b1k2r/pp2bppp/1qn1p3/4P3/8/P1BB1N2/1P3PPP/R2QK2R w KQkq - 1 13",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_murray-1-28",
+    "family": "king_safety",
+    "fen": "r3k2r/ppqbbppp/2n1p3/4P3/8/P1BB4/1P1N1PPP/R2Q1RK1 w kq - 5 15",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_murray-1-32",
+    "family": "king_safety",
+    "fen": "1k1r3r/ppqbbppp/2n1p3/4P3/6Q1/P1BB4/1P1N1PPP/R1R3K1 w - - 9 17",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_murray-1-36",
+    "family": "king_safety",
+    "fen": "1kr4r/ppqbb1pp/2n1pp2/4P3/1PQ5/P1BB4/3N1PPP/R1R3K1 w - - 0 19",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_murray-1-40",
+    "family": "king_safety",
+    "fen": "1kr4r/pp1bb1pp/1qn1p3/4Pp2/1P2Q3/P1BB1N2/5PPP/R1R3K1 w - - 0 21",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_murray-1-44",
+    "family": "king_safety",
+    "fen": "1kr4r/1p1bb2p/pqn1p3/4Ppp1/1P6/P1BB1N2/5PPP/1RR1Q1K1 w - - 0 23",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_murray-1-48",
+    "family": "king_safety",
+    "fen": "1k5r/1p1bb2p/pq2p3/4Ppp1/1P1n4/P1rBQ3/3N1PPP/1RR3K1 w - - 0 25",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_murray-1-52",
+    "family": "king_safety",
+    "fen": "1k5r/1p1bb2p/pq2p3/4P3/1P1n1pp1/P1RB4/3N1PPP/1R2Q1K1 w - - 0 27",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_murray-1-56",
+    "family": "king_safety",
+    "fen": "7r/kp2b2p/pqb1p3/2N1P3/1P1n1pp1/P1RB4/5PPP/1R2Q1K1 w - - 4 29",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_murray-1-60",
+    "family": "king_safety",
+    "fen": "3q3r/kp2b2p/p3p3/P1N1P3/1P1n1pp1/2RB1b2/5PPP/1R2Q1K1 w - - 1 31",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_murray-1-64",
+    "family": "middlegame",
+    "fen": "7r/kp5p/p3p3/P1P1P3/2Bn1ppq/2R2b2/5PPP/1R2Q1K1 w - - 1 33",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_murray-1-68",
+    "family": "middlegame",
+    "fen": "6r1/kp5p/p3p3/P1P1P3/2Bn1p1q/2R2p2/5P1P/1R2Q2K w - - 2 35",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_murray-1-72",
+    "family": "middlegame",
+    "fen": "8/kp4rp/p3p3/P1P1P1q1/2BQ1p2/2R2p2/5P1P/1R5K w - - 1 37",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_murray-1-76",
+    "family": "middlegame",
+    "fen": "1k6/1pr4p/p3p3/P3P1q1/2BQ1p2/2R2p2/5P1P/1R5K w - - 0 39",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_murray-1-80",
+    "family": "middlegame",
+    "fen": "1kr3R1/1p5p/p3p3/P3P2q/2BQ1p2/2R2p2/5P1P/7K w - - 4 41",
+    "source": "Kasparov_Murray.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-12",
+    "family": "opening",
+    "fen": "r1bq1rk1/pppnppbp/3p1np1/8/2PP4/1P3NP1/PB2PP1P/RN1QKB1R w KQ - 1 7",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-16",
+    "family": "opening",
+    "fen": "r1bqr1k1/pppn1pbp/3p1np1/4p3/2PP4/1P2PNP1/PB3PBP/RN1QK2R w KQ - 1 9",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-20",
+    "family": "opening",
+    "fen": "r1bqrnk1/ppp2pbp/3p1np1/8/2PPp3/1P2P1P1/PB1N1PBP/RN1Q1RK1 w - - 2 11",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-24",
+    "family": "king_safety",
+    "fen": "r2qrnk1/ppp2pbp/3p1np1/5b2/2PP4/1PN1PpP1/PB1N2BP/R2Q1RK1 w - - 0 13",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-28",
+    "family": "king_safety",
+    "fen": "r2qrnk1/pp3pbp/2pp1np1/8/2PPP1b1/1PN2QP1/PB1N2BP/R4RK1 w - - 1 15",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-32",
+    "family": "king_safety",
+    "fen": "r3rnk1/pp3pbp/2ppbnp1/q1P5/3PP3/1PN3P1/PB1N1QBP/R4RK1 w - - 1 17",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-36",
+    "family": "king_safety",
+    "fen": "r3rnk1/pp3pbp/2p1bnp1/q3P3/3p4/1PN3PP/PB1N1QB1/R4RK1 w - - 0 19",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-40",
+    "family": "king_safety",
+    "fen": "3rrnk1/pp3p1p/2p1bPpb/q7/3Q4/1PN3PP/PB1N2B1/R4RK1 w - - 1 21",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-48",
+    "family": "king_safety",
+    "fen": "4rnk1/pp3p1p/1qp2Ppb/8/N1r5/1P4PP/PB4B1/R4R1K w - - 0 25",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-52",
+    "family": "middlegame",
+    "fen": "5nk1/pp3p1p/2p2Ppb/8/2N5/1P4PP/PBr1r1B1/R4R1K w - - 3 27",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_nikolaevsky-1-56",
+    "family": "middlegame",
+    "fen": "5nk1/p4p1p/2p2Ppb/1p6/2N5/1P3BPP/PBr4r/R4RK1 w - - 0 29",
+    "source": "Kasparov_Nikolaevsky.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_nir-1-12",
+    "family": "opening",
+    "fen": "r1bqk2r/pp1p1ppp/2n1pn2/1N6/1b2P3/2N5/PPP2PPP/R1BQKB1R w KQkq - 2 7",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_nir-1-16",
+    "family": "opening",
+    "fen": "r1bqk2r/pp3ppp/2n1pn2/3p4/4P3/P1N5/1PP2PPP/R1BQKB1R w KQkq - 0 9",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_nir-1-20",
+    "family": "opening",
+    "fen": "r1bq1rk1/pp3ppp/2n2n2/3p4/8/P1NB4/1PP2PPP/R1BQK2R w KQ - 2 11",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_nir-1-24",
+    "family": "king_safety",
+    "fen": "r2q1rk1/pp3ppp/2n2n2/5b2/3pN3/P2B4/1PP2PPP/R1BQ1RK1 w - - 2 13",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_nir-1-28",
+    "family": "king_safety",
+    "fen": "r2q1rk1/pp3pp1/2n2n1p/6B1/3pB3/P7/1PP2PPP/R2Q1RK1 w - - 0 15",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_nir-1-32",
+    "family": "king_safety",
+    "fen": "r3r1k1/pp3pp1/2n2q1p/7Q/3pB3/P7/1PP2PPP/R4RK1 w - - 2 17",
+    "source": "Kasparov_Nir.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-12",
+    "family": "opening",
+    "fen": "rnbqkb1r/1pp1pp1p/1n1p2p1/p3P3/3P4/1B3N2/PPP2PPP/RNBQK2R w KQkq - 0 7",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-16",
+    "family": "opening",
+    "fen": "rnbqk2r/1pp2pbp/1n1pp1p1/p3P1N1/P2P4/1B6/1PP2PPP/RNBQK2R w KQkq - 0 9",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-20",
+    "family": "opening",
+    "fen": "rnbqk2r/1p3pbp/1n2p1p1/p1p1P1N1/P2P4/1B6/1PP3PP/RNBQK2R w KQkq - 0 11",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-24",
+    "family": "king_safety",
+    "fen": "r1bq1rk1/1p3pbp/1nn1p1p1/p1p1P1N1/P2P4/1BP5/1P4PP/RNBQ1RK1 w - - 1 13",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-28",
+    "family": "king_safety",
+    "fen": "r1bq1rk1/1p1nnpbp/4p1p1/p1p1P3/P2PN3/1BP1B3/1P4PP/RN1Q1RK1 w - - 5 15",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-32",
+    "family": "king_safety",
+    "fen": "r1bq1rk1/1p1nnpb1/4p1pp/p3P1B1/P2PN3/1B6/1P4PP/RN1Q1RK1 w - - 0 17",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-36",
+    "family": "king_safety",
+    "fen": "r1bq1rk1/1p1n1pb1/4p1np/p3P1p1/P2PN3/1B6/1P3BPP/RN1Q1RK1 w - - 2 19",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-40",
+    "family": "king_safety",
+    "fen": "r1b2rk1/3nqpb1/1p2p1np/p3P1p1/P2PN3/2N5/1PB2BPP/R2Q1RK1 w - - 0 21",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-44",
+    "family": "king_safety",
+    "fen": "r4rkn/3nqpb1/bp2p2p/p3P1p1/P2PN3/2N1B3/1PB2RPP/R2Q2K1 w - - 4 23",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-48",
+    "family": "king_safety",
+    "fen": "r4rkn/3nq1b1/bp2p3/p3PppQ/P2PN3/2N5/1PB2RPP/R5K1 w - f6 0 25",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-52",
+    "family": "king_safety",
+    "fen": "r5kn/3nq1b1/bp2p3/p3PrNQ/P2P4/2N5/1P3RPP/R5K1 w - - 0 27",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-56",
+    "family": "king_safety",
+    "fen": "r3q1kn/3n2b1/bp6/p2NPpNQ/P2P4/8/1P4PP/R5K1 w - - 2 29",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-60",
+    "family": "king_safety",
+    "fen": "r3q1kn/3n2b1/bp6/p2NPQN1/P2P4/8/1P4PP/R5K1 w - - 1 31",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-64",
+    "family": "middlegame",
+    "fen": "2r1qk1n/3n2bQ/bp6/p2NP1N1/P2P4/R7/1P4PP/6K1 w - - 5 33",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-68",
+    "family": "middlegame",
+    "fen": "2r2k1n/6bQ/bp3nq1/p2NP1N1/P2P4/5R1P/1P4P1/6K1 w - - 1 35",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_palatnik-1-72",
+    "family": "middlegame",
+    "fen": "2r1k2n/7Q/bp2Nbq1/p2NP3/P2P4/7P/1P4P1/6K1 w - - 2 37",
+    "source": "Kasparov_Palatnik.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp3ppp/2nppn2/6B1/3NP3/2N5/PPP2PPP/R2QKB1R w KQkq - 0 7",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-16",
+    "family": "opening",
+    "fen": "r2qkb1r/1p1b1ppp/p1nppn2/6B1/3NP3/2N5/PPPQ1PPP/2KR1B1R w kq - 2 9",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-20",
+    "family": "opening",
+    "fen": "r2qkb1r/5ppp/p1bppn2/1p4B1/4PP2/2N5/PPPQ2PP/2KR1B1R w kq - 0 11",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-24",
+    "family": "king_safety",
+    "fen": "r2qk2r/4bppp/p1b1pn2/1p2p1B1/5P2/2NB4/PPPQ2PP/2KR3R w kq - 0 13",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-28",
+    "family": "king_safety",
+    "fen": "r3k2r/3nqppp/p1b1p3/1p2P3/8/2NB4/PPPQ2PP/2KR3R w kq - 0 15",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-32",
+    "family": "king_safety",
+    "fen": "r3k2r/4qppp/p3p3/1p2n3/4N3/8/PPPQ2PP/2KR3R w kq - 0 17",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-36",
+    "family": "king_safety",
+    "fen": "r4k1r/4q1pp/p2Npp2/1p2n3/3Q4/8/PPP3PP/2KR3R w - - 2 19",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-40",
+    "family": "king_safety",
+    "fen": "r5kr/4q1p1/p2Npp1p/1p2n3/3Q2P1/8/PPP4P/2KR1R2 w - - 0 21",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-44",
+    "family": "king_safety",
+    "fen": "5rkr/4qnp1/p2Npp1p/1p6/4Q1PP/8/PPP5/2KR1R2 w - - 3 23",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-48",
+    "family": "king_safety",
+    "fen": "4qrkr/5np1/p4p1p/1p2p3/3NQ1PP/8/PPP5/2KR1R2 w - - 0 25",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-52",
+    "family": "king_safety",
+    "fen": "4qrk1/5npr/p4p2/1p2pN1p/4Q1PP/8/PPP5/2KR2R1 w - - 2 27",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-56",
+    "family": "king_safety",
+    "fen": "5r1k/1Q3npr/p3qp2/1p2pN1P/7P/8/PPP5/2KR2R1 w - - 1 29",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-60",
+    "family": "king_safety",
+    "fen": "6rk/4QnNr/p4p2/1p2p2P/7P/8/qPP5/2KR2R1 w - - 2 31",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_panchenko-1-68",
+    "family": "middlegame",
+    "fen": "7k/5nr1/p4Q2/qp2p2P/7P/8/1PP1K3/3R4 w - - 0 35",
+    "source": "Kasparov_Panchenko.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-12",
+    "family": "opening",
+    "fen": "rnb1kbnr/2qp1ppp/p3p3/1p6/3NP3/2N5/PPP1BPPP/R1BQK2R w KQkq - 0 7",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-16",
+    "family": "opening",
+    "fen": "r3kbnr/1bqp1ppp/p1n1p3/1p6/3NP3/2N2B2/PPP2PPP/R1BQ1RK1 w kq - 4 9",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-20",
+    "family": "opening",
+    "fen": "r3kbnr/1b3ppp/p1p1p3/1p2q3/8/2N2B2/PPP2PPP/R1BQ1RK1 w kq - 0 11",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-24",
+    "family": "king_safety",
+    "fen": "r3k1nr/1bq1bppp/p1p1p3/1p5B/8/2N5/PPP2PPP/R1BQR1K1 w kq - 4 13",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-28",
+    "family": "king_safety",
+    "fen": "3rk1nr/1bq1bp1p/p1p3p1/1p5B/8/2N5/PPP2PPP/R1BQR1K1 w k - 2 15",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-32",
+    "family": "king_safety",
+    "fen": "3rk1nr/1b2bp1p/pq4p1/1pp4B/5B2/2N2Q2/PPP2PPP/R3R1K1 w k - 2 17",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-36",
+    "family": "king_safety",
+    "fen": "3rk1nr/1bB1bp1p/p5q1/1pp4p/8/2N3Q1/PPP2PPP/R3R1K1 w k - 2 19",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-40",
+    "family": "middlegame",
+    "fen": "3k2nr/1b2bp1p/p7/1pp4p/8/2N3P1/PPP2PP1/R3R1K1 w - - 0 21",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-44",
+    "family": "rook_endgame",
+    "fen": "6nr/2k1bp1p/p7/1ppb3p/8/6P1/PPP2PP1/3RR1K1 w - - 0 23",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-48",
+    "family": "rook_endgame",
+    "fen": "6n1/2k1bp1r/p6p/1pp4R/8/6P1/PPP2PP1/4R1K1 w - - 1 25",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-52",
+    "family": "rook_endgame",
+    "fen": "6n1/3kbpr1/p6p/1pp5/8/4R1P1/PPP2PP1/4R1K1 w - - 5 27",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-56",
+    "family": "rook_endgame",
+    "fen": "6n1/2k1bp2/p5rp/1pp5/8/R5P1/PPP2PP1/4R1K1 w - - 9 29",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-60",
+    "family": "rook_endgame",
+    "fen": "6n1/3k1p2/p4brp/1pp5/8/2P2RP1/PP3PP1/4R1K1 w - - 1 31",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-64",
+    "family": "rook_endgame",
+    "fen": "4R3/2k1np2/p4brp/1pp5/8/2PR2P1/PP3PP1/6K1 w - - 5 33",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-68",
+    "family": "rook_endgame",
+    "fen": "8/3R1p2/pkn2brp/1pp5/8/2PR2P1/PP3PP1/6K1 w - - 9 35",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-72",
+    "family": "rook_endgame",
+    "fen": "8/5R2/pknb2rp/1pp5/8/2P1R1P1/PP3PP1/6K1 w - - 3 37",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-76",
+    "family": "rook_endgame",
+    "fen": "8/5R2/pkn3rp/1pb5/2p2P2/2P1R1P1/PP4PK/8 w - - 2 39",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-80",
+    "family": "rook_endgame",
+    "fen": "8/5R2/pkn3rp/2b5/2p1RP2/2p3P1/PP4PK/8 w - - 0 41",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 80
+  },
+  {
+    "id": "pgn-kasparov_polugaevsky-1-88",
+    "family": "rook_endgame",
+    "fen": "8/5R2/pk4rp/n7/P1R2P2/2P4K/6P1/4b3 w - - 1 45",
+    "source": "Kasparov_Polugaevsky.pgn",
+    "ply": 88
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/1p2pppp/p1np1n2/8/P2NP3/2N5/1PP2PPP/R1BQKB1R w KQkq - 1 7",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-16",
+    "family": "opening",
+    "fen": "r1bqk2r/1p2bppp/p1nppn2/8/P2NP3/2N5/1PP1BPPP/R1BQ1RK1 w kq - 2 9",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-20",
+    "family": "opening",
+    "fen": "r1b2rk1/1pq1bppp/p1nppn2/8/P2NPP2/2N1B3/1PP1B1PP/R2Q1RK1 w - - 1 11",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-24",
+    "family": "king_safety",
+    "fen": "1rb1r1k1/1pq1bppp/p1nppn2/8/P2NPP2/2N1BB2/1PP3PP/R2Q1R1K w - - 5 13",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-28",
+    "family": "king_safety",
+    "fen": "1rb1rbk1/1pqn1ppp/p1npp3/8/P2NPP2/2N2B2/1PP2BPP/R2QR2K w - - 9 15",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-32",
+    "family": "king_safety",
+    "fen": "1rb1rbk1/2qn1ppp/pp1pp3/8/P2BPP2/2N2B2/1PP1Q1PP/R3R2K w - - 0 17",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-36",
+    "family": "king_safety",
+    "fen": "1rb1r1k1/2qn1ppp/pp2p3/4P3/Pb1B4/2N2B2/1PP1Q1PP/R3R2K w - - 1 19",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-40",
+    "family": "king_safety",
+    "fen": "1rb1r1k1/2q2ppp/pp2p1n1/4P3/Pb1B4/2N2B2/1PP1Q1PP/3R1R1K w - - 5 21",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-44",
+    "family": "king_safety",
+    "fen": "1rb1r1k1/2q2ppp/pp2p1n1/7B/Pb1BN3/8/1PP1Q1PP/3R1R1K w - - 2 23",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-48",
+    "family": "king_safety",
+    "fen": "1rb1r1k1/2q2pp1/pp4p1/4p1N1/Pb1B4/8/1PP1Q1PP/3R1R1K w - - 0 25",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-52",
+    "family": "king_safety",
+    "fen": "2b1r1k1/1r3Rp1/ppq3p1/4B1N1/Pb6/8/1PP1Q1PP/3R3K w - - 1 27",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-56",
+    "family": "king_safety",
+    "fen": "4r1k1/1q4p1/pp4p1/4B1N1/Pb4b1/8/1PP2QPP/3R3K w - - 0 29",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-60",
+    "family": "king_safety",
+    "fen": "4r2k/1q4p1/pp4p1/4B1Nb/PbQ5/8/1PP3PP/3R3K w - - 4 31",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-64",
+    "family": "middlegame",
+    "fen": "4rb1k/1q4p1/pp4p1/4B1Nb/PPQ5/8/2P3PP/5R1K w - - 1 33",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_razuvaev-1-68",
+    "family": "middlegame",
+    "fen": "2q1rb1k/5Rp1/1p4p1/p3B1Nb/PP3Q2/8/2P3PP/7K w - - 0 35",
+    "source": "Kasparov_Razuvaev.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-12",
+    "family": "opening",
+    "fen": "r1bqkb1r/pp3ppp/2np1n2/1N2p3/4P3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 7",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-16",
+    "family": "opening",
+    "fen": "r2qkb1r/1p3ppp/p1npbn2/4p1B1/4P3/N1N5/PPP2PPP/R2QKB1R w KQkq - 2 9",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-20",
+    "family": "opening",
+    "fen": "2rqk2r/1p2bppp/p1npbn2/4p1B1/4P3/2N1N3/PPP2PPP/R2QKB1R w KQk - 6 11",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-24",
+    "family": "king_safety",
+    "fen": "2rq1rk1/1p3ppp/p1npbb2/4p3/2B1P3/2N1N3/PPP2PPP/R2QK2R w KQ - 2 13",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-28",
+    "family": "king_safety",
+    "fen": "2rq1rk1/1p3ppp/p2pb3/4p1b1/3nP3/1BN1N3/PPP2PPP/R2Q1RK1 w - - 6 15",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-32",
+    "family": "king_safety",
+    "fen": "2rq1rk1/1p3p1p/p2pb1p1/3Np1b1/4P3/1P2N3/1PP2PPP/R2Q1RK1 w - - 0 17",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-36",
+    "family": "king_safety",
+    "fen": "2rq1rk1/1p5p/p2pb1pb/3Npp2/4P3/1P1QN3/1PP2PPP/R4R1K w - - 0 19",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-40",
+    "family": "king_safety",
+    "fen": "2rq1r1k/1p5p/p2pb2b/3Npp2/5P2/1P1QN3/1PP3PP/R4R1K w - - 1 21",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-44",
+    "family": "king_safety",
+    "fen": "2r2r1k/1p5p/p2pb2b/3N1p2/5p1q/1P2N3/1PP1Q1PP/3R1R1K w - - 0 23",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-48",
+    "family": "king_safety",
+    "fen": "2r2r1k/1p5p/p2p3b/3N1p1b/2N2p1q/1P1Q4/1PP3PP/3R1R1K w - - 4 25",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-52",
+    "family": "king_safety",
+    "fen": "2N2r1k/1p5p/p6b/3N1p1b/5p1q/1P1Q4/1PP3PP/5R1K w - - 1 27",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-56",
+    "family": "king_safety",
+    "fen": "5r1k/1p2N2p/p6b/3N1p1b/8/1P1Q1P1q/1PP4P/5R1K w - - 1 29",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-60",
+    "family": "king_safety",
+    "fen": "5r1k/1p2N2p/p4q1b/5p1b/3Q1N2/1P3P2/1PP4P/5R1K w - - 5 31",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_rogers-1-64",
+    "family": "rook_endgame",
+    "fen": "7k/1p2Nr1p/p6b/5p1N/8/1P3P2/1PP4P/5R1K w - - 1 33",
+    "source": "Kasparov_Rogers.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-12",
+    "family": "opening",
+    "fen": "r1bqr1k1/pppp1ppp/2n2n2/3Np3/1bP5/4PN2/PPQP1PPP/R1B1KB1R w KQ - 5 7",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-16",
+    "family": "opening",
+    "fen": "r1bqr1k1/ppppbppp/5n2/3NNQ2/1nP5/4P3/PP1P1PPP/R1B1KB1R w KQ - 1 9",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-20",
+    "family": "opening",
+    "fen": "r1bqr1k1/ppp2ppp/5n2/3pNQ2/1bP5/P3P3/1P1P1PPP/R1B1KB1R w KQ - 0 11",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-24",
+    "family": "king_safety",
+    "fen": "r2q2k1/ppp2ppp/5n2/3prb2/1PP5/4P3/1PQP1PPP/R1B1KB1R w KQ - 1 13",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-28",
+    "family": "king_safety",
+    "fen": "r5k1/ppp1qppp/5n2/4rb2/1PPp4/3PP3/1PQB1PPP/R3KB1R w KQ - 0 15",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-32",
+    "family": "king_safety",
+    "fen": "r5k1/ppp1qppp/5n2/4r3/1PP3b1/3PP3/1PQBB1PP/R3K2R w KQ - 1 17",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-40",
+    "family": "king_safety",
+    "fen": "r5k1/ppp2ppp/5n2/6q1/1PP5/3P1P2/1P2Q2P/R3K2R w KQ - 2 21",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-44",
+    "family": "king_safety",
+    "fen": "r5k1/ppp2ppp/8/7n/1PP4q/3P1P2/1P1Q3P/R2K3R w - - 6 23",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-48",
+    "family": "king_safety",
+    "fen": "r5k1/ppp2pp1/5q1p/7n/1PP5/3P1P2/1PKQ3P/R3R3 w - - 2 25",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-52",
+    "family": "king_safety",
+    "fen": "r5k1/ppp2pp1/4nq1p/R7/1PP1R3/3P1P2/1PKQ3P/8 w - - 6 27",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 52
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-56",
+    "family": "king_safety",
+    "fen": "r5k1/p4pp1/1p2nq1p/2pR4/1PP1R3/3PQP2/1PK4P/8 w - - 0 29",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 56
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-60",
+    "family": "king_safety",
+    "fen": "r5k1/5pp1/1p2nq1p/p2R4/1pPPRP2/4Q3/1PK4P/8 w - - 0 31",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 60
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-64",
+    "family": "middlegame",
+    "fen": "r5k1/5pp1/1p2n1qp/3R4/pQPPRP2/8/1PK4P/8 w - - 1 33",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 64
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-68",
+    "family": "middlegame",
+    "fen": "r5k1/5pp1/1p4qp/4R3/2PPRn2/p7/1PK4P/4Q3 w - - 0 35",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 68
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-72",
+    "family": "middlegame",
+    "fen": "r5k1/5pp1/1pq4p/3nR3/2P1R3/p5Q1/1PK4P/8 w - - 0 37",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 72
+  },
+  {
+    "id": "pgn-kasparov_romanishin-1-76",
+    "family": "middlegame",
+    "fen": "2r3k1/5pp1/1pq2n1p/4R3/2PR4/P5Q1/2K4P/8 w - - 3 39",
+    "source": "Kasparov_Romanishin.pgn",
+    "ply": 76
+  },
+  {
+    "id": "pgn-kasparov_roos-1-12",
+    "family": "opening",
+    "fen": "r1bqk2r/pp2bppp/2nppn2/2p5/4P3/2NP1NP1/PPP2PBP/R1BQK2R w KQkq - 1 7",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_roos-1-16",
+    "family": "opening",
+    "fen": "1rbq1rk1/pp2bppp/2nppn2/2p5/4P3/2NP1NPP/PPP2PB1/R1BQ1RK1 w - - 1 9",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 16
+  },
+  {
+    "id": "pgn-kasparov_roos-1-20",
+    "family": "opening",
+    "fen": "1r1q1rk1/pb2bppp/1pnppn2/2p5/P3P3/2NP1NPP/1PP2PB1/R1BQR1K1 w - - 2 11",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 20
+  },
+  {
+    "id": "pgn-kasparov_roos-1-24",
+    "family": "king_safety",
+    "fen": "1r1q1rk1/pb2bpp1/1pnp1n1p/2p1p3/P3P3/2NPBNPP/1PP2PB1/R2QR1K1 w - - 0 13",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 24
+  },
+  {
+    "id": "pgn-kasparov_roos-1-28",
+    "family": "king_safety",
+    "fen": "1r1q1rk1/pb2bppn/1p1p3p/2p1p3/P2nP1P1/2NPBN1P/1PP2PBK/R2QR3 w - - 3 15",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 28
+  },
+  {
+    "id": "pgn-kasparov_roos-1-32",
+    "family": "king_safety",
+    "fen": "1r1q1rk1/pb3ppn/1p1pn2p/2pNp1b1/P3P1P1/3PB2P/1PP2PBK/R2QR1N1 w - - 7 17",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 32
+  },
+  {
+    "id": "pgn-kasparov_roos-1-36",
+    "family": "king_safety",
+    "fen": "1r1q1rk1/p4ppn/1p1p3p/2pPp1b1/P4nP1/3PB2P/1PP1NPBK/R2QR3 w - - 1 19",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 36
+  },
+  {
+    "id": "pgn-kasparov_roos-1-40",
+    "family": "king_safety",
+    "fen": "1r1q1rk1/p4ppn/1p1p3p/2pP4/P4pP1/3P3P/1PP2PBK/R2QR3 w - - 0 21",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 40
+  },
+  {
+    "id": "pgn-kasparov_roos-1-44",
+    "family": "king_safety",
+    "fen": "1r3rk1/p4p1n/1p1p1qpp/2pP4/P3BpP1/3P3P/1PPQ1P1K/R3R3 w - - 2 23",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 44
+  },
+  {
+    "id": "pgn-kasparov_roos-1-48",
+    "family": "king_safety",
+    "fen": "4rrk1/p4p1n/1p1p2pp/2pP4/P3BpPq/2PP1P1P/1P1Q3K/R3R3 w - - 1 25",
+    "source": "Kasparov_Roos.pgn",
+    "ply": 48
+  },
+  {
+    "id": "pgn-kasparov_rostislav-1-12",
+    "family": "opening",
+    "fen": "r1bqk1nr/pp2bppp/2npp3/8/3NP3/2N5/PPP1BPPP/R1BQK2R w KQkq - 2 7",
+    "source": "Kasparov_Rostislav.pgn",
+    "ply": 12
+  },
+  {
+    "id": "pgn-kasparov_rostislav-1-16",
+    "family": "opening",
+    "fen": "r1bqk2r/1p2bppp/p1nppn2/8/3NP3/2N1B3/PPP1BPPP/R2Q1RK1 w kq - 0 9",
+    "source": "Kasparov_Rostislav.pgn",
+    "ply": 16
+  }
+]

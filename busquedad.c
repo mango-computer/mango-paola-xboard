@@ -84,12 +84,10 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 
 	if (usarLibroAperturas && esActivoLibro && (nFueraLibro < 3) && (juego.totalMov<60))
 	{
-		char fen[128];
 		char MOVALG_LIBRO[6];
-		int nMovLibro = 0;
+		int nMovLibro;
 
-		if (converTabler2FEN(fen, sizeof(fen)))
-			nMovLibro = buscarMovimientoLibro3(fen, MOVALG_LIBRO);
+		nMovLibro = buscarMovimientoLibro3DesdeEstado(MOVALG_LIBRO);
 
 		if (nMovLibro <= 0)
 			nFueraLibro++;

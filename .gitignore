@@ -6,6 +6,17 @@ mangoac.exe
 *~
 __pycache__/
 *.pyc
+tests/mangoac_*
+tests/eval_compare/.stockfish-build/
+tests/eval_compare/stockfish-hce
+tests/eval_compare/report-*.json
+tests/eval_compare/report.json
+!tests/eval_compare/report-final.json
+tests/eval_compare/performance*.json
+!tests/eval_compare/performance-final.json
+tests/eval_compare/selfplay*.json
+!tests/eval_compare/selfplay-final-1000.json
+tests/eval_compare/eval-benchmark.json
 
 # Archivo suelto, no el libro PGN del repo
 .pgn

@@ -1,0 +1,242 @@
+{
+  "base": {
+    "elapsed_median_ms": 43.315,
+    "nodes_median": 9858,
+    "nps_median": 1089150,
+    "samples": [
+      {
+        "elapsed_ms": 43.316291,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.18172,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.354677,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.18928,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.463007,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.222363,
+        "nodes": 9858,
+        "nps": 814500.0
+      },
+      {
+        "elapsed_ms": 43.374832,
+        "nodes": 9858,
+        "nps": 814500.0
+      },
+      {
+        "elapsed_ms": 43.473773,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.315026,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.529518,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.189943,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.49422,
+        "nodes": 9858,
+        "nps": 814500.0
+      },
+      {
+        "elapsed_ms": 43.218658,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.257754,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.188778,
+        "nodes": 9858,
+        "nps": 927400.0
+      },
+      {
+        "elapsed_ms": 43.518626,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.402611,
+        "nodes": 9858,
+        "nps": 814500.0
+      },
+      {
+        "elapsed_ms": 43.477318,
+        "nodes": 9858,
+        "nps": 1089150.0
+      },
+      {
+        "elapsed_ms": 43.019184,
+        "nodes": 9858,
+        "nps": 814500.0
+      },
+      {
+        "elapsed_ms": 43.036936,
+        "nodes": 9858,
+        "nps": 1215250.0
+      },
+      {
+        "elapsed_ms": 43.291186,
+        "nodes": 9858,
+        "nps": 1089150.0
+      }
+    ]
+  },
+  "candidate": {
+    "elapsed_median_ms": 43.335,
+    "nodes_median": 3555,
+    "nps_median": 670000,
+    "samples": [
+      {
+        "elapsed_ms": 43.239138,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.760859,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.265012,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.293083,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.403509,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.46072,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.728488,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.74499,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.28016,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.029298,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.335369,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.255526,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.126747,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.041369,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.705891,
+        "nodes": 3555,
+        "nps": 0.0
+      },
+      {
+        "elapsed_ms": 43.107973,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.489757,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.154705,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.624311,
+        "nodes": 3555,
+        "nps": 670000.0
+      },
+      {
+        "elapsed_ms": 43.477697,
+        "nodes": 3555,
+        "nps": 385500.0
+      },
+      {
+        "elapsed_ms": 43.409641,
+        "nodes": 3555,
+        "nps": 670000.0
+      }
+    ]
+  },
+  "candidate_speed_ratio": 0.99954,
+  "configuration": {
+    "cpu": 0,
+    "depth": 10,
+    "repetitions": 21
+  },
+  "eval_batch": {
+    "base_median_ms": 156.653,
+    "candidate_median_ms": 153.688,
+    "candidate_ratio": 1.01929
+  },
+  "nodes_change_percent": -63.938,
+  "nps_comparable": false,
+  "nps_regression_percent": 38.484,
+  "passes_eval_gate": true,
+  "passes_nps_gate": true
+}

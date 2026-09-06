@@ -1,0 +1,107 @@
+{
+  "decision": "promote-candidate-for-tournament-validation",
+  "limitations": [
+    "cutechess-cli was unavailable; self-play is diversified paired smoke evidence, not an Elo estimate",
+    "NPS is not directly comparable because the candidate searched a materially different node count"
+  ],
+  "performance": {
+    "candidate_speed_ratio": 0.99954,
+    "eval_batch": {
+      "base_median_ms": 156.653,
+      "candidate_median_ms": 153.688,
+      "candidate_ratio": 1.01929
+    },
+    "nps_comparable": false,
+    "passes_eval_gate": true,
+    "passes_search_gate": true
+  },
+  "perft": {
+    "depth": 4,
+    "expected": 197281,
+    "nodes": 197281,
+    "passed": true
+  },
+  "regression": {
+    "failed": 0,
+    "passed": 38
+  },
+  "selfplay": {
+    "base": 241,
+    "candidate": 257,
+    "candidate_score": 0.508,
+    "configuration": {
+      "base": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_base",
+      "base_sha256": "eee95cc8bb0813fab2fbf45bc1d782d161148b264750053dcae54e1fd14ce91d",
+      "candidate": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_candidato",
+      "candidate_sha256": "af0b32c04a9ca578097fc550481d2a949faf5bfa3064ed6bfec11cdac2317be1",
+      "concurrency": 10,
+      "depth": 5,
+      "max_plies": 100,
+      "openings": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/eval_corpus.json",
+      "tc": "10+0.1"
+    },
+    "draw": 502,
+    "games": 1000,
+    "mode": "builtin-smoke",
+    "score_standard_error": 0.01116
+  },
+  "teacher": {
+    "stockfish_commit": "6a8767a0d5d9502e6d4de1bef97468b5d6fab80a",
+    "test_base": {
+      "mae": 46.144,
+      "mae_ci95": [
+        39.388,
+        52.841
+      ],
+      "median": 37.428,
+      "p90": 96.494,
+      "p99": 133.614,
+      "pearson": 0.89454,
+      "rmse": 57.629,
+      "sign_error": 0.18627,
+      "spearman": 0.84579
+    },
+    "test_candidate": {
+      "mae": 44.723,
+      "mae_ci95": [
+        38.191,
+        51.339
+      ],
+      "median": 35.306,
+      "p90": 94.041,
+      "p99": 134.595,
+      "pearson": 0.89959,
+      "rmse": 56.382,
+      "sign_error": 0.17647,
+      "spearman": 0.85156
+    },
+    "validation_base": {
+      "mae": 55.281,
+      "mae_ci95": [
+        44.866,
+        67.158
+      ],
+      "median": 40.674,
+      "p90": 107.782,
+      "p99": 305.317,
+      "pearson": 0.84195,
+      "rmse": 83.141,
+      "sign_error": 0.20661,
+      "spearman": 0.7926
+    },
+    "validation_candidate": {
+      "mae": 53.9,
+      "mae_ci95": [
+        43.76,
+        65.398
+      ],
+      "median": 38.311,
+      "p90": 106.088,
+      "p99": 286.679,
+      "pearson": 0.84855,
+      "rmse": 81.649,
+      "sign_error": 0.21488,
+      "spearman": 0.80453
+    }
+  }
+}

@@ -71,6 +71,7 @@ typedef struct
 	VISTATABLERO	vistaTablero[64];
 	MOVALG		movAlg;
 	uint64		llaveHash;
+	uint64		llavePeones;
 } DATAJUEGO;
 
 
@@ -105,6 +106,7 @@ typedef struct
 	uint32		material_peon_negro;
 	uint32		material_lado_negro;
 	uint64		llaveHash;
+	uint64		llavePeones;
 	uint32		maxTiempo;	
 
 	// Variables para la búsqueda iterativa de profundidad
@@ -142,13 +144,29 @@ typedef struct
 {
 	uint64	id;
 	int 	valor;
+	uint16	generacion;
 
 } HASH_EVAL;
 
 typedef struct
 {
+	uint64 peonesBlancos;
+	uint64 peonesNegros;
+	int puntaje_m[2];
+	int puntaje_f[2];
+	uint64 debiles[2];
+	uint64 pasados[2];
+	uint64 candidatos[2];
+	uint8 filas[2];
+	uint8 filasPasados[2];
+	uint16 generacion;
+} HASH_PEONES;
+
+typedef struct
+{
 	uint64		id;
 	uint8		profundidad;
+	uint16		generacion;
 	int		puntaje;
 	MOVIMIENTO	mov;
 	uint8		banderas;

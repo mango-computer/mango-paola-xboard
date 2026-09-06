@@ -5,15 +5,22 @@
 
 #define FALSO 0
 #define VERDADERO 1
+#define MEBIBYTE 1048576u
+#define LIBRO3_SIN_ESTADO_MOTOR
 
 int esActivoLibro = FALSO;
 char rutaLibroPolyglot[512] = "";
+unsigned int maxLibroPolyglotMB = 64;
 
 #include "../libro3.c"
 
 static int usage(void)
 {
-	fprintf(stderr, "uso: polyglot-harness hash FEN | probe BOOK SEED FEN | move RAW\n");
+	fprintf(
+		stderr,
+		"uso: polyglot-harness hash FEN | probe BOOK SEED FEN | "
+		"move RAW | stats BOOK MAX_MB\n"
+	);
 	return 2;
 }
 
@@ -51,6 +58,19 @@ int main(int argc, char **argv)
 		char move[6];
 		libro3MoveToUci((uint16_t)strtoul(argv[2], NULL, 0), move);
 		puts(move);
+		return 0;
+	}
+
+	if (argc == 4 && !strcmp(argv[1], "stats")) {
+		maxLibroPolyglotMB = (unsigned int)strtoul(argv[3], NULL, 10);
+		if (!abrirLibro3Ruta(argv[2]))
+			return 1;
+		printf(
+			"%llu %zu\n",
+			(unsigned long long)libro3Book.entries,
+			libro3Book.bytes
+		);
+		cerrarLibro3();
 		return 0;
 	}
 

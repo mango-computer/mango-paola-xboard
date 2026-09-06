@@ -1,0 +1,20 @@
+{
+  "base": 241,
+  "candidate": 257,
+  "candidate_score": 0.508,
+  "configuration": {
+    "base": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_base",
+    "base_sha256": "eee95cc8bb0813fab2fbf45bc1d782d161148b264750053dcae54e1fd14ce91d",
+    "candidate": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/mangoac_candidato",
+    "candidate_sha256": "af0b32c04a9ca578097fc550481d2a949faf5bfa3064ed6bfec11cdac2317be1",
+    "concurrency": 10,
+    "depth": 5,
+    "max_plies": 100,
+    "openings": "/home/mangocomputer/mango-proyectos/mangoacXboard_fuente/mangoac_ajedrez/mangoac/mma9/tests/eval_corpus.json",
+    "tc": "10+0.1"
+  },
+  "draw": 502,
+  "games": 1000,
+  "mode": "builtin-smoke",
+  "score_standard_error": 0.01116
+}

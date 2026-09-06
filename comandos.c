@@ -332,6 +332,95 @@ BOOLEANO ejecutarComando(const char *buff)
 		printf("Evaluación estática del tablero actual\nEval:	%d\n",resulEval);
 		return VERDADERO;    
 	}
+
+	if ((!strncmp(buff, "evalwindow ", 11)))
+	{
+		int alfa = -INFINITO;
+		int beta = INFINITO;
+		CONT_BUFF_COMANDOS = '\0';
+		sscanf(buff, "evalwindow %d %d", &alfa, &beta);
+		printf("EvalWindow: %d\n", evaluacionTablero(alfa, beta));
+		return VERDADERO;
+	}
+
+	if ((!strcmp(buff, "evalstats")))
+	{
+		double tasa = consultasHashPeones ?
+			(100.0 * (double)aciertosHashPeones / (double)consultasHashPeones) : 0.0;
+		CONT_BUFF_COMANDOS = '\0';
+		printf("EvalStats: phase=%d pawn_hits=%llu pawn_queries=%llu pawn_rate=%.2f\n",
+		       FASE,
+		       (unsigned long long)aciertosHashPeones,
+		       (unsigned long long)consultasHashPeones,
+		       tasa);
+		return VERDADERO;
+	}
+#ifdef PRUEBAS_HCE
+	if ((!strncmp(buff, "evalprobe", 9)))
+	{
+		int origen = -1;
+		int tipo = -1;
+		int color = BLANCO;
+		uint64 pseudo = 0;
+		uint64 efectivos = 0;
+		uint64 utiles = 0;
+		int resulEval;
+
+		CONT_BUFF_COMANDOS = '\0';
+		sscanf(buff, "evalprobe %d %d %d", &origen, &tipo, &color);
+		resulEval = evaluacionTablero(-INFINITO, INFINITO);
+		if (origen >= 0 && origen < 64 && color >= BLANCO && color <= NEGRO)
+		{
+			switch (tipo)
+			{
+				case PEON:
+					pseudo = mascaraCapturarPeon[origen][color];
+					break;
+				case CABALLO:
+					pseudo = genCaballoAtaqueTablero(origen, juego);
+					break;
+				case ALFIL:
+					pseudo = genAlfilAtaqueTablero(origen, juego);
+					break;
+				case TORRE:
+					pseudo = genTorreAtaqueTablero(origen, juego);
+					break;
+				case DAMA:
+					pseudo = genDamaAtaqueTablero(origen, juego);
+					break;
+			}
+			efectivos = ataquesEfectivosEval(color, origen, pseudo);
+			utiles = areaMovilidadUtil(color, origen, efectivos);
+		}
+		printf("EvalProbe: eval=%d weakW=%llu weakB=%llu passedW=%llu passedB=%llu "
+		       "pawnW=%llu pawnB=%llu attacksW=%llu attacksB=%llu "
+		       "pseudoW=%llu pseudoB=%llu pinsW=%llu pinsB=%llu ray=%llu "
+		       "piecePseudo=%llu pieceEffective=%llu pieceUseful=%llu "
+		       "threatW=%d threatB=%d oppositionW=%d oppositionB=%d\n",
+		       resulEval,
+		       (unsigned long long)peonesDebiles[BLANCO],
+		       (unsigned long long)peonesDebiles[NEGRO],
+		       (unsigned long long)peonesPasados[BLANCO],
+		       (unsigned long long)peonesPasados[NEGRO],
+		       (unsigned long long)mapaPosAtacadasXPza[BLANCO][PEON],
+		       (unsigned long long)mapaPosAtacadasXPza[NEGRO][PEON],
+		       (unsigned long long)mapaPosAtacadas[BLANCO],
+		       (unsigned long long)mapaPosAtacadas[NEGRO],
+		       (unsigned long long)mapaPosAtacadasPseudo[BLANCO],
+		       (unsigned long long)mapaPosAtacadasPseudo[NEGRO],
+		       (unsigned long long)mapaClavadasRey[BLANCO],
+		       (unsigned long long)mapaClavadasRey[NEGRO],
+		       (unsigned long long)((origen >= 0 && origen < 64) ? mapaRayosClavada[origen] : 0),
+		       (unsigned long long)pseudo,
+		       (unsigned long long)efectivos,
+		       (unsigned long long)utiles,
+		       puntajeAmenazas(BLANCO),
+		       puntajeAmenazas(NEGRO),
+		       evalOposicionReyes(BLANCO),
+		       evalOposicionReyes(NEGRO));
+		return VERDADERO;
+	}
+#endif
 #ifdef COMPILAR_CON_EGBB
 	if ((!strcmp(buff, "nalimov")))
 	{
@@ -631,6 +720,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		cerrarLibro3();
+		cerrarTablas();
 #ifdef COMPILAR_CON_EGBB
 		cerrarBitbases();
 #endif
@@ -1003,6 +1093,8 @@ void xboard()
 		}
 		if (!strcmp(buffComandos, "quit"))
 		{
+			cerrarLibro3();
+			cerrarTablas();
 			return;
 		}
 		if (!strcmp(buffComandos, "white"))

@@ -281,6 +281,7 @@ void iniHashTablero()
 	juego.llaveHash ^= arrayHash.OOOB;
 	juego.llaveHash ^= arrayHash.OON;
 	juego.llaveHash ^= arrayHash.OOON;
+	recalcularLlavePeones();
 }
 
 void iniTablerosUtil()
@@ -309,6 +310,121 @@ void actualizarTablerosUtil(COLOR color)
 		juego.destinos	= juego.desOcupados | juego.negros;
 	}
 }
+
+unsigned int maxHashMBPermitido(void)
+{
+	return (sizeof(void *) >= 8) ? HASH_MB_MAX_64 : HASH_MB_MAX_32;
+}
+
+BOOLEANO calcularDimensionTablaHash(
+	unsigned int mb,
+	size_t *entradas,
+	uint64 *mascara,
+	size_t *bytes,
+	unsigned int *mbReales
+)
+{
+	size_t bytesSolicitados, maxEntradas, potencia;
+
+	if (!entradas || !mascara || !bytes || !mbReales ||
+	    mb < 1 || mb > maxHashMBPermitido() ||
+	    (size_t)mb > SIZE_MAX / MEBIBYTE)
+		return FALSO;
+
+	bytesSolicitados = (size_t)mb * MEBIBYTE;
+	maxEntradas = bytesSolicitados / sizeof(REGISTRO_TABLA_HASH);
+	if (!maxEntradas)
+		return FALSO;
+
+	potencia = 1;
+	while (potencia <= maxEntradas / 2)
+		potencia <<= 1;
+	if (potencia > SIZE_MAX / sizeof(REGISTRO_TABLA_HASH))
+		return FALSO;
+
+	*entradas = potencia;
+	*mascara = (uint64)(potencia - 1);
+	*bytes = potencia * sizeof(REGISTRO_TABLA_HASH);
+	*mbReales = (unsigned int)(*bytes / MEBIBYTE);
+	if (!*mbReales)
+		*mbReales = 1;
+	return VERDADERO;
+}
+
+BOOLEANO redimensionarTablaHashMB(unsigned int mb)
+{
+	REGISTRO_TABLA_HASH *nuevaTabla;
+	size_t nuevasEntradas, nuevosBytes;
+	uint64 nuevaMascara;
+	unsigned int nuevosMBReales;
+
+	if (!calcularDimensionTablaHash(
+			mb,
+			&nuevasEntradas,
+			&nuevaMascara,
+			&nuevosBytes,
+			&nuevosMBReales))
+		return FALSO;
+
+	if (tabla_hash && nuevasEntradas == entradasTablaHash) {
+		hashMBSolicitados = mb;
+		hashMBReales = nuevosMBReales;
+		return VERDADERO;
+	}
+
+	nuevaTabla = (REGISTRO_TABLA_HASH *)calloc(
+		nuevasEntradas,
+		sizeof(REGISTRO_TABLA_HASH)
+	);
+	if (!nuevaTabla)
+		return FALSO;
+
+	free(tabla_hash);
+	tabla_hash = nuevaTabla;
+	entradasTablaHash = nuevasEntradas;
+	LARGO_TABLA_HASH = nuevaMascara;
+	bytesTablaHash = nuevosBytes;
+	hashMBSolicitados = mb;
+	hashMBReales = nuevosMBReales;
+	return VERDADERO;
+}
+
+void limpiarTablasHash(void)
+{
+	generacionHash++;
+	if (generacionHash)
+		return;
+
+	if (hash_eval)
+		memset(hash_eval, 0, (LARGO_HASH_EVAL + 1) * sizeof(HASH_EVAL));
+	if (hash_peones)
+		memset(hash_peones, 0, (LARGO_HASH_PEONES + 1) * sizeof(HASH_PEONES));
+	if (tabla_hash && bytesTablaHash)
+		memset(tabla_hash, 0, bytesTablaHash);
+	generacionHash = 1;
+}
+
+void aplicarCambioHashPendiente(void)
+{
+	if (!hashResizePendiente)
+		return;
+
+	if (redimensionarTablaHashMB(hashMBPendientes)) {
+		printf(
+			"info string Hash solicitado %u MB, reservado %u MB\n",
+			hashMBSolicitados,
+			hashMBReales
+		);
+	} else {
+		printf(
+			"info string error: no se pudo reservar Hash de %u MB; se conserva %u MB\n",
+			hashMBPendientes,
+			hashMBReales
+		);
+	}
+	hashResizePendiente = FALSO;
+}
+
 void inicializarVar()
 {
 	PROMOCION[BLANCO] 		= DAMA_BLANCO;
@@ -342,16 +458,16 @@ void inicializarVar()
 	limpiarBufffer();
 	memset(juego.historicoJuego, 0, sizeof(DATAJUEGO)*MAX_BUFF_MOV);
 
-	if (hash_eval==NULL)
-	{
-		hash_eval = (HASH_EVAL*)malloc((LARGO_HASH_EVAL+1) * sizeof(HASH_EVAL));
-	}
+	if (hash_eval == NULL)
+		hash_eval = (HASH_EVAL*)calloc(LARGO_HASH_EVAL + 1, sizeof(HASH_EVAL));
+
+	if (hash_peones == NULL)
+		hash_peones = (HASH_PEONES*)calloc(LARGO_HASH_PEONES + 1, sizeof(HASH_PEONES));
 
 	if (hash_eval == NULL)
 	{
 			printf("#  Hash evaluacion       no se pudo crear\n");
 	} else {
-		memset(hash_eval, 0, (LARGO_HASH_EVAL+1)*sizeof(HASH_EVAL));
 		if (!primeraVez)
 		{
 			printf("#  Hash evaluacion       %d MB  [OK]\n",
@@ -363,23 +479,24 @@ void inicializarVar()
 	if (esUsoTablaHash)
 	{
 		if (tabla_hash == NULL)
-		{
-			tabla_hash = (REGISTRO_TABLA_HASH*)malloc((LARGO_TABLA_HASH+1) * sizeof(REGISTRO_TABLA_HASH));
-		}
+			redimensionarTablaHashMB(hashMBSolicitados);
 
 		if (tabla_hash == NULL)
 		{
 			printf("#  Hash movimientos      no se pudo crear\n");
 		} else {
-			memset(tabla_hash, 0, (LARGO_TABLA_HASH+1) * sizeof(REGISTRO_TABLA_HASH));
 			if (!primeraVez)
 			{
-				printf("#  Hash movimientos      %d MB  [OK]\n",
-						(int)(((LARGO_TABLA_HASH+1)*sizeof(REGISTRO_TABLA_HASH))/1048576));
+				printf(
+					"#  Hash movimientos      %u MB reales (%u MB solicitados) [OK]\n",
+					hashMBReales,
+					hashMBSolicitados
+				);
 			}
 		}
 	}
 
+	limpiarTablasHash();
 	primeraVez = VERDADERO;
 }
 
@@ -390,12 +507,24 @@ void cerrarTablas()
 	if (hash_eval)
 	{
 		free(hash_eval);
+		hash_eval = NULL;
+	}
+
+	if (hash_peones)
+	{
+		free(hash_peones);
+		hash_peones = NULL;
 	}
 
 	if (tabla_hash)
 	{
 		free(tabla_hash);
+		tabla_hash = NULL;
 	}
+	entradasTablaHash = 0;
+	bytesTablaHash = 0;
+	LARGO_TABLA_HASH = 0;
+	hashMBReales = 0;
 
 }
 

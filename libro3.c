@@ -6,15 +6,15 @@
  */
 
 #include <ctype.h>
-#include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 #include "polyglot_random.h"
 
-#define LIBRO3_ENTRY_SIZE 16L
+#define LIBRO3_ENTRY_SIZE 16u
 #define LIBRO3_MAX_MOVES 256
 
 typedef struct {
@@ -25,11 +25,12 @@ typedef struct {
 } LIBRO3_ENTRY;
 
 typedef struct {
-	FILE *file;
+	unsigned char *data;
 	uint64_t entries;
+	size_t bytes;
 } LIBRO3_BOOK;
 
-static LIBRO3_BOOK libro3Book = {NULL, 0};
+static LIBRO3_BOOK libro3Book = {NULL, 0, 0};
 static uint32_t libro3RandomState = 1;
 
 static uint16_t libro3ReadBE16(const unsigned char *p)
@@ -53,19 +54,11 @@ static uint64_t libro3ReadBE64(const unsigned char *p)
 
 static int libro3ReadEntry(uint64_t index, LIBRO3_ENTRY *entry)
 {
-	unsigned char bytes[LIBRO3_ENTRY_SIZE];
-	long offset;
+	const unsigned char *bytes;
 
-	if (!libro3Book.file || !entry || index >= libro3Book.entries)
+	if (!libro3Book.data || !entry || index >= libro3Book.entries)
 		return 0;
-	if (index > (uint64_t)(LONG_MAX / LIBRO3_ENTRY_SIZE))
-		return 0;
-
-	offset = (long)(index * LIBRO3_ENTRY_SIZE);
-	if (fseek(libro3Book.file, offset, SEEK_SET) != 0)
-		return 0;
-	if (fread(bytes, sizeof(bytes), 1, libro3Book.file) != 1)
-		return 0;
+	bytes = libro3Book.data + (size_t)index * LIBRO3_ENTRY_SIZE;
 
 	entry->key = libro3ReadBE64(bytes);
 	entry->move = libro3ReadBE16(bytes + 8);
@@ -76,46 +69,66 @@ static int libro3ReadEntry(uint64_t index, LIBRO3_ENTRY *entry)
 
 void cerrarLibro3(void)
 {
-	if (libro3Book.file)
-		fclose(libro3Book.file);
-	libro3Book.file = NULL;
+	free(libro3Book.data);
+	libro3Book.data = NULL;
 	libro3Book.entries = 0;
+	libro3Book.bytes = 0;
 	esActivoLibro = FALSO;
 }
 
 int abrirLibro3Ruta(const char *ruta)
 {
+	FILE *file;
 	long size;
+	size_t maxBytes;
+	unsigned char *data;
 	uint64_t i;
-	LIBRO3_ENTRY previous, current;
+	uint64_t previousKey, currentKey;
 
 	cerrarLibro3();
 	if (!ruta || !ruta[0])
 		return 0;
-
-	libro3Book.file = fopen(ruta, "rb");
-	if (!libro3Book.file)
+	if (!maxLibroPolyglotMB)
 		return 0;
-	if (fseek(libro3Book.file, 0, SEEK_END) != 0 ||
-	    (size = ftell(libro3Book.file)) <= 0 ||
-	    size % LIBRO3_ENTRY_SIZE != 0) {
-		cerrarLibro3();
+	maxBytes = (size_t)maxLibroPolyglotMB * MEBIBYTE;
+
+	file = fopen(ruta, "rb");
+	if (!file)
+		return 0;
+	if (fseek(file, 0, SEEK_END) != 0 ||
+	    (size = ftell(file)) <= 0 ||
+	    (size_t)size > maxBytes ||
+	    (size_t)size % LIBRO3_ENTRY_SIZE != 0 ||
+	    fseek(file, 0, SEEK_SET) != 0) {
+		fclose(file);
 		return 0;
 	}
 
-	libro3Book.entries = (uint64_t)(size / LIBRO3_ENTRY_SIZE);
-	if (!libro3ReadEntry(0, &previous)) {
-		cerrarLibro3();
+	data = (unsigned char *)malloc((size_t)size);
+	if (!data) {
+		fclose(file);
 		return 0;
 	}
-	for (i = 1; i < libro3Book.entries; i++) {
-		if (!libro3ReadEntry(i, &current) || current.key < previous.key) {
-			cerrarLibro3();
+	if (fread(data, (size_t)size, 1, file) != 1) {
+		free(data);
+		fclose(file);
+		return 0;
+	}
+	fclose(file);
+
+	previousKey = libro3ReadBE64(data);
+	for (i = 1; i < (uint64_t)((size_t)size / LIBRO3_ENTRY_SIZE); i++) {
+		currentKey = libro3ReadBE64(data + (size_t)i * LIBRO3_ENTRY_SIZE);
+		if (currentKey < previousKey) {
+			free(data);
 			return 0;
 		}
-		previous = current;
+		previousKey = currentKey;
 	}
 
+	libro3Book.data = data;
+	libro3Book.bytes = (size_t)size;
+	libro3Book.entries = (uint64_t)(libro3Book.bytes / LIBRO3_ENTRY_SIZE);
 	esActivoLibro = VERDADERO;
 	return 1;
 }
@@ -218,13 +231,80 @@ uint64_t libro3HashFen(const char *fen, int *ok)
 	return hash;
 }
 
+#ifndef LIBRO3_SIN_ESTADO_MOTOR
+static int libro3PieceIndexInterno(PIEZA piece)
+{
+	switch (piece) {
+		case PEON_NEGRO: return 0;
+		case PEON_BLANCO: return 1;
+		case CABALLO_NEGRO: return 2;
+		case CABALLO_BLANCO: return 3;
+		case ALFIL_NEGRO: return 4;
+		case ALFIL_BLANCO: return 5;
+		case TORRE_NEGRO: return 6;
+		case TORRE_BLANCO: return 7;
+		case DAMA_NEGRO: return 8;
+		case DAMA_BLANCO: return 9;
+		case REY_NEGRO: return 10;
+		case REY_BLANCO: return 11;
+		default: return -1;
+	}
+}
+
+uint64_t libro3HashJuego(int *ok)
+{
+	uint64_t hash = 0;
+	int square;
+
+	if (ok)
+		*ok = 0;
+	if (juego.colorTurno != BLANCO && juego.colorTurno != NEGRO)
+		return 0;
+
+	for (square = 0; square < 64; square++) {
+		int piece = libro3PieceIndexInterno(ESCAQUES[square]);
+		if (piece >= 0)
+			hash ^= POLYGLOT_RANDOM[64 * piece + square];
+	}
+	if (juego.OOB) hash ^= POLYGLOT_RANDOM[768];
+	if (juego.OOOB) hash ^= POLYGLOT_RANDOM[769];
+	if (juego.OON) hash ^= POLYGLOT_RANDOM[770];
+	if (juego.OOON) hash ^= POLYGLOT_RANDOM[771];
+
+	if (juego.posPeonPaso < 64) {
+		int epFile = juego.posPeonPaso & 7;
+		int epRank = juego.posPeonPaso >> 3;
+		int pawnRank = juego.colorTurno == BLANCO ? epRank - 1 : epRank + 1;
+		PIEZA pawn = juego.colorTurno == BLANCO ? PEON_BLANCO : PEON_NEGRO;
+		int canCapture = 0;
+
+		if (pawnRank >= 0 && pawnRank < 8) {
+			if (epFile > 0 &&
+			    ESCAQUES[pawnRank * 8 + epFile - 1] == pawn)
+				canCapture = 1;
+			if (epFile < 7 &&
+			    ESCAQUES[pawnRank * 8 + epFile + 1] == pawn)
+				canCapture = 1;
+		}
+		if (canCapture)
+			hash ^= POLYGLOT_RANDOM[772 + epFile];
+	}
+	if (juego.colorTurno == BLANCO)
+		hash ^= POLYGLOT_RANDOM[780];
+
+	if (ok)
+		*ok = 1;
+	return hash;
+}
+#endif
+
 static int libro3Probe(uint64_t key, LIBRO3_ENTRY *entries, int capacity)
 {
 	uint64_t low = 0, high = libro3Book.entries;
 	int count = 0;
 	LIBRO3_ENTRY entry;
 
-	if (!libro3Book.file || !entries || capacity <= 0)
+	if (!libro3Book.data || !entries || capacity <= 0)
 		return 0;
 	while (low < high) {
 		uint64_t middle = low + (high - low) / 2;
@@ -290,20 +370,16 @@ static void libro3MoveToUci(uint16_t move, char uci[6])
 	}
 }
 
-int buscarMovimientoLibro3ConSemilla(const char *fen, char uci[6], uint32_t seed)
+static int libro3BuscarClaveConSemilla(uint64_t key, char uci[6], uint32_t seed)
 {
 	LIBRO3_ENTRY entries[LIBRO3_MAX_MOVES];
-	uint64_t key;
-	int ok, count, selected;
+	int count, selected;
 
 	if (uci)
 		uci[0] = '\0';
-	if (!libro3Book.file || !uci)
+	if (!libro3Book.data || !uci)
 		return 0;
 
-	key = libro3HashFen(fen, &ok);
-	if (!ok)
-		return 0;
 	count = libro3Probe(key, entries, LIBRO3_MAX_MOVES);
 	if (count <= 0)
 		return count;
@@ -315,15 +391,63 @@ int buscarMovimientoLibro3ConSemilla(const char *fen, char uci[6], uint32_t seed
 	return 1;
 }
 
+int buscarMovimientoLibro3ConSemilla(const char *fen, char uci[6], uint32_t seed)
+{
+	uint64_t key;
+	int ok;
+
+	key = libro3HashFen(fen, &ok);
+	if (!ok)
+		return 0;
+	return libro3BuscarClaveConSemilla(key, uci, seed);
+}
+
+#ifndef LIBRO3_SIN_ESTADO_MOTOR
+int buscarMovimientoLibro3DesdeEstadoConSemilla(char uci[6], uint32_t seed)
+{
+	uint64_t key;
+	int ok;
+
+	key = libro3HashJuego(&ok);
+	if (!ok)
+		return 0;
+	return libro3BuscarClaveConSemilla(key, uci, seed);
+}
+#endif
+
+static uint32_t libro3SiguienteAleatorio(void)
+{
+	libro3RandomState ^= libro3RandomState << 13;
+	libro3RandomState ^= libro3RandomState >> 17;
+	libro3RandomState ^= libro3RandomState << 5;
+	return libro3RandomState;
+}
+
 int buscarMovimientoLibro3(const char *fen, char uci[6])
 {
 	int result;
 
-	libro3RandomState ^= libro3RandomState << 13;
-	libro3RandomState ^= libro3RandomState >> 17;
-	libro3RandomState ^= libro3RandomState << 5;
-	result = buscarMovimientoLibro3ConSemilla(fen, uci, libro3RandomState);
+	result = buscarMovimientoLibro3ConSemilla(
+		fen,
+		uci,
+		libro3SiguienteAleatorio()
+	);
 	if (result < 0)
 		cerrarLibro3();
 	return result;
 }
+
+#ifndef LIBRO3_SIN_ESTADO_MOTOR
+int buscarMovimientoLibro3DesdeEstado(char uci[6])
+{
+	int result;
+
+	result = buscarMovimientoLibro3DesdeEstadoConSemilla(
+		uci,
+		libro3SiguienteAleatorio()
+	);
+	if (result < 0)
+		cerrarLibro3();
+	return result;
+}
+#endif
