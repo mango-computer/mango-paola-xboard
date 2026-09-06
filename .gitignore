@@ -4,6 +4,8 @@ mangoac.exe
 *.o
 *.a
 *~
+__pycache__/
+*.pyc
 
 # Archivo suelto, no el libro PGN del repo
 .pgn

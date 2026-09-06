@@ -38,10 +38,7 @@ int 			nLimitePiezasBitBases 				= 4;
 int 			profundidadEgbb;
 #endif
 int 			XError 						= 0;
-char			rutaRandom1[512];
-char			rutaRandom2[512];
-char			rutaMainBook[512];
-char			rutaTourBook[512];
+char			rutaLibroPolyglot[512]				= "polyglotbooks/mangoac-book.bin";
 
 int			maxHistorial[2]					= {0,0};		
 BOOLEANO		siguePV						= FALSO;
@@ -145,9 +142,6 @@ int 			QcontadorNodos					= 0;
 int 			alfaGlobal 					= 0;
 int 			betaGlobal 					= 0;
 char 			pngmov[20];
-FILE 			*libroBlancas;
-FILE 			*libroNegras;
-//FILE 			*libroTablas;
 uint64 			tiempoAculumado					= 0;
 HASH_EVAL 		*hash_eval;
 REGISTRO_TABLA_HASH	*tabla_hash;

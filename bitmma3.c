@@ -94,7 +94,7 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 #include "util.c"
 #include "hash.c"
 #include "eet.c"
-#include "libro2.c"
+#include "libro3.c"
 
 #ifdef COMPILAR_CON_EGBB
 	#include "egbb.c"
@@ -185,21 +185,9 @@ int main(int np, char* param[])
 					usarLibroAperturas = ((u) ? VERDADERO:FALSO);
 					printf("#  Libro de aperturas    %s\n", usarLibroAperturas ? "activo" : "inactivo");
 
-				} else if (!strncmp(lineaINI, "RutaRandom1",11)) {
-					memset(rutaRandom1,'\0',512);
-					sscanf(lineaINI, "RutaRandom1 %s", rutaRandom1);
-
-				} else if (!strncmp(lineaINI, "RutaRandom2",11)) {
-					memset(rutaRandom2,'\0',512);
-					sscanf(lineaINI, "RutaRandom2 %s", rutaRandom2);
-
-				} else if (!strncmp(lineaINI, "RutaMainBook",12)) {
-					memset(rutaMainBook,'\0',512);
-					sscanf(lineaINI, "RutaMainBook %s", rutaMainBook);
-
-				} else if (!strncmp(lineaINI, "RutaTourBook",12)) {
-					memset(rutaTourBook,'\0',512);
-					sscanf(lineaINI, "RutaTourBook %s", rutaTourBook);
+				} else if (!strncmp(lineaINI, "RutaLibroPolyglot",17)) {
+					memset(rutaLibroPolyglot,'\0',512);
+					sscanf(lineaINI, "RutaLibroPolyglot %511s", rutaLibroPolyglot);
 #ifdef COMPILAR_CON_EGBB
 				} else if (!strncmp(lineaINI, "UsarTablaFinalesNalimov",23)) {
 					int u=0;
@@ -237,7 +225,7 @@ int main(int np, char* param[])
 	iniHashTablero();
 	juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
 	if (usarLibroAperturas)
-		abrirLibro2();
+		abrirLibro3();
 #ifdef COMPILAR_CON_EGBB
 	if (usar_egbb)
 		cargaBitbases();

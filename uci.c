@@ -642,7 +642,7 @@ void uci(void)
 		} else if (!strcmp(cmd, "stop")) {
 			tiempoVencido = VERDADERO;
 		} else if (!strcmp(cmd, "quit")) {
-			CLOSE_BOOK();
+			cerrarLibro3();
 #ifdef COMPILAR_CON_EGBB
 			cerrarBitbases();
 #endif

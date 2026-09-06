@@ -28,21 +28,23 @@
 #ifndef PROTOTIPOS_H
 #define PROTOTIPOS_H
 
+#include <stddef.h>
+#include <stdint.h>
+
 int LoadEgbbLibrary(char* main_path, int egbb_cache_size);
 void unload_bitbases(void);
 int probe_bitbases(int *score);
 void cargaBitbases();
 void cerrarBitbases();
 
-int INITIALIZE(const char *Toerfile,const char *Bookfile);
-int FIND_OPENING(const char *EPD,char *From,char *To, char *From1,char *From2,char *To1,char *To2,int *Bookmvs);
-void CLOSE_BOOK(void);
-void BOEK_BEGIN();
-void MAKE_HASHKEY();
-void BOEKIN();
-void abrirLibro2();
+int abrirLibro3(void);
+int abrirLibro3Ruta(const char *ruta);
+void cerrarLibro3(void);
+uint64_t libro3HashFen(const char *fen, int *ok);
+int buscarMovimientoLibro3(const char *fen, char uci[6]);
+int buscarMovimientoLibro3ConSemilla(const char *fen, char uci[6], uint32_t seed);
 
-void converTabler2FEN(char *string);
+int converTabler2FEN(char *string, size_t capacidad);
 void depurarLibro(FILE *libro);
 void limpiarAntesDeBusqueda();
 void verMovimentosTodos();
@@ -172,11 +174,6 @@ char obtCharPieza(int pieza);
 int obtTipoFinalJuego();
 int contarMovLegales();
 
-//**************** Libro **********************
-void abrirLibro();
-void cerrarLibro();
-int obtMovLibro(FILE *libro);
-BOOLEANO esIgualLibro(char *s1, char *s2);
 //**************** tabla hash *****************
 void agregarEvalTablaHash(int valor);
 BOOLEANO verificarEvalTablaHash(int *valor);

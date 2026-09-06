@@ -307,56 +307,82 @@ void setupFen(char *fen, char *fencolor, char *fenEnroque, char *fenPeonPaso, in
 }
 
 
-/* Convertimos una posición del tablero a formato FEN (EPD) para consultar el libro de aperturas */
-void converTabler2FEN(char *string)
+/* Convierte el estado interno en un FEN completo apto para hash Polyglot. */
+int converTabler2FEN(char *string, size_t capacidad)
 {
-	int x, y, l=0, i=0, sq;
-	char row[8];
+	char piezas[80];
+	char enroques[5];
+	const char *peonPaso;
+	size_t usados = 0;
+	int x, y, vacios, sq, nEnroques = 0;
+	int escritos;
 
-	strcpy(string,"");
+	if (!string || capacidad == 0)
+		return 0;
+	string[0] = '\0';
 
-	for (y=0;y<8;y++) {
-		i=l=0;
-		strcpy(row,"");
-		for (x=0;x<8;x++) {
-			sq = (y*8)+x;
-			if (ESCAQUES[ESPEJO[sq]] == VACIO) l++;
-			else {
-				if (l>0) 
-				{
-					row[i] = (char) (l+48);
-					i++;
-				}
-				l=0;
-				switch (ESCAQUES[ESPEJO[sq]]) 
-				{
-					case PEON_BLANCO 	: row[i]='P';break;
-					case CABALLO_BLANCO 	: row[i]='N';break;
-					case ALFIL_BLANCO	: row[i]='B';break;
-					case TORRE_BLANCO	: row[i]='R';break;
-					case DAMA_BLANCO	: row[i]='Q';break;
-					case REY_BLANCO	 	: row[i]='K';break;
+	for (y = 0; y < 8; y++) {
+		vacios = 0;
+		for (x = 0; x < 8; x++) {
+			char pieza = '\0';
+			sq = (y * 8) + x;
 
-					case PEON_NEGRO	 	: row[i]='p';break;
-					case CABALLO_NEGRO 	: row[i]='n';break;
-					case ALFIL_NEGRO	: row[i]='b';break;
-					case TORRE_NEGRO	: row[i]='r';break;
-					case DAMA_NEGRO	 	: row[i]='q';break;
-					case REY_NEGRO	 	: row[i]='k';break;
-				}
-				i++;
+			switch (ESCAQUES[ESPEJO[sq]]) {
+				case PEON_BLANCO: pieza = 'P'; break;
+				case CABALLO_BLANCO: pieza = 'N'; break;
+				case ALFIL_BLANCO: pieza = 'B'; break;
+				case TORRE_BLANCO: pieza = 'R'; break;
+				case DAMA_BLANCO: pieza = 'Q'; break;
+				case REY_BLANCO: pieza = 'K'; break;
+				case PEON_NEGRO: pieza = 'p'; break;
+				case CABALLO_NEGRO: pieza = 'n'; break;
+				case ALFIL_NEGRO: pieza = 'b'; break;
+				case TORRE_NEGRO: pieza = 'r'; break;
+				case DAMA_NEGRO: pieza = 'q'; break;
+				case REY_NEGRO: pieza = 'k'; break;
+				default: vacios++; break;
+			}
+
+			if (pieza) {
+				if (vacios)
+					piezas[usados++] = (char)('0' + vacios);
+				piezas[usados++] = pieza;
+				vacios = 0;
 			}
 		}
-		if (l>0) {
-			row[i] = (char) (l+48);
-			i++;
-		}
-		strncat(string,row,i);
-		if (y<7) strcat(string,"/");
+		if (vacios)
+			piezas[usados++] = (char)('0' + vacios);
+		if (y < 7)
+			piezas[usados++] = '/';
 	}
+	piezas[usados] = '\0';
 
-	if (!juego.colorTurno) strcat(string," w ");
-	else strcat(string," b ");
+	if (juego.OOB) enroques[nEnroques++] = 'K';
+	if (juego.OOOB) enroques[nEnroques++] = 'Q';
+	if (juego.OON) enroques[nEnroques++] = 'k';
+	if (juego.OOON) enroques[nEnroques++] = 'q';
+	if (!nEnroques) enroques[nEnroques++] = '-';
+	enroques[nEnroques] = '\0';
+
+	peonPaso = juego.posPeonPaso < 64
+		? NOMBRE_ESCAQUES[juego.posPeonPaso]
+		: "-";
+	escritos = snprintf(
+		string,
+		capacidad,
+		"%s %c %s %s %u %u",
+		piezas,
+		juego.colorTurno == BLANCO ? 'w' : 'b',
+		enroques,
+		peonPaso,
+		(unsigned int)juego.reglaCincuentaMov,
+		(unsigned int)(juego.totalMov / 2 + 1)
+	);
+	if (escritos < 0 || (size_t)escritos >= capacidad) {
+		string[0] = '\0';
+		return 0;
+	}
+	return 1;
 }
 
 #endif

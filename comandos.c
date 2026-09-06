@@ -388,10 +388,9 @@ BOOLEANO ejecutarComando(const char *buff)
 	if ((!strcmp(buff, "fen")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
-		char fen[100];
-		memset(fen,'\0', 100);
-		converTabler2FEN(fen);
-		printf("FEN: %s\n",fen);
+		char fen[128];
+		if (converTabler2FEN(fen, sizeof(fen)))
+			printf("FEN: %s\n",fen);
 		return VERDADERO;    
 	}
 
@@ -631,7 +630,7 @@ BOOLEANO ejecutarComando(const char *buff)
 	if ((!strcmp(buff, "exit")) || (!strcmp(buff, "quit")) || (!strcmp(buff, "salir")))
 	{
 		CONT_BUFF_COMANDOS = '\0';
-		CLOSE_BOOK();
+		cerrarLibro3();
 #ifdef COMPILAR_CON_EGBB
 		cerrarBitbases();
 #endif
@@ -642,6 +641,9 @@ BOOLEANO ejecutarComando(const char *buff)
 	{
 		CONT_BUFF_COMANDOS = '\0';
 		usarLibroAperturas = VERDADERO;
+		nFueraLibro = 0;
+		if (!esActivoLibro)
+			abrirLibro3();
 		return VERDADERO;    
 	}
 
@@ -1311,6 +1313,12 @@ MOVIMIENTO parse_mov(char *s)
 					case 'R':
 						pCoronada = OBT_MOV_PROMOCION(juego.Buffer_MOV[i]);
 						if (pCoronada == TORRE_BLANCO || pCoronada == TORRE_NEGRO)
+							return juego.Buffer_MOV[i];
+						break;
+					case 'q':
+					case 'Q':
+						pCoronada = OBT_MOV_PROMOCION(juego.Buffer_MOV[i]);
+						if (pCoronada == DAMA_BLANCO || pCoronada == DAMA_NEGRO)
 							return juego.Buffer_MOV[i];
 						break;
 					default:  

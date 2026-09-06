@@ -84,20 +84,17 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 
 	if (usarLibroAperturas && esActivoLibro && (nFueraLibro < 3) && (juego.totalMov<60))
 	{
-		char fen[100];
-		memset(fen,'\0', 100);
-		converTabler2FEN(fen);
-		char FROM[10],TO[10], MOVALG_LIBRO[20];
-		char FROM1[20],FROM2[20],TO1[20],TO2[20];
-		int  nMovLibro;
+		char fen[128];
+		char MOVALG_LIBRO[6];
+		int nMovLibro = 0;
 
-		FIND_OPENING(fen,FROM,TO,FROM1,FROM2,TO1,TO2,&nMovLibro);
+		if (converTabler2FEN(fen, sizeof(fen)))
+			nMovLibro = buscarMovimientoLibro3(fen, MOVALG_LIBRO);
 
-		if (!nMovLibro)
+		if (nMovLibro <= 0)
 			nFueraLibro++;
 		else {
 			nFueraLibro = 0;
-			sprintf(MOVALG_LIBRO, "%s%s",FROM,TO);
 
 			MOVIMIENTO m = parse_mov(MOVALG_LIBRO);
 			if (m != -1)

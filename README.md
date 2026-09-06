@@ -15,7 +15,7 @@ Blog oficial: [Mango AC Ajedrez](http://mangocomputerca.blogspot.com/2013/03/man
 Es un **motor** (UCI y xboard), no una ventana de tablero. Se engancha a una interfaz: [Cute Chess](https://github.com/cutechess/cutechess), Arena, WinBoard, o la consola.
 
 1. Compila (abajo) o, cuando haya paquetes, baja el zip de [Releases](https://github.com/mango-computer/mango-paola-xboard/releases).
-2. Deja juntos el binario (`mangoac` o `mangoac.exe`), `mangoac.ini` y la carpeta `libros/`.
+2. Deja juntos el binario (`mangoac` o `mangoac.exe`), `mangoac.ini` y la carpeta `polyglotbooks/`.
 3. En la GUI, añade el motor como UCI (o xboard/WinBoard). En consola: `./mangoac`, luego `ayuda`.
 
 ## Sugerir mejoras
@@ -181,7 +181,13 @@ Uso Zobrist: pieza×casilla, turno, enroques y *en passant*. La entrada guarda p
 
 `evaluacionTablero()` combina material (con fase de juego: dama 9, torre 5, ligera 3), estructura de peones (pasados, aislados, doblados, *outside passed pawn*), seguridad del rey (tropismo × vector de ataques) y tablas de pieza-casilla interpoladas por fase. Lazy eval: si el material solo ya queda fuera de `[alfa, beta]` ± `LIMITE_MOV_NULL`, no calculo el resto.
 
-El libro de aperturas es binario (`libro2.c`, estilo Polyglot: random/main/tour en `mangoac.ini`). Las bitbases de finales (EGBB/Nalimov) son opcionales en compilación (`COMPILAR_CON_EGBB`); por defecto las dejo desactivadas.
+El libro de aperturas usa el formato Polyglot estándar y el lector C99 de
+`libro3.c`. `mangoac.ini` apunta a un único archivo:
+`polyglotbooks/mangoac-book.bin`. El libro se genera de forma reproducible con
+datos CC0 de Lichess; su procedencia, licencia y SHA-256 están documentados
+dentro de `polyglotbooks/`. Mango AC no incluye ni soporta libros Rebel/ProDeo.
+Las bitbases de finales (EGBB/Nalimov) son opcionales en compilación
+(`COMPILAR_CON_EGBB`); por defecto las dejo desactivadas.
 
 ---
 
@@ -204,6 +210,19 @@ mangoac.exe
 ```
 
 O `./compilar.sh` en Linux: compila y arranca si no hay errores.
+
+La regresión reutilizable verifica el checksum del libro, compila el lector y
+el motor, comprueba 140 posiciones Polyglot por C y UCI, y conserva las pruebas
+del protocolo:
+
+```bash
+./tests/run_regression.sh
+```
+
+El fixture puede regenerarse desde el mismo `.bin` con
+`tests/generate_polyglot_fixture.py`; esa tarea de mantenimiento requiere
+`python-chess==1.11.2`, pero la ejecución normal de los tests usa solo la
+biblioteca estándar de Python.
 
 Los binarios no van en este git. Cuando publique una versión, estarán en [Releases](https://github.com/mango-computer/mango-paola-xboard/releases).
 
