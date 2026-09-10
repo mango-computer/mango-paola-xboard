@@ -39,6 +39,25 @@ def summarize(results: list[str], args: argparse.Namespace, mode: str) -> dict:
         sum((value - score) ** 2 for value in outcomes) / (len(outcomes) - 1)
         if len(outcomes) > 1 else 0.0
     )
+    pair_scores = [
+        outcomes[index] + outcomes[index + 1]
+        for index in range(0, len(outcomes) - 1, 2)
+    ]
+    pair_mean = sum(pair_scores) / len(pair_scores) if pair_scores else 0.0
+    pair_variance = (
+        sum((value - pair_mean) ** 2 for value in pair_scores) /
+        (len(pair_scores) - 1)
+        if len(pair_scores) > 1 else 0.0
+    )
+    paired_score_error = (
+        math.sqrt(pair_variance / len(pair_scores)) / 2 if pair_scores else 0.0
+    )
+    lower_score = max(1e-9, score - 1.96 * paired_score_error)
+    upper_score = min(1 - 1e-9, score + 1.96 * paired_score_error)
+
+    def elo(value: float) -> float:
+        return 400.0 * math.log10(value / (1.0 - value))
+
     return {
         "base": results.count("base"),
         "candidate": results.count("candidate"),
@@ -47,6 +66,19 @@ def summarize(results: list[str], args: argparse.Namespace, mode: str) -> dict:
         "candidate_score": round(score, 5),
         "score_standard_error": round(math.sqrt(variance / len(outcomes)), 5)
         if outcomes else 0.0,
+        "paired_score_standard_error": round(paired_score_error, 5),
+        "pentanomial": {
+            str(index): sum(
+                1 for value in pair_scores if int(round(value * 2)) == index
+            )
+            for index in range(5)
+        },
+        "elo_difference": round(elo(score), 2) if outcomes else 0.0,
+        "elo_95ci": (
+            [round(elo(lower_score), 2), round(elo(upper_score), 2)]
+            if outcomes else [0.0, 0.0]
+        ),
+        "significant_95_percent": lower_score > 0.5 or upper_score < 0.5,
         "mode": mode,
         "configuration": {
             "base": str(args.base),

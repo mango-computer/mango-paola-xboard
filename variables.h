@@ -153,6 +153,17 @@ BOOLEANO 		tiempoVencido 					= FALSO;
 int 			contadorDescendente;
 int 			contadorNodos 					= 0;	
 int 			QcontadorNodos					= 0;
+#ifdef PRUEBAS_HCE
+int			contadorPodasEET				= 0;
+int			contadorExtensionesEET				= 0;
+uint64			llamadasEETCompleto				= 0;
+uint64			llamadasEETUmbral				= 0;
+uint64			ramasEETCompleto				= 0;
+uint64			ramasEETUmbral					= 0;
+uint64			cortesEETUmbral				= 0;
+uint64			llamadasEETPOS					= 0;
+int			profundidadMaxEET				= 0;
+#endif
 int 			alfaGlobal 					= 0;
 int 			betaGlobal 					= 0;
 char 			pngmov[20];

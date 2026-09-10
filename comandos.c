@@ -356,6 +356,139 @@ BOOLEANO ejecutarComando(const char *buff)
 		return VERDADERO;
 	}
 #ifdef PRUEBAS_HCE
+	if ((!strcmp(buff, "eetstats")))
+	{
+		CONT_BUFF_COMANDOS = '\0';
+		printf("SEEStats: full_calls=%llu threshold_calls=%llu full_branches=%llu "
+		       "threshold_branches=%llu threshold_cuts=%llu eetpos_calls=%llu max_depth=%d\n",
+		       (unsigned long long)llamadasEETCompleto,
+		       (unsigned long long)llamadasEETUmbral,
+		       (unsigned long long)ramasEETCompleto,
+		       (unsigned long long)ramasEETUmbral,
+		       (unsigned long long)cortesEETUmbral,
+		       (unsigned long long)llamadasEETPOS,
+		       profundidadMaxEET);
+		return VERDADERO;
+	}
+
+	if ((!strcmp(buff, "eetstatsreset")))
+	{
+		CONT_BUFF_COMANDOS = '\0';
+		reiniciarEstadisticasEET();
+		printf("SEEStatsReset: ok\n");
+		return VERDADERO;
+	}
+
+	if ((!strncmp(buff, "eetbench ", 9)))
+	{
+		MOVIMIENTO movimientos[256];
+		uint32 fin;
+		int cantidad;
+		int repeticiones = 1;
+		int umbral = 0;
+		int usarUmbral = 1;
+		int i, repeticion;
+		uint64 checksum = 0;
+
+		CONT_BUFF_COMANDOS = '\0';
+		sscanf(buff, "eetbench %d %d %d", &repeticiones, &umbral, &usarUmbral);
+		if (repeticiones < 1) repeticiones = 1;
+		fin = generarMovCapPro(0);
+		cantidad = (int)MINIMO(fin, 256);
+		for (i = 0; i < cantidad; i++) movimientos[i] = juego.Buffer_MOV[i];
+
+		reiniciarEstadisticasEET();
+		for (repeticion = 0; repeticion < repeticiones; repeticion++)
+		{
+			for (i = 0; i < cantidad; i++)
+			{
+				if (usarUmbral)
+					checksum += EETSuperaUmbral(movimientos[i], umbral);
+				else
+					checksum += EET(movimientos[i]) >= umbral;
+			}
+		}
+		printf("SEEBench: moves=%d repetitions=%d threshold=%d mode=%d checksum=%llu "
+		       "full_calls=%llu threshold_calls=%llu full_branches=%llu "
+		       "threshold_branches=%llu threshold_cuts=%llu max_depth=%d\n",
+		       cantidad, repeticiones, umbral, usarUmbral,
+		       (unsigned long long)checksum,
+		       (unsigned long long)llamadasEETCompleto,
+		       (unsigned long long)llamadasEETUmbral,
+		       (unsigned long long)ramasEETCompleto,
+		       (unsigned long long)ramasEETUmbral,
+		       (unsigned long long)cortesEETUmbral,
+		       profundidadMaxEET);
+		return VERDADERO;
+	}
+
+	if ((!strcmp(buff, "eetall")))
+	{
+		MOVIMIENTO movimientos[256];
+		uint32 fin = generarMovCapPro(0);
+		int cantidad = (int)MINIMO(fin, 256);
+		int i;
+
+		CONT_BUFF_COMANDOS = '\0';
+		for (i = 0; i < cantidad; i++) movimientos[i] = juego.Buffer_MOV[i];
+		for (i = 0; i < cantidad; i++)
+		{
+			MOVIMIENTO mov = movimientos[i];
+			BOOLEANO ilegal;
+			int exacto;
+			int referencia;
+
+			hacerMovimiento(mov);
+			if (juego.colorTurno)
+				ilegal = esAtacadoPor(juego.tablero[BLANCO][REY], NEGRO);
+			else
+				ilegal = esAtacadoPor(juego.tablero[NEGRO][REY], BLANCO);
+			desHacerMovimiento(mov);
+			if (ilegal) continue;
+
+			exacto = EET(mov);
+			referencia = EETReferencia(mov);
+			printf("SEECompare: origin=%d destination=%d promotion=%d exact=%d reference=%d "
+			       "geNeg1000=%d geNeg500=%d geNeg100=%d geNeg15=%d "
+			       "ge0=%d ge1=%d ge100=%d ge500=%d ge1000=%d\n",
+			       OBT_MOV_ORIGEN(mov), OBT_MOV_DESTINO(mov),
+			       OBT_MOV_PROMOCION(mov), exacto, referencia,
+			       EETSuperaUmbral(mov, -1000), EETSuperaUmbral(mov, -500),
+			       EETSuperaUmbral(mov, -100),
+			       EETSuperaUmbral(mov, -15), EETSuperaUmbral(mov, 0),
+			       EETSuperaUmbral(mov, 1), EETSuperaUmbral(mov, 100),
+			       EETSuperaUmbral(mov, 500), EETSuperaUmbral(mov, 1000));
+		}
+		return VERDADERO;
+	}
+
+	if ((!strncmp(buff, "searchprobe ", 12)))
+	{
+		int profundidad = 0;
+		int alfa = -INFINITO;
+		int beta = INFINITO;
+		int valor;
+
+		CONT_BUFF_COMANDOS = '\0';
+		sscanf(buff, "searchprobe %d %d %d", &profundidad, &alfa, &beta);
+		limpiarAntesDeBusqueda();
+		tiempoVencido = FALSO;
+		contadorDescendente = INFINITO;
+		juego.Buffer_MOV_INDEXCAPAS[0] = 0;
+
+		if (profundidad > 0)
+		{
+			valor = alfabetaNegado(0, profundidad, alfa, beta, VERDADERO);
+		} else {
+			valor = busquedadTranquilidad(0, alfa, beta);
+		}
+
+		printf("SearchProbe: score=%d nodes=%d qnodes=%d eet_prunes=%d eet_extensions=%d\n",
+		       valor, contadorNodos, QcontadorNodos,
+		       contadorPodasEET, contadorExtensionesEET);
+		return VERDADERO;
+	}
+
 	if ((!strncmp(buff, "evalprobe", 9)))
 	{
 		int origen = -1;

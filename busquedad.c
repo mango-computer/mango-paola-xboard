@@ -32,6 +32,10 @@ void limpiarAntesDeBusqueda()
 {
 	contadorNodos		= 0;
 	QcontadorNodos		= 0;
+#ifdef PRUEBAS_HCE
+	contadorPodasEET	= 0;
+	contadorExtensionesEET	= 0;
+#endif
 	nodoRaiz		= 0;
 	memset(juego.historicoMovMatadores, -INFINITO, largoResetMatadores); 
 	maxHistorial[0]		= 0;
@@ -405,6 +409,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	BOOLEANO esMovPeon;
 	BOOLEANO esCaptura;
 	int posDestinoMovPeon; 
+	BOOLEANO eetSuperaCero;
 
 	juego.triangularLargo[capa] = capa;
 
@@ -677,6 +682,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	for (i = juego.Buffer_MOV_INDEXCAPAS[capa]; i < juego.Buffer_MOV_INDEXCAPAS[capa+1]; i++)
 	{
 		seleccionarMovimiento(capa, i);
+		esCaptura = ES_MOV_CAPTURA(juego.Buffer_MOV[i]);
+		eetSuperaCero = esCaptura ? EETSuperaUmbral(juego.Buffer_MOV[i], 1) : VERDADERO;
 		hacerMovimiento(juego.Buffer_MOV[i]);
 
 		// Tras la jugada blanca, se comprueba que el rey blanco no haya quedado en jaque
@@ -700,7 +707,6 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 			ext 		  = 0;
 			c 		  = !juego.colorTurno;
 			validarMasExt     = FALSO;
-			esCaptura         = ES_MOV_CAPTURA(juego.Buffer_MOV[i]);
 			daJaque 	  = ES_ESTADO_JUEGO_JAQUE;
 			posDestinoMovPeon = OBT_MOV_DESTINO(juego.Buffer_MOV[i]); 
 			esMovPeon 	  = ES_MOV_PEON(juego.Buffer_MOV[i]);
@@ -709,9 +715,12 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 			{
 				if (esCaptura)
 				{
-					if (EET(juego.Buffer_MOV[i]) < 1)
+					if (!eetSuperaCero)
 					{
 						ext = 1;
+#ifdef PRUEBAS_HCE
+						contadorExtensionesEET++;
+#endif
 					}
 				} else {
 					if (EETPOS((uint8)posDestinoMovPeon, juego.colorTurno) < 0) 

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "rook_takes_undefended_pawn",
+    "fen": "4k3/8/8/3p4/8/8/3R4/4K3 w - - 0 1",
+    "origin": 11,
+    "destination": 35,
+    "expected": 100
+  },
+  {
+    "id": "queen_takes_defended_pawn",
+    "fen": "4k3/8/8/8/8/6n1/4p3/K3Q3 w - - 0 1",
+    "origin": 4,
+    "destination": 12,
+    "expected": -875
+  },
+  {
+    "id": "rook_exchange_with_xray_defender",
+    "fen": "4r1k1/4b3/8/8/8/8/4R3/6K1 w - - 0 1",
+    "origin": 12,
+    "destination": 52,
+    "expected": -160
+  },
+  {
+    "id": "white_en_passant",
+    "fen": "4k3/8/8/3Pp3/8/8/8/4K3 w - e6 0 1",
+    "origin": 35,
+    "destination": 44,
+    "expected": 100
+  },
+  {
+    "id": "black_rook_takes_undefended_pawn",
+    "fen": "4k3/3r4/8/8/3P4/8/8/4K3 b - - 0 1",
+    "origin": 51,
+    "destination": 27,
+    "expected": 100
+  },
+  {
+    "id": "three_capture_sequence",
+    "fen": "6k1/8/8/5n2/3p4/2B2N2/8/6K1 w - - 0 1",
+    "origin": 18,
+    "destination": 27,
+    "expected": 85
+  },
+  {
+    "id": "opponent_declines_bad_recapture",
+    "fen": "3q2k1/8/8/3p4/2P5/8/3R4/6K1 w - - 0 1",
+    "origin": 11,
+    "destination": 35,
+    "expected": 100
+  },
+  {
+    "id": "pinned_knight_cannot_recapture",
+    "fen": "5k2/8/8/3p4/5n2/8/3R4/5RK1 w - - 0 1",
+    "origin": 11,
+    "destination": 35,
+    "expected": 100
+  },
+  {
+    "id": "king_cannot_capture_defended_square",
+    "fen": "4k3/3p4/8/8/6B1/8/3R4/6K1 w - - 0 1",
+    "origin": 11,
+    "destination": 51,
+    "expected": 100
+  },
+  {
+    "id": "king_can_capture_safe_square",
+    "fen": "4k3/3p4/8/8/8/8/3R4/6K1 w - - 0 1",
+    "origin": 11,
+    "destination": 51,
+    "expected": -400
+  },
+  {
+    "id": "capture_promotes_to_queen",
+    "fen": "k6r/6P1/8/8/8/8/8/K7 w - - 0 1",
+    "origin": 54,
+    "destination": 63,
+    "promotion": 7,
+    "expected": 1375
+  },
+  {
+    "id": "capture_underpromotes_to_rook",
+    "fen": "k6r/6P1/8/8/8/8/8/K7 w - - 0 1",
+    "origin": 54,
+    "destination": 63,
+    "promotion": 6,
+    "expected": 900
+  },
+  {
+    "id": "capture_underpromotes_to_bishop",
+    "fen": "k6r/6P1/8/8/8/8/8/K7 w - - 0 1",
+    "origin": 54,
+    "destination": 63,
+    "promotion": 5,
+    "expected": 740
+  },
+  {
+    "id": "capture_underpromotes_to_knight",
+    "fen": "k6r/6P1/8/8/8/8/8/K7 w - - 0 1",
+    "origin": 54,
+    "destination": 63,
+    "promotion": 3,
+    "expected": 725
+  }
+]

@@ -36,6 +36,7 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 	int Vparcial			= 0;
 	int j				= 0;
 	int valorFC			= 0;
+	BOOLEANO eetSuperaPoda		= VERDADERO;
 	BOOLEANO esJaque 		= FALSO;
 	BOOLEANO estoyJaque 		= FALSO;
 	BOOLEANO existeUnMovValido 	= FALSO;
@@ -126,6 +127,12 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 	for (i = juego.Buffer_MOV_INDEXCAPAS[capa]; i < juego.Buffer_MOV_INDEXCAPAS[capa+1]; i++)
 	{
 		seleccionarMovimiento(capa, i);
+		eetSuperaPoda = VERDADERO;
+		if (!OBT_MOV_PROMOCION(juego.Buffer_MOV[i]) && !ALFA_BETA_PROXIMO_MATE && !esFinal &&
+		    !estoyJaque && ES_MOV_CAPTURA(juego.Buffer_MOV[i]))
+		{
+			eetSuperaPoda = EETSuperaUmbral(juego.Buffer_MOV[i], -15);
+		}
 		hacerMovimiento(juego.Buffer_MOV[i]);
 		
 		if (juego.colorTurno) // Si le toca al negro, se comprueba que el rey blanco no haya quedado en jaque
@@ -153,8 +160,11 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 				valorFC = VALORPIEZA_FASE[OBT_MOV_CAPTURA(juego.Buffer_MOV[i])];
 		
 				if ((VALORPIEZA_FASE[OBT_MOV_PIEZA(juego.Buffer_MOV[i])] > valorFC) &&
-				    ((fase[colorMueve] - valorFC) > 0) && (EET(juego.Buffer_MOV[i]) < -15))
+				    ((fase[colorMueve] - valorFC) > 0) && !eetSuperaPoda)
 				{
+#ifdef PRUEBAS_HCE
+					contadorPodasEET++;
+#endif
 					desHacerMovimiento(juego.Buffer_MOV[i]);
 					continue;
 				}

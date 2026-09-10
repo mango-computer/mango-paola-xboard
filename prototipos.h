@@ -177,6 +177,11 @@ void iniHashTablero();
 int busquedadTranquilidad(int capa, int alfa, int beta);
 void agregarMovCapPro(uint32 indexPrimero, uint32 *index);
 int EET(MOVIMIENTO mov);
+BOOLEANO EETSuperaUmbral(MOVIMIENTO mov, int umbral);
+#ifdef PRUEBAS_HCE
+int EETReferencia(MOVIMIENTO mov);
+void reiniciarEstadisticasEET(void);
+#endif
 uint64 obtAtacantesDeEscaque(uint8 escaque);
 uint64 obtProximosAtacantes(uint64 atacantes, uint64 noRemovidos, int destino, int direccion);
 int EETPOS(uint8 origen, COLOR colorPrimerTurno);
