@@ -50,6 +50,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C11.a | GREEN | `26b6c6d` / `BASE-23` | `artifacts/gates/C11.a/20260911T202459Z` | Quiescencia sin eval en jaque |
 | C11.b | GREEN | `389d021` / `BASE-24` | `artifacts/gates/C11.b/20260911T202631Z` | Static eval y lazy de qsearch |
 | C12 | GREEN | `0c7d0ce` / `BASE-25` | `artifacts/gates/C12/20260911T202804Z` | Candidatos con estado local |
+| C13.a | GREEN | `2bf0eca` / `BASE-26` | `artifacts/gates/C13.a/20260911T203129Z` | Position/scratch por hilo |
 
 ## BASE-00
 
@@ -309,6 +310,14 @@ solo cuando el peón no es aislado) quedan congeladas. La única familia nueva
 es el estado local de candidatos: ataque, defensa y casilla evaluada no se
 comparten con peones previos ni con un bloqueo inmediato. El fixture marca
 `blocked=0 candidate=1`. Gate verde.
+
+## C13.a — Position y scratch por hilo
+
+`ThreadState` agrupa `Position` (el `BITTABLERO` de siempre) y `EvalScratch`.
+El hilo principal usa `hilosBusqueda[0]`; `juego` y los mapas de evaluación
+son accesos a ese estado. Un segundo `ThreadState` copia la posición y
+reproduce las mismas tres puntuaciones (`same=1`). Un hilo permanece verde.
+Gate en 23,891 s.
 
 ## Regresiones y bloqueos
 
