@@ -50,6 +50,9 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C11.a | GREEN | `26b6c6d` / `BASE-23` | `artifacts/gates/C11.a/20260911T202459Z` | Quiescencia sin eval en jaque |
 | C11.b | GREEN | `389d021` / `BASE-24` | `artifacts/gates/C11.b/20260911T202631Z` | Static eval y lazy de qsearch |
 | C12 | GREEN | `0c7d0ce` / `BASE-25` | `artifacts/gates/C12/20260911T202804Z` | Candidatos con estado local |
+| C12.b | RED | `a10c419`, revert `34411ea` | `artifacts/match/C12.b.json` | Aislado+doblado; Elo −28,6 |
+| C12.c | GREEN | `4585431` | `artifacts/match/C12.c.json` | Shelter por derechos/columna |
+| C12.d | RED | `c846927`, revert `2a17b77` | `artifacts/match/C12.d.json` | Pareja opuesta; Elo 0 |
 | C13.a | GREEN | `2bf0eca` / `BASE-26` | `artifacts/gates/C13.a/20260911T203129Z` | Position/scratch por hilo |
 | C13.b | GREEN | `5f84b6e` / `BASE-27` | `artifacts/gates/C13.b/20260911T203455Z` | Lazy SMP, default 1 hilo |
 
@@ -376,6 +379,41 @@ Resultados (suite ~49 min, 0 ilegales/crashes en 1400 partidas):
 Veredicto: el candidato no se descarta. Es más correcto (0 fallos
 funcionales) y más fuerte a profundidad fija. A tiempo la señal es
 positiva pero el IC cruza cero. No hay SPRT de publicación.
+
+## P10 por familias (C12.b / C12.c / C12.d)
+
+Rama `integration/p10-familias` desde `master` @ `11f784e` (mutex de TT
+omitido con un hilo). Cada familia: commit + fixture, match de 1000 partidas
+con el mismo protocolo (`go depth 8`, 120 ply, Hash 64, `Threads=1`, sin
+libro, 8 juegos en paralelo, colores invertidos). Conservar solo si
+`illegal_or_crash == 0` y `elo_difference > 0`. El IC de 1000 partidas a
+depth 8 es orientativo; no se afirma Elo publicado. Texel queda fuera.
+
+| Familia | Marcador (C–B–T) | Puntuación | Elo (IC 95 %) | Veredicto |
+| --- | --- | --- | --- | --- |
+| C12.b aislado+doblado | 42–124–834 | 45,90 % | −28,55 [−35,78, −21,35] | Revertida |
+| C12.c shelter | 167–83–750 | 54,20 % | +29,25 [+19,71, +38,84] | Conservada |
+| C12.d pareja alfiles | 83–83–834 | 50,00 % | 0,00 [0,00, 0,00] | Revertida |
+
+C12.b aplicaba `peon_doblado` también cuando el peón es aislado. El fixture
+`isolated=1 doubled=1` pasó; el match perdió Elo de forma significativa y el
+commit se revirtió. El dúo y el débil siguen en la rama no aislada.
+
+C12.c no retoca `INSEGURIDAD_REY`. Si el rey ya enrocó, el pivote sigue la
+columna real. Si quedan derechos, el mínimo solo mira pivotes aún legales
+(7/5 y/o 2). Sin derechos y sin haber enrocado, usa la columna actual, no
+`min(2, 5)`. El fixture (`rey e1`, sin O-O/O-O-O, flanco de rey roto) marca
+`pivot=5 used_current=1`. 0 ilegales; se conserva y pasa a ser la base del
+siguiente match.
+
+C12.d daba el bono +38/+56 solo con alfil claro y oscuro, fuera del cache de
+material por cuentas. El fixture `pair=1 pair_same=0` pasó; el match empató
+(Elo no mayor que 0) y el commit se revirtió. Ablaciones N×peones no se
+abrieron.
+
+P10 de este ciclo cierra con un solo cambio de conocimiento: C12.c. No hay
+merge ni push a `master` hasta que se pida. Texel (corpus etiquetado, export
+MG/EG, split por partida) queda para un ciclo posterior.
 
 ## Regresiones y bloqueos
 

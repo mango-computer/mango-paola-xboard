@@ -304,14 +304,32 @@
       "reason": "Todas las comprobaciones bloqueantes pasaron.",
       "promoted_base": "BASE-25"
     },
+    "C12.b": {
+      "requires": [
+        "C12"
+      ],
+      "status": "RED",
+      "last_commit": "a10c419f3c1dc38f5700a4c7676d495aeb34f6a8",
+      "last_evidence": "artifacts/match/C12.b.json",
+      "reason": "Match 1000 depth 8: Elo -28.55; revertido (34411ea)."
+    },
     "C12.c": {
       "requires": [
         "C12"
       ],
-      "status": "PENDING",
-      "last_commit": "",
-      "last_evidence": "",
-      "reason": "Shelter por derechos o columna real; match 1000 pendiente."
+      "status": "GREEN",
+      "last_commit": "4585431a79affebcc3244ac6483cac165701d0dc",
+      "last_evidence": "artifacts/match/C12.c.json",
+      "reason": "Match 1000 depth 8: Elo +29.25, 0 ilegales; conservado."
+    },
+    "C12.d": {
+      "requires": [
+        "C12"
+      ],
+      "status": "RED",
+      "last_commit": "c846927b9551fe4f1f7a8913ad40737120d4c057",
+      "last_evidence": "artifacts/match/C12.d.json",
+      "reason": "Match 1000 depth 8: Elo 0.00; revertido (2a17b77)."
     },
     "C13.a": {
       "requires": [
