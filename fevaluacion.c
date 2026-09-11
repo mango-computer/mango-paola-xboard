@@ -974,7 +974,9 @@ void evalPeones(COLOR colorEval)
 			peonesDebiles[colorEval] |= BITSET[escaqueOrigen];
 			esAislado 		  = VERDADERO;
 
-		} else {  
+		} else {
+			/* Familia BASE-00: aislado y doblado no se acumulan.
+			   El descuento de doblados vive solo en esta rama. */
 
 			//Peones Debiles
 			ataque  = 0;
@@ -1056,30 +1058,39 @@ void evalPeones(COLOR colorEval)
 			if ((AISLADO[escaqueOrigen] & juego.tablero[colorEval][PEON]) && 
 			    !(mascaraCapturarPeon[escaqueOrigen][colorEval] & juego.tablero[xcolorEval][PEON]))
 			{
-				for (esq=escaqueOrigen;esq != POSRANK7[colorEval][escaqueOrigen];esq+=DIR[colorEval])
+				int ataqueCandidato = 0;
+				int defensaCandidato = 0;
+				int casillaEvaluada = 0;
+				int esqCandidato = escaqueOrigen;
+
+				for (esqCandidato = escaqueOrigen;
+				     esqCandidato != POSRANK7[colorEval][escaqueOrigen];
+				     esqCandidato += DIR[colorEval])
 				{
-					if (BITSET[esq+DIR[colorEval]] & mapaTodosPeones) break;
+					if (BITSET[esqCandidato + DIR[colorEval]] & mapaTodosPeones)
+						break;
 
-					defensa = 
-					cuentaBit(mascaraCapturarPeon[esq][xcolorEval] & peonMov[colorEval]);
-
-					ataque = 
-					cuentaBit(mascaraCapturarPeon[esq][colorEval] & juego.tablero[xcolorEval][PEON]);
-					
-					if (ataque) break;
+					defensaCandidato = cuentaBit(
+						mascaraCapturarPeon[esqCandidato][xcolorEval] &
+						peonMov[colorEval]);
+					ataqueCandidato = cuentaBit(
+						mascaraCapturarPeon[esqCandidato][colorEval] &
+						juego.tablero[xcolorEval][PEON]);
+					casillaEvaluada = 1;
+					if (ataqueCandidato)
+						break;
 				}
 
-				if (ataque <= defensa)
+				if (casillaEvaluada && ataqueCandidato <= defensaCandidato &&
+				    !(PASADO[colorEval][esqCandidato + DIR[colorEval]] &
+				      juego.tablero[xcolorEval][PEON]))
 				{
-					if (!(PASADO[colorEval][esq+DIR[colorEval]] & juego.tablero[xcolorEval][PEON]))
-					{
-						puntaje_m[colorEval] += 
-						  peon_pasado_candidato[MEDIO_JUEGO][colorEval][RANKS[escaqueOrigen]];
-						puntaje_f[colorEval] += 
-						  peon_pasado_candidato[FINAL_JUEGO][colorEval][RANKS[escaqueOrigen]];
+					puntaje_m[colorEval] +=
+					  peon_pasado_candidato[MEDIO_JUEGO][colorEval][RANKS[escaqueOrigen]];
+					puntaje_f[colorEval] +=
+					  peon_pasado_candidato[FINAL_JUEGO][colorEval][RANKS[escaqueOrigen]];
 
-						peonesCandidatos[colorEval] |= BITSET[escaqueOrigen];
-					}
+					peonesCandidatos[colorEval] |= BITSET[escaqueOrigen];
 				}
 			}
 		}

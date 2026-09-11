@@ -311,6 +311,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
 
+    def test_candidate_pawn_uses_local_attack_state(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "candidate_local"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("blocked=0 candidate=1", result.stdout)
+
     def test_qsearch_reuses_static_eval_and_avoids_lazy(self) -> None:
         result = subprocess.run(
             [str(self.audit), "qsearch_static"],

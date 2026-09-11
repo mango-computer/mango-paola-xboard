@@ -414,6 +414,15 @@ int main(int argc, char **argv)
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
 	}
+	else if (strcmp(argv[1], "candidate_local") == 0)
+	{
+		load_fen("4k3/8/8/2P5/2P5/8/3P4/4K3 w - - 0 1");
+		full_uncached();
+		printf("blocked=%d ", !!(peonesCandidatos[BLANCO] & BITSET[26]));
+		load_fen("4k3/8/3p4/8/2P5/8/3P4/4K3 w - - 0 1");
+		full_uncached();
+		printf("candidate=%d\n", !!(peonesCandidatos[BLANCO] & BITSET[26]));
+	}
 	else if (strcmp(argv[1], "qsearch_static") == 0)
 	{
 		HASH_EVAL *saved = hash_eval;
