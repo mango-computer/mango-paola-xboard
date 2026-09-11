@@ -397,6 +397,20 @@ int main(int argc, char **argv)
 		       memcmp(expected, peonDefectos, sizeof(expected)) == 0,
 		       (unsigned long long)aciertosHashPeones);
 	}
+	else if (strcmp(argv[1], "material_cache") == 0)
+	{
+		uint64 hitsBefore;
+		int first, second;
+
+		load_fen("r2q1rk1/pp2bppp/2n1pn2/2pp4/3P4/2PBPN2/PPQ2PPP/R1B1K2R w KQ - 4 10");
+		limpiarTablasHash();
+		hitsBefore = aciertosHashMaterial;
+		first = full_uncached();
+		second = full_uncached();
+		printf("same_score=%d material_hits=%llu\n",
+		       first == second,
+		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
+	}
 	else
 	{
 		cerrarTablas();

@@ -1380,11 +1380,50 @@ void evalDama(COLOR colorEval)
 	}
 }
 
+typedef struct
+{
+	uint64 firma;
+	int puntajeM[2];
+	int puntajeF[2];
+	uint16 generacion;
+} ENTRADA_HASH_MATERIAL;
+
+static ENTRADA_HASH_MATERIAL hashMaterial[1024];
+#ifdef PRUEBAS_HCE
+static uint64 aciertosHashMaterial;
+#endif
+
+static uint64 firmaMaterialActual(void)
+{
+	uint64 firma = 0xcbf29ce484222325ULL;
+	int color, tipo;
+
+	for (color = BLANCO; color <= NEGRO; color++)
+		for (tipo = PEON; tipo <= REY; tipo++)
+			firma = (firma ^ juego.estadoEvaluacion.conteo[color][tipo]) *
+				0x100000001b3ULL;
+	firma = (firma ^ juego.colorTurno) * 0x100000001b3ULL;
+	firma = (firma ^ !!(mapaTodosPeones & mascaraFGH)) * 0x100000001b3ULL;
+	firma = (firma ^ !!(mapaTodosPeones & mascaraABC)) * 0x100000001b3ULL;
+	return firma;
+}
+
 void ini_material()
 {
 	int mayores, menores, balance;
+	uint64 firma = firmaMaterialActual();
+	ENTRADA_HASH_MATERIAL *entrada = &hashMaterial[firma & 1023];
 	static int b[17] = { 0, 40, 40, 35, 30, 24, 16, 12, 10, 8, 7, 6, 5, 4, 3, 2, 1 };
 
+	if (entrada->generacion == generacionHash && entrada->firma == firma)
+	{
+		memcpy(puntaje_m, entrada->puntajeM, sizeof(entrada->puntajeM));
+		memcpy(puntaje_f, entrada->puntajeF, sizeof(entrada->puntajeF));
+#ifdef PRUEBAS_HCE
+		aciertosHashMaterial++;
+#endif
+		return;
+	}
 
 	if (juego.material_total < 0)
 	{
@@ -1525,6 +1564,10 @@ void ini_material()
 	printf("f[N]=%d\n",puntaje_f[NEGRO]);
 #endif
 
+	entrada->firma = firma;
+	memcpy(entrada->puntajeM, puntaje_m, sizeof(entrada->puntajeM));
+	memcpy(entrada->puntajeF, puntaje_f, sizeof(entrada->puntajeF));
+	entrada->generacion = generacionHash;
 }
 
 void evalRey(COLOR colorEval)

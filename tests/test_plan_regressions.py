@@ -297,6 +297,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"shelter_restored=1 pawn_hits=[1-9]\d*")
 
+    def test_material_cache_reuses_complete_pure_result(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "material_cache"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
+
 
 if __name__ == "__main__":
     unittest.main()
