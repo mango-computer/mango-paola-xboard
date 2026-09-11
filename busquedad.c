@@ -517,9 +517,15 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 			{
 				switch(h_banderas)
 				{
-					case BANDERA_HASH_EXACTO:	if (!nodoPV) 		return h_V;		
-					case BANDERA_HASH_ARRIBA:  	if (h_V <= alfa)	return alfa;
-					case BANDERA_HASH_ABAJO: 	if (h_V >= beta)	return beta;
+					case BANDERA_HASH_EXACTO:
+						if (!nodoPV) return h_V;
+						break;
+					case BANDERA_HASH_ARRIBA:
+						if (h_V <= alfa) return alfa;
+						break;
+					case BANDERA_HASH_ABAJO:
+						if (h_V >= beta) return beta;
+						break;
 					case BANDERA_HASH_EVITAR_NULL:  hacerNULL = FALSO; break;
 				}
 			}
