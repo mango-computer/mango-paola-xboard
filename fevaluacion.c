@@ -1433,7 +1433,8 @@ void ini_material()
 	ENTRADA_HASH_MATERIAL *entrada = &hashMaterial[firma & 1023];
 	static int b[17] = { 0, 40, 40, 35, 30, 24, 16, 12, 10, 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	if (entrada->generacion == generacionHash && entrada->firma == firma)
+	if (!esBusquedaParalela &&
+	    entrada->generacion == generacionHash && entrada->firma == firma)
 	{
 		memcpy(puntajeEval_m, entrada->puntajeM, sizeof(entrada->puntajeM));
 		memcpy(puntajeEval_f, entrada->puntajeF, sizeof(entrada->puntajeF));
@@ -1582,10 +1583,13 @@ void ini_material()
 	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 
-	entrada->firma = firma;
-	memcpy(entrada->puntajeM, puntajeEval_m, sizeof(entrada->puntajeM));
-	memcpy(entrada->puntajeF, puntajeEval_f, sizeof(entrada->puntajeF));
-	entrada->generacion = generacionHash;
+	if (!esBusquedaParalela)
+	{
+		entrada->firma = firma;
+		memcpy(entrada->puntajeM, puntajeEval_m, sizeof(entrada->puntajeM));
+		memcpy(entrada->puntajeF, puntajeEval_f, sizeof(entrada->puntajeF));
+		entrada->generacion = generacionHash;
+	}
 }
 
 void evalRey(COLOR colorEval)

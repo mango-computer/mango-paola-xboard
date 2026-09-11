@@ -56,8 +56,13 @@ COLOR 			computadora 					= NEGRO;
 
 int			numEstatico					= 0;
 ThreadState		hilosBusqueda[MAX_HILOS];
+#ifdef MANGO_SMP
+__thread ThreadState	*hiloActual					= &hilosBusqueda[0];
+#else
 ThreadState		*hiloActual					= &hilosBusqueda[0];
+#endif
 int			numHilosBusqueda				= 1;
+BOOLEANO		esBusquedaParalela				= FALSO;
 #define			nPeones		(hiloActual->scratch.nPeones)
 #define			nDama		(hiloActual->scratch.nDama)
 #define			nCaballos	(hiloActual->scratch.nCaballos)

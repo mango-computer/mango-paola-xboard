@@ -31,6 +31,7 @@ class PlanRegressionTests(unittest.TestCase):
                 str(ROOT),
                 str(ROOT / "tests" / "plan_audit.c"),
                 "-lm",
+                "-pthread",
                 "-o",
                 str(cls.audit),
             ],
@@ -310,6 +311,17 @@ class PlanRegressionTests(unittest.TestCase):
             check=True,
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
+
+    def test_lazy_smp_two_workers_return_legal_moves(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "smp_search"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"one=\d+ two=\d+ both_legal=1")
 
     def test_thread_state_eval_is_worker_independent(self) -> None:
         result = subprocess.run(

@@ -106,6 +106,7 @@ static void uciIdentificarse(void)
 		maxHashMBPermitido()
 	);
 	printf("option name Clear Hash type button\n");
+	printf("option name Threads type spin default 1 min 1 max %d\n", MAX_HILOS);
 	printf("uciok\n");
 	fflush(stdout);
 }
@@ -129,7 +130,7 @@ static void uciSetOption(char *linea)
 		return;
 	}
 
-	if (strcmp(tok, "MultiPV") && strcmp(tok, "Hash"))
+	if (strcmp(tok, "MultiPV") && strcmp(tok, "Hash") && strcmp(tok, "Threads"))
 		return;
 	{
 		char nombre[64];
@@ -150,6 +151,15 @@ static void uciSetOption(char *linea)
 			if (value > 3)
 				value = 3;
 			uciMultiPV = (int)value;
+			return;
+		}
+
+		if (!strcmp(nombre, "Threads")) {
+			if (value < 1)
+				value = 1;
+			if (value > MAX_HILOS)
+				value = MAX_HILOS;
+			numHilosBusqueda = (int)value;
 			return;
 		}
 

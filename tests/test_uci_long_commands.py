@@ -138,6 +138,7 @@ class LongUciCommandTests(unittest.TestCase):
             [
                 "gcc",
                 "-lm",
+                "-pthread",
                 str(ROOT / "bitmma3.c"),
                 "-Wall",
                 "-O2",

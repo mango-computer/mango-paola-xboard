@@ -27,7 +27,7 @@ class EetRegressionTests(unittest.TestCase):
         subprocess.run(
             [
                 "gcc", "-O2", "-Wall", "-DPRUEBAS_HCE",
-                str(ROOT / "bitmma3.c"), "-lm", "-o", cls.engine,
+                str(ROOT / "bitmma3.c"), "-lm", "-pthread", "-o", cls.engine,
             ],
             cwd=ROOT,
             check=True,

@@ -28,6 +28,10 @@
 #ifndef MACROS_H
 #define MACROS_H
 
+#if !defined(WINDOWS) && !defined(_WIN32) && !defined(_WIN64)
+#define MANGO_SMP 1
+#endif
+
 #define 	VERSION_MANGO_AJEDREZ 		"Mango AC Ajedrez 1.2.0, (c) 2013. Creado por Jose Andres Morales Linares. comprasmangocomputer@gmail.com"
 
 #define NOMBRE_MANGO_AC			"Mango AC"

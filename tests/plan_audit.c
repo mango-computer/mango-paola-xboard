@@ -414,6 +414,24 @@ int main(int argc, char **argv)
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
 	}
+	else if (strcmp(argv[1], "smp_search") == 0)
+	{
+		MOVIMIENTO one;
+		MOVIMIENTO two;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		usarLibroAperturas = FALSO;
+		juego.profundidadBusquedad = 3;
+		juego.maxTiempo = 1 << 25;
+		numHilosBusqueda = 1;
+		one = pensarRapido();
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		numHilosBusqueda = 2;
+		two = pensarRapido();
+		numHilosBusqueda = 1;
+		printf("one=%u two=%u both_legal=%d\n",
+		       (unsigned)one, (unsigned)two, one != 0 && two != 0);
+	}
 	else if (strcmp(argv[1], "thread_eval") == 0)
 	{
 		static const char *positions[] = {

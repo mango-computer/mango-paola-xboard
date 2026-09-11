@@ -28,6 +28,26 @@
 #ifndef BUSQUEDAD_C
 #define BUSQUEDAD_C
 
+#ifdef MANGO_SMP
+typedef struct
+{
+	int id;
+	int profundidad;
+	int alfa;
+	int beta;
+} SMP_TRABAJO;
+
+static void *hiloBusquedaAuxiliar(void *arg)
+{
+	const SMP_TRABAJO *trabajo = arg;
+
+	hiloActual = &hilosBusqueda[trabajo->id];
+	alfabetaNegado(0, trabajo->profundidad, trabajo->alfa, trabajo->beta,
+		       VERDADERO);
+	return NULL;
+}
+#endif
+
 typedef struct
 {
 	COLOR colorTurno;
@@ -224,7 +244,42 @@ if (tipoDeBusqueda == TIPO_BUSQUEDA_NORMAL)
 #endif
 
 		//BUSQUEDA
+#ifdef MANGO_SMP
+		{
+			pthread_t auxiliares[MAX_HILOS];
+			SMP_TRABAJO trabajos[MAX_HILOS];
+			int ayudante, lanzados = 0;
+
+			esBusquedaParalela = numHilosBusqueda > 1;
+			if (esBusquedaParalela)
+			{
+				for (ayudante = 1;
+				     ayudante < numHilosBusqueda && ayudante < MAX_HILOS;
+				     ayudante++)
+				{
+					trabajos[ayudante].id = ayudante;
+					trabajos[ayudante].profundidad = profundidadActual;
+					trabajos[ayudante].alfa = alfa;
+					trabajos[ayudante].beta = beta;
+					hilosBusqueda[ayudante].posicion = hilosBusqueda[0].posicion;
+					memset(&hilosBusqueda[ayudante].scratch, 0,
+					       sizeof(hilosBusqueda[ayudante].scratch));
+					if (pthread_create(&auxiliares[ayudante], NULL,
+							   hiloBusquedaAuxiliar,
+							   &trabajos[ayudante]) != 0)
+						break;
+					lanzados++;
+				}
+			}
+			valoracion = alfabetaNegado(0,profundidadActual,alfa, beta, VERDADERO);
+			for (ayudante = 1; ayudante <= lanzados; ayudante++)
+				pthread_join(auxiliares[ayudante], NULL);
+			esBusquedaParalela = FALSO;
+			hiloActual = &hilosBusqueda[0];
+		}
+#else
 		valoracion = alfabetaNegado(0,profundidadActual,alfa, beta, VERDADERO);
+#endif
 
 //*****************************************************************************************************************
 #define MARGEN  33

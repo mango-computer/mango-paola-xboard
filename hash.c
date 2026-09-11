@@ -38,6 +38,15 @@
 #ifndef HASH_C
 #define HASH_C
 
+#ifdef MANGO_SMP
+static pthread_mutex_t mutexTablaHash = PTHREAD_MUTEX_INITIALIZER;
+#define BLOQUEAR_TT() pthread_mutex_lock(&mutexTablaHash)
+#define DESBLOQUEAR_TT() pthread_mutex_unlock(&mutexTablaHash)
+#else
+#define BLOQUEAR_TT() ((void)0)
+#define DESBLOQUEAR_TT() ((void)0)
+#endif
+
 _Static_assert(sizeof(REGISTRO_TABLA_HASH) == 32,
 	       "La entrada TT debe conservar el layout de 32 bytes");
 
@@ -121,7 +130,7 @@ static uint64 llaveEvaluacion(void)
 void agregarEvalTablaHash(int valor)
 {
 	uint64 llave;
-	if (!hash_eval)
+	if (esBusquedaParalela || !hash_eval)
 		return;
 	llave = llaveEvaluacion();
 	HASH_EVAL *ptabla 	= hash_eval + (llave & LARGO_HASH_EVAL);
@@ -134,7 +143,7 @@ void agregarEvalTablaHash(int valor)
 BOOLEANO verificarEvalTablaHash(int *valor)
 {
 	uint64 llave;
-	if (!hash_eval)
+	if (esBusquedaParalela || !hash_eval)
 		return FALSO;
 	llave = llaveEvaluacion();
 	HASH_EVAL *ptabla 	= hash_eval + (llave & LARGO_HASH_EVAL);
@@ -160,7 +169,7 @@ BOOLEANO cargarHashPeones(void)
 	int color;
 
 	consultasHashPeones++;
-	if (!hash_peones)
+	if (esBusquedaParalela || !hash_peones)
 		return FALSO;
 	entrada = entradaHashPeones();
 	if (entrada->generacion != generacionHash ||
@@ -189,7 +198,7 @@ void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior)
 	HASH_PEONES *entrada;
 	int color;
 
-	if (!hash_peones)
+	if (esBusquedaParalela || !hash_peones)
 		return;
 	entrada = entradaHashPeones();
 	entrada->peonesBlancos = juego.tablero[BLANCO][PEON];
@@ -235,6 +244,7 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas,
 {
 	if (!tabla_hash || !entradasTablaHash)
 		return;
+	BLOQUEAR_TT();
 	REGISTRO_TABLA_HASH *ptabla 	= tabla_hash + (juego.llaveHash & LARGO_TABLA_HASH);
 
 	if ((ptabla->generacion == generacionHash) &&
@@ -243,7 +253,10 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas,
 	    (ptabla->reglaCincuentaMov == juego.reglaCincuentaMov) &&
 	    (ptabla->enroqueBlanco == juego.ENROQUEB) &&
 	    (ptabla->enroqueNegro == juego.ENROQUEN))
+	{
+		DESBLOQUEAR_TT();
 		return;
+	}
 
 	valor = puntajeHashAlGuardar(valor, capa);
 
@@ -257,6 +270,7 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas,
 	ptabla->banderas	= banderas;
 	ptabla->enroqueBlanco	= juego.ENROQUEB;
 	ptabla->enroqueNegro	= juego.ENROQUEN;
+	DESBLOQUEAR_TT();
 }
 
 int verificarTablaHash(int alfa, int beta, int capa, int profundidad,
@@ -267,6 +281,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad,
 		*evalEstatico = INT_MAX;
 		return 0;
 	}
+	BLOQUEAR_TT();
 	REGISTRO_TABLA_HASH *ptabla = tabla_hash + (juego.llaveHash & LARGO_TABLA_HASH);
 
 	int valor = 0;
@@ -298,23 +313,27 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad,
 			if ((flag == BANDERA_HASH_ARRIBA) && (valor <=alfa))
 			{
 				*banderas = BANDERA_HASH_ARRIBA;
+				DESBLOQUEAR_TT();
 				return alfa;
 			}
 
 			if ((flag == BANDERA_HASH_ABAJO) && (valor >= beta))
 			{
 				*banderas = BANDERA_HASH_ABAJO;
+				DESBLOQUEAR_TT();
 				return beta;
 			}
 
 			if (flag == BANDERA_HASH_EXACTO)
 			{
 				*banderas = BANDERA_HASH_EXACTO;
+				DESBLOQUEAR_TT();
 				return valor;
 			}
 		}
 	}
 
+	DESBLOQUEAR_TT();
 	return 0;	
 }
 
