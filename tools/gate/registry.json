@@ -78,7 +78,10 @@
       "requires": [
         "C03.a"
       ],
-      "status": "PENDING"
+      "status": "PROVISIONAL",
+      "last_commit": "f71ee2b5344266170899746b3601623616e6fc0a",
+      "last_evidence": "artifacts/gates/C03.b/20260911T193245Z",
+      "reason": "Regresi\u00f3n menor de 4.942 %; se evaluar\u00e1 con dependientes."
     },
     "C03.c": {
       "requires": [

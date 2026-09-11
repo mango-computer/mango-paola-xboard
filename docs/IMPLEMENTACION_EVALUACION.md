@@ -27,6 +27,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C01.d | GREEN | `83ded49` / `BASE-04` | `artifacts/gates/C01.d/20260911T185511Z` | Null reversible; promover |
 | C02 | GREEN | `53caefd` / `BASE-05` | `artifacts/gates/C02/20260911T185648Z` | Terminales corregidos; promover |
 | C03.a | PROVISIONAL | `63ad082`, base `BASE-05` | `artifacts/gates/C03.a/20260911T185843Z` | Mantener para medir cadena C03 |
+| C03.b | PROVISIONAL | `f71ee2b`, base `BASE-05` | `artifacts/gates/C03.b/20260911T193245Z` | Mantener para medir cadena C03 |
 
 ## BASE-00
 
@@ -89,8 +90,23 @@ falsa. Los 51 tests pasan. El lote de evaluación pasó de 149,744 ms a
 154,198 ms (`+2,974 %`), una regresión menor al umbral fuerte; el cambio queda
 `PROVISIONAL` para medirlo junto con defensa de rey y movilidad.
 
+## C03.b — Defensa del rey
+
+Los ataques del rey se incorporan a los mapas simple/doble; el rey c3 vuelve a
+defender la torre d4. La cadena C03 acumula 157,633 ms frente a 150,209 ms
+(`+4,942 %`) en el lote de evaluación, pero la búsqueda corta recorrió 4,05 %
+más nodos en 7,82 % menos tiempo. Se mantiene `PROVISIONAL`.
+
+La primera ejecución del gate quedó roja porque un test antiguo atribuía todo
+el mapa agregado a la torre clavada; d2/f2 también son ataques legítimos del
+rey e1 tras C03.b. Se corrigió el oráculo para comprobar los campos específicos
+de la pieza clavada. No fue una regresión del motor. La repetición posterior
+superó las 52 pruebas.
+
 ## Regresiones y bloqueos
 
 - C03.a: `+2,974 %` en lote de evaluación, por debajo del umbral fuerte del
   10 %. Se conserva provisionalmente porque corrige la semántica requerida por
   C03.b/C03.c.
+- C03.b: cadena C03 en `+4,942 %` de coste de evaluación. Sigue por debajo del
+  umbral fuerte y la búsqueda corta mejora tiempo; se conserva hasta C03.c.
