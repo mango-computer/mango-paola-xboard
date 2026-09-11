@@ -8,37 +8,201 @@
     "strong_regression_percent": 10.0
   },
   "changes": {
-    "C00": {"requires": [], "status": "PENDING"},
-    "C01.a": {"requires": ["C00"], "status": "PENDING"},
-    "C01.b": {"requires": ["C01.a"], "status": "PENDING"},
-    "C01.c": {"requires": ["C01.b"], "status": "PENDING"},
-    "C01.d": {"requires": ["C01.c"], "status": "PENDING"},
-    "C02": {"requires": ["C01.c"], "status": "PENDING"},
-    "C03.a": {"requires": ["C02"], "status": "PENDING"},
-    "C03.b": {"requires": ["C03.a"], "status": "PENDING"},
-    "C03.c": {"requires": ["C03.b"], "status": "PENDING"},
-    "C04.a": {"requires": ["C03.c"], "status": "PENDING"},
-    "C04.b": {"requires": ["C04.a"], "status": "PENDING"},
-    "C05.a": {"requires": ["C04.b"], "status": "PENDING"},
-    "C05.b": {"requires": ["C05.a"], "status": "PENDING"},
-    "C05.c": {"requires": ["C05.b"], "status": "PENDING"},
-    "C06.a": {"requires": ["C05.c"], "status": "PENDING"},
-    "C06.b": {"requires": ["C06.a"], "status": "PENDING"},
-    "C06.c": {"requires": ["C06.b"], "status": "PENDING"},
-    "C07.a": {"requires": ["C05.c"], "status": "PENDING"},
-    "C07.b": {"requires": ["C07.a"], "status": "PENDING"},
-    "C07.c": {"requires": ["C07.b"], "status": "PENDING"},
-    "C07.d": {"requires": ["C07.c", "C01.d"], "status": "PENDING"},
-    "C08": {"requires": ["C06.c", "C07.d"], "status": "PENDING"},
-    "C09.a": {"requires": ["C08"], "status": "PENDING"},
-    "C09.b": {"requires": ["C09.a"], "status": "PENDING"},
-    "C10.a": {"requires": ["C09.b", "C07.d"], "status": "PENDING"},
-    "C10.b": {"requires": ["C10.a"], "status": "PENDING"},
-    "C10.c": {"requires": ["C10.b"], "status": "PENDING"},
-    "C11.a": {"requires": ["C10.c"], "status": "PENDING"},
-    "C11.b": {"requires": ["C11.a"], "status": "PENDING"},
-    "C12": {"requires": ["C11.b"], "status": "PENDING"},
-    "C13.a": {"requires": ["C10.c"], "status": "PENDING"},
-    "C13.b": {"requires": ["C13.a"], "status": "PENDING"}
+    "C00": {
+      "requires": [],
+      "status": "GREEN",
+      "last_commit": "2681da90e55edd84cd91e38a3babd6afa9efcbb9",
+      "last_evidence": "artifacts/gates/C00/20260911T184919Z",
+      "reason": "Todas las comprobaciones bloqueantes pasaron."
+    },
+    "C01.a": {
+      "requires": [
+        "C00"
+      ],
+      "status": "PENDING"
+    },
+    "C01.b": {
+      "requires": [
+        "C01.a"
+      ],
+      "status": "PENDING"
+    },
+    "C01.c": {
+      "requires": [
+        "C01.b"
+      ],
+      "status": "PENDING"
+    },
+    "C01.d": {
+      "requires": [
+        "C01.c"
+      ],
+      "status": "PENDING"
+    },
+    "C02": {
+      "requires": [
+        "C01.c"
+      ],
+      "status": "PENDING"
+    },
+    "C03.a": {
+      "requires": [
+        "C02"
+      ],
+      "status": "PENDING"
+    },
+    "C03.b": {
+      "requires": [
+        "C03.a"
+      ],
+      "status": "PENDING"
+    },
+    "C03.c": {
+      "requires": [
+        "C03.b"
+      ],
+      "status": "PENDING"
+    },
+    "C04.a": {
+      "requires": [
+        "C03.c"
+      ],
+      "status": "PENDING"
+    },
+    "C04.b": {
+      "requires": [
+        "C04.a"
+      ],
+      "status": "PENDING"
+    },
+    "C05.a": {
+      "requires": [
+        "C04.b"
+      ],
+      "status": "PENDING"
+    },
+    "C05.b": {
+      "requires": [
+        "C05.a"
+      ],
+      "status": "PENDING"
+    },
+    "C05.c": {
+      "requires": [
+        "C05.b"
+      ],
+      "status": "PENDING"
+    },
+    "C06.a": {
+      "requires": [
+        "C05.c"
+      ],
+      "status": "PENDING"
+    },
+    "C06.b": {
+      "requires": [
+        "C06.a"
+      ],
+      "status": "PENDING"
+    },
+    "C06.c": {
+      "requires": [
+        "C06.b"
+      ],
+      "status": "PENDING"
+    },
+    "C07.a": {
+      "requires": [
+        "C05.c"
+      ],
+      "status": "PENDING"
+    },
+    "C07.b": {
+      "requires": [
+        "C07.a"
+      ],
+      "status": "PENDING"
+    },
+    "C07.c": {
+      "requires": [
+        "C07.b"
+      ],
+      "status": "PENDING"
+    },
+    "C07.d": {
+      "requires": [
+        "C07.c",
+        "C01.d"
+      ],
+      "status": "PENDING"
+    },
+    "C08": {
+      "requires": [
+        "C06.c",
+        "C07.d"
+      ],
+      "status": "PENDING"
+    },
+    "C09.a": {
+      "requires": [
+        "C08"
+      ],
+      "status": "PENDING"
+    },
+    "C09.b": {
+      "requires": [
+        "C09.a"
+      ],
+      "status": "PENDING"
+    },
+    "C10.a": {
+      "requires": [
+        "C09.b",
+        "C07.d"
+      ],
+      "status": "PENDING"
+    },
+    "C10.b": {
+      "requires": [
+        "C10.a"
+      ],
+      "status": "PENDING"
+    },
+    "C10.c": {
+      "requires": [
+        "C10.b"
+      ],
+      "status": "PENDING"
+    },
+    "C11.a": {
+      "requires": [
+        "C10.c"
+      ],
+      "status": "PENDING"
+    },
+    "C11.b": {
+      "requires": [
+        "C11.a"
+      ],
+      "status": "PENDING"
+    },
+    "C12": {
+      "requires": [
+        "C11.b"
+      ],
+      "status": "PENDING"
+    },
+    "C13.a": {
+      "requires": [
+        "C10.c"
+      ],
+      "status": "PENDING"
+    },
+    "C13.b": {
+      "requires": [
+        "C13.a"
+      ],
+      "status": "PENDING"
+    }
   }
 }

@@ -20,7 +20,22 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 
 | Entrega | Estado | Base/commit | Evidencia | Decisión |
 |---|---|---|---|---|
-| C00 | Pendiente | `43ed23b` | Pendiente | Congelar referencia actual |
+| C00 | GREEN | `BASE-00` desde `43ed23b` | `artifacts/gates/C00/20260911T184919Z` | Referencia congelada |
+
+## BASE-00
+
+- Fuentes iniciales: `43ed23bfd6aa5df1e5d14a406d71a9fc35693859`.
+- Infraestructura del gate: `2681da90e55edd84cd91e38a3babd6afa9efcbb9`.
+- Binario GCC 11.4.0, `-std=gnu11 -O2 -g -Wall`:
+  `1541d2dfc9a22939c4323c5688f6f56316bd759dcced048cb015ec433aad6ed4`.
+- Regresión completa: 45 pruebas superadas.
+- Gate completo: 15,787 s.
+- A/B contra copia idéntica, tres pares a profundidad 6: mismos 3555 nodos;
+  mediana de lote de evaluación 152,053 ms frente a 149,555 ms. La
+  diferencia de 1,67 % cuantifica el ruido inicial y queda dentro de la banda
+  neutra.
+- La compilación mantiene advertencias preexistentes; no se trataron como
+  regresiones de C00.
 
 ## Regresiones y bloqueos
 
