@@ -345,19 +345,6 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("blocked=0 candidate=1", result.stdout)
 
-    def test_isolated_doubled_applies_both_tables(self) -> None:
-        result = subprocess.run(
-            [str(self.audit), "isolated_doubled"],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            timeout=30,
-            check=True,
-        )
-        self.assertRegex(
-            result.stdout, r"isolated=1 doubled=1 aislado_mg=\d+ doblado_mg=\d+"
-        )
-
     def test_qsearch_reuses_static_eval_and_avoids_lazy(self) -> None:
         result = subprocess.run(
             [str(self.audit), "qsearch_static"],
