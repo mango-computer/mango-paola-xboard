@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_commit": "43ed23bfd6aa5df1e5d14a406d71a9fc35693859",
-  "current_base": "BASE-13",
+  "current_base": "BASE-14",
   "policy": {
     "timeout_seconds": 600,
     "neutral_percent": 2.0,
@@ -167,7 +167,11 @@
       "requires": [
         "C06.b"
       ],
-      "status": "PENDING"
+      "status": "GREEN",
+      "last_commit": "aaa7d2b13e4300efff229f9fa81ec3de1dda205a",
+      "last_evidence": "artifacts/gates/C06.c/20260911T194607Z",
+      "reason": "Todas las comprobaciones bloqueantes pasaron.",
+      "promoted_base": "BASE-14"
     },
     "C07.a": {
       "requires": [

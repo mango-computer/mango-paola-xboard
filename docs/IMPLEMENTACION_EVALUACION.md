@@ -36,6 +36,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C05.c | GREEN | `5a64484` / `BASE-11` | `artifacts/gates/C05.c/20260911T194158Z` | Contrato explícito; Hito A |
 | C06.a | GREEN | `c49c7c6` / `BASE-12` | `artifacts/gates/C06.a/20260911T194337Z` | Intrínsecos equivalentes; promover |
 | C06.b | GREEN | `359c71f` / `BASE-13` | `artifacts/gates/C06.b/20260911T194440Z` | Limpieza completa verificada |
+| C06.c | GREEN | `aaa7d2b` / `BASE-14` | `artifacts/gates/C06.c/20260911T194607Z` | Impresión sin OOB |
 
 ## BASE-00
 
@@ -173,6 +174,12 @@ Se añadió un guard de aceptación que envenena las 64 entradas de
 `mapaRayosClavada` y confirma que una evaluación completa limpia todas. La
 implementación de `sizeof(mapaRayosClavada)` ya estaba incluida en BASE-00;
 esta entrega congela su equivalencia y evita que vuelva el literal 64.
+
+## C06.c — Límite de bitboard
+
+`imprimirBitTablero()` ya no consulta `BITSET[-8]` después de imprimir la
+última fila. El caso extremo pasa bajo UBSan y se elimina la advertencia
+reproducible de acceso fuera de rango. Regresión completa verde.
 
 ## Regresiones y bloqueos
 
