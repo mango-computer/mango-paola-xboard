@@ -283,6 +283,11 @@ int main(int argc, char **argv)
 			dirty += mapaRayosClavada[index] != 0;
 		printf("dirty_pin_rays=%u\n", dirty);
 	}
+	else if (strcmp(argv[1], "print_bits") == 0)
+	{
+		imprimirBitTablero(0x8000000000000001ULL);
+		printf("printed_bitboard=1\n");
+	}
 	else
 	{
 		cerrarTablas();

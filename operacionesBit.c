@@ -44,7 +44,8 @@ void imprimirBitTablero(uint64 numero)
 			mascara = mascara << 1;
 		}
 		marca -=8;
-		mascara = (uint64)BITSET[marca];
+		if (i < 7)
+			mascara = (uint64)BITSET[marca];
 		printf("\n");
 	}
 	printf("\n");

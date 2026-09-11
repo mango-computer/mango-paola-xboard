@@ -224,6 +224,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("dirty_pin_rays=0", result.stdout)
 
+    def test_bitboard_printer_does_not_index_past_board(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "print_bits"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("printed_bitboard=1", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
