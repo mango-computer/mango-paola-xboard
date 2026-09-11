@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_commit": "43ed23bfd6aa5df1e5d14a406d71a9fc35693859",
-  "current_base": "BASE-26",
+  "current_base": "BASE-27",
   "policy": {
     "timeout_seconds": 600,
     "neutral_percent": 2.0,
@@ -318,7 +318,11 @@
       "requires": [
         "C13.a"
       ],
-      "status": "PENDING"
+      "status": "GREEN",
+      "last_commit": "5f84b6e4cd9e5242f2d3d2cc1e40c9bc1510cd2c",
+      "last_evidence": "artifacts/gates/C13.b/20260911T203455Z",
+      "reason": "Todas las comprobaciones bloqueantes pasaron.",
+      "promoted_base": "BASE-27"
     }
   }
 }

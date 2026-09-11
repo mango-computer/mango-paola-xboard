@@ -51,6 +51,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C11.b | GREEN | `389d021` / `BASE-24` | `artifacts/gates/C11.b/20260911T202631Z` | Static eval y lazy de qsearch |
 | C12 | GREEN | `0c7d0ce` / `BASE-25` | `artifacts/gates/C12/20260911T202804Z` | Candidatos con estado local |
 | C13.a | GREEN | `2bf0eca` / `BASE-26` | `artifacts/gates/C13.a/20260911T203129Z` | Position/scratch por hilo |
+| C13.b | GREEN | `5f84b6e` / `BASE-27` | `artifacts/gates/C13.b/20260911T203455Z` | Lazy SMP, default 1 hilo |
 
 ## BASE-00
 
@@ -318,6 +319,33 @@ El hilo principal usa `hilosBusqueda[0]`; `juego` y los mapas de evaluación
 son accesos a ese estado. Un segundo `ThreadState` copia la posición y
 reproduce las mismas tres puntuaciones (`same=1`). Un hilo permanece verde.
 Gate en 23,891 s.
+
+## C13.b — Lazy SMP
+
+La opción UCI `Threads` (1–4, default 1) lanza ayudantes que copian
+`Position` y `EvalScratch` y buscan el mismo árbol. La TT se publica bajo
+mutex; eval/pawn/material hash se desactivan mientras `esBusquedaParalela`.
+Con un hilo el camino es el de siempre. Con dos workers, `pensarRapido()` a
+profundidad 3 devuelve jugadas legales. Gate verde en 23,806 s; la suite
+completa (73 pruebas) pasó.
+
+**Hito C alcanzado:** el candidato paralelo queda en `BASE-27` sobre la rama
+local `integration/evaluacion-gradual`. No hay merge ni push. Un ensayo
+formal de fuerza, TSan saturado y 100000 transiciones incrementales siguen
+siendo G2, no bloqueantes para esta integración.
+
+## Verificación final
+
+- Rama: `integration/evaluacion-gradual` @ `5f84b6e`.
+- Bases promovidas: `BASE-00` … `BASE-27`.
+- Entregas C00–C13.b: todas `GREEN`. Ninguna `RED`, `BLOCKED` ni revertida.
+- Tres cadenas empezaron `PROVISIONAL` y se recuperaron: C03, C07.a–b, C08–C09.a.
+- Umbral de descarte fuerte (>10 %) no se cruzó en ningún gate.
+- `master` permanece en `43ed23b`.
+
+G2 pendiente (fuera del gate diario): TSan con 2–4 workers y TT saturada,
+perft ampliado, siete pares de 400 vueltas contra `BASE-00` y un SPRT si se
+quiere publicar Elo.
 
 ## Regresiones y bloqueos
 
