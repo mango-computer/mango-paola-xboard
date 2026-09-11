@@ -35,6 +35,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C05.b | GREEN | `bdccc6d` / `BASE-10` | `artifacts/gates/C05.b/20260911T194046Z` | Trazas estables; promover |
 | C05.c | GREEN | `5a64484` / `BASE-11` | `artifacts/gates/C05.c/20260911T194158Z` | Contrato explícito; Hito A |
 | C06.a | GREEN | `c49c7c6` / `BASE-12` | `artifacts/gates/C06.a/20260911T194337Z` | Intrínsecos equivalentes; promover |
+| C06.b | GREEN | `359c71f` / `BASE-13` | `artifacts/gates/C06.b/20260911T194440Z` | Limpieza completa verificada |
 
 ## BASE-00
 
@@ -165,6 +166,13 @@ GCC/Clang usan `ctzll`, `clzll` y `popcountll`, con implementación histórica
 como fallback portable. 100.000 palabras pseudoaleatorias coinciden con el
 oráculo escalar. A profundidad 7 el árbol fue idéntico y la mediana bajó de
 43,940 ms a 43,012 ms (`-2,112 %`); evaluación `+0,195 %`, dentro del ruido.
+
+## C06.b — Tamaño de limpiezas
+
+Se añadió un guard de aceptación que envenena las 64 entradas de
+`mapaRayosClavada` y confirma que una evaluación completa limpia todas. La
+implementación de `sizeof(mapaRayosClavada)` ya estaba incluida en BASE-00;
+esta entrega congela su equivalencia y evita que vuelva el literal 64.
 
 ## Regresiones y bloqueos
 
