@@ -92,6 +92,31 @@ int main(int argc, char **argv)
 		       juego.ENROQUEB, juego.ENROQUEN,
 		       (unsigned)juego.indiceHJuego);
 	}
+	else if (strcmp(argv[1], "null_state") == 0)
+	{
+		ESTADO_MOV_NULL estado;
+		uint64 llaveAntes;
+		uint8 epAntes;
+		uint16 relojAntes;
+		COLOR colorAntes;
+
+		load_fen("7k/8/8/8/3pP3/8/8/K7 b - e3 87 1");
+		llaveAntes = juego.llaveHash;
+		epAntes = juego.posPeonPaso;
+		relojAntes = juego.reglaCincuentaMov;
+		colorAntes = juego.colorTurno;
+		hacerMovimientoNull(&estado);
+		printf("during_ep_clear=%d during_clock=%u side_changed=%d ",
+		       juego.posPeonPaso == SIN_POS_VALIDA,
+		       (unsigned)juego.reglaCincuentaMov,
+		       juego.colorTurno != colorAntes);
+		desHacerMovimientoNull(&estado);
+		printf("restored=%d\n",
+		       juego.llaveHash == llaveAntes &&
+		       juego.posPeonPaso == epAntes &&
+		       juego.reglaCincuentaMov == relojAntes &&
+		       juego.colorTurno == colorAntes);
+	}
 	else
 	{
 		cerrarTablas();

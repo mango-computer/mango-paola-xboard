@@ -28,6 +28,37 @@
 #ifndef BUSQUEDAD_C
 #define BUSQUEDAD_C
 
+typedef struct
+{
+	COLOR colorTurno;
+	uint8 posPeonPaso;
+	uint16 reglaCincuentaMov;
+	uint64 llaveHash;
+} ESTADO_MOV_NULL;
+
+static void hacerMovimientoNull(ESTADO_MOV_NULL *estado)
+{
+	estado->colorTurno = juego.colorTurno;
+	estado->posPeonPaso = juego.posPeonPaso;
+	estado->reglaCincuentaMov = juego.reglaCincuentaMov;
+	estado->llaveHash = juego.llaveHash;
+
+	if (juego.posPeonPaso != SIN_POS_VALIDA)
+		juego.llaveHash ^= arrayHash.ep[juego.posPeonPaso];
+	juego.posPeonPaso = SIN_POS_VALIDA;
+	juego.colorTurno = !juego.colorTurno;
+	juego.llaveHash ^= arrayHash.lado;
+	juego.reglaCincuentaMov = 0;
+}
+
+static void desHacerMovimientoNull(const ESTADO_MOV_NULL *estado)
+{
+	juego.colorTurno = estado->colorTurno;
+	juego.posPeonPaso = estado->posPeonPaso;
+	juego.reglaCincuentaMov = estado->reglaCincuentaMov;
+	juego.llaveHash = estado->llaveHash;
+}
+
 void limpiarAntesDeBusqueda()
 {
 	contadorNodos		= 0;
@@ -602,45 +633,19 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 
 			if (!esJaque)
 			{
+				ESTADO_MOV_NULL estadoNull;
 				contadorNodos++;
-
-				COLOR 	 RcolorTurno	= juego.colorTurno;
-				BOOLEANO ROOB		= juego.OOB;
-				BOOLEANO ROOOB		= juego.OOOB;
-				BOOLEANO ROON		= juego.OON;
-				BOOLEANO ROOON		= juego.OOON;
-				int	 RENROQUEB	= juego.ENROQUEB;
-				int	 RENROQUEN	= juego.ENROQUEN;
-				uint8	 RposPeonPaso	= juego.posPeonPaso;
-				uint16	 RreglaCincuentaMov= juego.reglaCincuentaMov;
-				uint32	 RtotalMov	= juego.totalMov;
-				uint64	 RllaveHash	= juego.llaveHash;
-
-				juego.colorTurno 	= !juego.colorTurno;
-				juego.llaveHash        ^= arrayHash.lado;
-
-				juego.reglaCincuentaMov = 0;
+				hacerMovimientoNull(&estadoNull);
 
 				V = -alfabetaNegado(capa,profundidad-REDUCCION_MOV_NULL-1,-beta,-beta+1, FALSO);	
-
-				juego.colorTurno 	= RcolorTurno;
-				juego.OOB 		= ROOB;
-				juego.OOOB 		= ROOOB;
-				juego.OON 		= ROON;
-				juego.OOON 		= ROOON;
-				juego.ENROQUEB 		= RENROQUEB;
-				juego.ENROQUEN 		= RENROQUEN;
-				juego.posPeonPaso 	= RposPeonPaso;
-				juego.reglaCincuentaMov = RreglaCincuentaMov;
-				juego.totalMov		= RtotalMov;
-				juego.llaveHash 	= RllaveHash;
+				desHacerMovimientoNull(&estadoNull);
 
 				if (tiempoVencido) return 0;		
 				if (V >= beta)
 				{
 					if (esUsoTablaHash)
 					{
-						agregarMovTablaHash(profundidad, capa, V, BANDERA_HASH_ABAJO, juego.Buffer_MOV[i]);
+						agregarMovTablaHash(profundidad, capa, V, BANDERA_HASH_ABAJO, 0);
 					}
 
 					if (V >= (VALOR_JAQUE_MATE-64)) V = beta;

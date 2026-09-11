@@ -81,6 +81,20 @@ class PlanRegressionTests(unittest.TestCase):
             "castled_white=0 castled_black=0 history=0", result.stdout
         )
 
+    def test_null_move_clears_ep_and_restores_exact_state(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "null_state"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn(
+            "during_ep_clear=1 during_clock=0 side_changed=1 restored=1",
+            result.stdout,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
