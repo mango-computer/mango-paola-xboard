@@ -24,6 +24,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C01.a | GREEN | `c743809` / `BASE-01` | `artifacts/gates/C01.a/20260911T185105Z` | Historial acotado; promover |
 | C01.b | GREEN | `b0dd5e3` / `BASE-02` | `artifacts/gates/C01.b/20260911T185232Z` | Reloj unificado; promover |
 | C01.c | GREEN | `5ad6c24` / `BASE-03` | `artifacts/gates/C01.c/20260911T185347Z` | FEN limpia; promover |
+| C01.d | GREEN | `83ded49` / `BASE-04` | `artifacts/gates/C01.d/20260911T185511Z` | Null reversible; promover |
 
 ## BASE-00
 
@@ -62,6 +63,14 @@ la regresión completa en 21,897 s.
 antes de construir una posición. El test envenena ambos campos y confirma
 `castled_white=0 castled_black=0 history=0`. La regresión completa pasó; gate
 de 21,544 s.
+
+## C01.d — Movimiento nulo
+
+El movimiento nulo guarda y restaura explícitamente turno, EP, reloj y clave.
+Al hacerlo elimina EP y su componente Zobrist, crea una barrera conservadora
+de repetición mediante reloj cero y nunca almacena una jugada ajena en el corte
+null. El estado se restauró bit a bit en el caso dirigido; regresión completa
+verde en 21,796 s.
 
 ## Regresiones y bloqueos
 
