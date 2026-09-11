@@ -167,9 +167,12 @@ typedef struct
 	uint64		id;
 	uint16		profundidad;
 	uint16		generacion;
+	uint16		reglaCincuentaMov;
 	int		puntaje;
 	MOVIMIENTO	mov;
 	uint8		banderas;
+	uint8		enroqueBlanco;
+	uint8		enroqueNegro;
 } REGISTRO_TABLA_HASH;
 
 #endif

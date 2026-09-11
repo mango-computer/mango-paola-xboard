@@ -99,7 +99,7 @@ class MemoryOptimizationTests(unittest.TestCase):
             "quit\n"
         )
         self.assertIn(
-            "info string Hash solicitado 64 MB, reservado 48 MB",
+            "info string Hash solicitado 64 MB, reservado 64 MB",
             result.stdout,
         )
         self.assertIn("readyok", result.stdout)
@@ -115,7 +115,10 @@ class MemoryOptimizationTests(unittest.TestCase):
                 encoding="utf-8",
             )
             result = self.run_engine("quit\n", cwd)
-        self.assertIn("Hash movimientos      6 MB reales", result.stdout)
+        self.assertIn(
+            "Hash movimientos      4 MB reales (6 MB solicitados)",
+            result.stdout,
+        )
 
     def test_hash_clear_uses_generations_not_full_memset_per_game(self) -> None:
         source = (ROOT / "ini.c").read_text(encoding="utf-8")

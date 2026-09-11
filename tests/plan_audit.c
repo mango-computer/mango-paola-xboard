@@ -301,6 +301,24 @@ int main(int argc, char **argv)
 		printf("score=%d flag=%d expected_flag=%d\n",
 		       score, flag, BANDERA_HASH_EXACTO);
 	}
+	else if (strcmp(argv[1], "tt_context") == 0)
+	{
+		int flag = 0;
+		MOVIMIENTO mov = 0;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		limpiarTablasHash();
+		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0);
+		juego.reglaCincuentaMov = 99;
+		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
+		printf("clock_miss=%d ", flag == BANDERA_HASH_VACIO);
+		juego.reglaCincuentaMov = 0;
+		juego.ENROQUEB = ENROQUE_OO;
+		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
+		printf("history_miss=%d size=%zu\n",
+		       flag == BANDERA_HASH_VACIO,
+		       sizeof(REGISTRO_TABLA_HASH));
+	}
 	else
 	{
 		cerrarTablas();

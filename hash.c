@@ -213,7 +213,10 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 
 	if ((ptabla->generacion == generacionHash) &&
 	    (ptabla->profundidad > profundidad) &&
-	    (ptabla->id == juego.llaveHash))
+	    (ptabla->id == juego.llaveHash) &&
+	    (ptabla->reglaCincuentaMov == juego.reglaCincuentaMov) &&
+	    (ptabla->enroqueBlanco == juego.ENROQUEB) &&
+	    (ptabla->enroqueNegro == juego.ENROQUEN))
 		return;
 
 	if ((valor > VALOR_ALTO) || (valor < VALOR_BAJO))
@@ -229,9 +232,12 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 	ptabla->id 		= (uint64)juego.llaveHash;
 	ptabla->profundidad	= profundidad;
 	ptabla->generacion	= generacionHash;
+	ptabla->reglaCincuentaMov = juego.reglaCincuentaMov;
 	ptabla->puntaje		= valor;
 	ptabla->mov		= mov;
 	ptabla->banderas	= banderas;
+	ptabla->enroqueBlanco	= juego.ENROQUEB;
+	ptabla->enroqueNegro	= juego.ENROQUEN;
 }
 
 int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *banderas, MOVIMIENTO *mov)
@@ -247,7 +253,11 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 
 	*banderas = BANDERA_HASH_VACIO;
 
-	if (ptabla->generacion == generacionHash && ptabla->id == juego.llaveHash)
+	if (ptabla->generacion == generacionHash &&
+	    ptabla->id == juego.llaveHash &&
+	    ptabla->reglaCincuentaMov == juego.reglaCincuentaMov &&
+	    ptabla->enroqueBlanco == juego.ENROQUEB &&
+	    ptabla->enroqueNegro == juego.ENROQUEN)
 	{
 		valor 		= ptabla->puntaje;
 		flag	 	= ptabla->banderas;
