@@ -68,6 +68,9 @@ void imprimirBits(uint64 numero)
 
 static inline int bitScanForwardBruijn(uint64 bb) 
 {
+#if defined(__GNUC__) || defined(__clang__)
+	return __builtin_ctzll(bb);
+#else
 	static const int index64[64] 	= {
 					   63, 0,58, 1,59,47,53, 2,
 					   60,39,48,27,54,33,42, 3,
@@ -79,6 +82,7 @@ static inline int bitScanForwardBruijn(uint64 bb)
 					   44,24,15, 8,23, 7, 6, 5};
 
 	return index64[((bb & -bb) * debruijn64) >> 58];
+#endif
 }
 
 static inline int convertir2lista(uint64 bb, uint8 *lista)
@@ -95,7 +99,9 @@ static inline int convertir2lista(uint64 bb, uint8 *lista)
 
 static inline uint32 cuentaBit(uint64 bitmap)
 {
- 
+#if defined(__GNUC__) || defined(__clang__)
+	return (uint32)__builtin_popcountll(bitmap);
+#else
 // MIT HAKMEM algorithm, see http://graphics.stanford.edu/~seander/bithacks.html
  
 static const uint64  M1 = 0x5555555555555555ull;  // 1 zero,  1 one ...
@@ -112,10 +118,14 @@ static const uint64 M32 = 0x00000000ffffffffull;  // 32 zeros, 32 ones
     bitmap = (bitmap & M16) + ((bitmap >> 16) & M16);   //put count of each 32 bits into those 32 bits
     bitmap = (bitmap & M32) + ((bitmap >> 32) & M32);   //put count of each 64 bits into those 64 bits
     return (uint32)bitmap;
+#endif
 }
 
 static inline uint32 bitScanLast(uint64 bitmap)
 {
+#if defined(__GNUC__) || defined(__clang__)
+	return (uint32)(63 - __builtin_clzll(bitmap));
+#else
     // this is Eugene Nalimov's bitScanReverse
        // use firstOne if you can, it is faster than lastOne.
        // don't use this if bitmap = 0
@@ -137,6 +147,7 @@ static inline uint32 bitScanLast(uint64 bitmap)
               result += 8;
        }
        return result + TABLA_MSB1[bitmap];
+#endif
 }
 
 

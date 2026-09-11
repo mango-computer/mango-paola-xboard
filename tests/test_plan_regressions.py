@@ -202,6 +202,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("full=0 cache=2 lazy=1", result.stdout)
 
+    def test_compiler_bit_intrinsics_match_reference(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "bitops"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("bitops_samples=100000", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

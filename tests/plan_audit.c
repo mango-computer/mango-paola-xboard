@@ -241,6 +241,36 @@ int main(int argc, char **argv)
 		printf("full=%d cache=%d lazy=%d\n",
 		       fullClass, cacheClass, lazyClass);
 	}
+	else if (strcmp(argv[1], "bitops") == 0)
+	{
+		uint64 value = 0x9e3779b97f4a7c15ULL;
+		unsigned sample;
+
+		for (sample = 0; sample < 100000; sample++)
+		{
+			uint64 probe;
+			uint32 count = 0;
+			int first = 0, last = 63;
+
+			value = value * 6364136223846793005ULL + 1;
+			probe = value | 1ULL;
+			for (uint64 copy = probe; copy; copy &= copy - 1)
+				count++;
+			while (!(probe & (1ULL << first)))
+				first++;
+			while (!(probe & (1ULL << last)))
+				last--;
+			if (cuentaBit(probe) != count ||
+			    bitScanForwardBruijn(probe) != first ||
+			    bitScanLast(probe) != (uint32)last)
+			{
+				printf("bitops_mismatch=%u\n", sample);
+				cerrarTablas();
+				return 1;
+			}
+		}
+		printf("bitops_samples=100000\n");
+	}
 	else
 	{
 		cerrarTablas();
