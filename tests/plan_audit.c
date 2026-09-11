@@ -225,6 +225,22 @@ int main(int argc, char **argv)
 		       cold == warm,
 		       mapaPosAtacadas[BLANCO] == 0xdeadbeefULL);
 	}
+	else if (strcmp(argv[1], "eval_result_class") == 0)
+	{
+		int fullClass, cacheClass, lazyClass;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		limpiarTablasHash();
+		evaluacionTablero(-INFINITO, INFINITO);
+		fullClass = ultimoResultadoEval;
+		evaluacionTablero(-INFINITO, INFINITO);
+		cacheClass = ultimoResultadoEval;
+		limpiarTablasHash();
+		evaluacionTablero(10000, 10001);
+		lazyClass = ultimoResultadoEval;
+		printf("full=%d cache=%d lazy=%d\n",
+		       fullClass, cacheClass, lazyClass);
+	}
 	else
 	{
 		cerrarTablas();

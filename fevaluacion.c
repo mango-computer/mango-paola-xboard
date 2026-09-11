@@ -28,6 +28,20 @@
 #ifndef FEVAL_C
 #define FEVAL_C
 
+typedef enum
+{
+	RESULTADO_EVAL_COMPLETO,
+	RESULTADO_EVAL_LAZY,
+	RESULTADO_EVAL_CACHE
+} TIPO_RESULTADO_EVAL;
+
+#ifdef PRUEBAS_HCE
+static TIPO_RESULTADO_EVAL ultimoResultadoEval = RESULTADO_EVAL_COMPLETO;
+#define MARCAR_RESULTADO_EVAL(tipo) (ultimoResultadoEval = (tipo))
+#else
+#define MARCAR_RESULTADO_EVAL(tipo) ((void)0)
+#endif
+
 int evaluacionTablero(int alfa, int beta)
 {
 
@@ -44,6 +58,7 @@ int evaluacionTablero(int alfa, int beta)
 	{	
 		puntaje = ajustarReglaCincuenta(puntaje);
 		puntaje = (juego.colorTurno)?-puntaje:puntaje;
+		MARCAR_RESULTADO_EVAL(RESULTADO_EVAL_CACHE);
 		return puntaje;
 	}
 //*/
@@ -60,6 +75,7 @@ int evaluacionTablero(int alfa, int beta)
 	    (((EvalFlojo + LIMITE_MOV_NULL) < alfa) ||
 	     (beta < (EvalFlojo - LIMITE_MOV_NULL))))
 	{
+		MARCAR_RESULTADO_EVAL(RESULTADO_EVAL_LAZY);
 		return ajustarReglaCincuenta(EvalFlojo);
 	} 
 #endif
@@ -263,7 +279,10 @@ int evaluacionTablero(int alfa, int beta)
 #endif
 
 	if (!esEvaluarTodo)
+	{
+		MARCAR_RESULTADO_EVAL(RESULTADO_EVAL_LAZY);
 		return ajustarReglaCincuenta(EvalFlojo);
+	}
 
 	if (esEvaluarTodo)
 	{
@@ -377,6 +396,7 @@ int evaluacionTablero(int alfa, int beta)
 
 	puntajeTemporal = ajustarReglaCincuenta(puntajeTemporal);
 	puntaje = (juego.colorTurno)?-puntajeTemporal:puntajeTemporal;
+	MARCAR_RESULTADO_EVAL(RESULTADO_EVAL_COMPLETO);
 
 	return 	puntaje; 		
 	

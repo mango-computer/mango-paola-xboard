@@ -24,6 +24,7 @@ class PlanRegressionTests(unittest.TestCase):
                 "-std=gnu11",
                 "-O1",
                 "-g",
+                "-DPRUEBAS_HCE",
                 "-fsanitize=undefined",
                 "-fno-omit-frame-pointer",
                 "-I",
@@ -189,6 +190,17 @@ class PlanRegressionTests(unittest.TestCase):
             check=True,
         )
         self.assertIn("same_score=1 cache_is_score_only=1", result.stdout)
+
+    def test_eval_result_class_distinguishes_full_lazy_and_cache(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "eval_result_class"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("full=0 cache=2 lazy=1", result.stdout)
 
 
 if __name__ == "__main__":
