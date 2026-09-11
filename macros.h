@@ -382,7 +382,8 @@
 #define		ES_REPETICION_TABLERO(es)									\
 	int i_;													\
 	int repeticion_   = 1;      		                                       				\
-	int indexBusqRep_ = juego.indiceHJuego - juego.reglaCincuentaMov;  	 				\
+	int indexBusqRep_ = (int)juego.indiceHJuego - (int)juego.reglaCincuentaMov;				\
+	if (indexBusqRep_ < 0) indexBusqRep_ = 0;								\
 	for (i_ = juego.indiceHJuego - 2; i_ >= indexBusqRep_; i_ -= 2)        					\
 	{													\
 		if (juego.historicoJuego[i_].llaveHash == juego.llaveHash)					\
@@ -397,7 +398,8 @@
 #define		ES_REPETICION_TABLEROMAIN(es)									\
 	int i_;													\
 	int repeticion_   = 1;      		                                       				\
-	int indexBusqRep_ = juego.indiceHJuego - juego.reglaCincuentaMov;  	 				\
+	int indexBusqRep_ = (int)juego.indiceHJuego - (int)juego.reglaCincuentaMov;				\
+	if (indexBusqRep_ < 0) indexBusqRep_ = 0;								\
 	for (i_ = juego.indiceHJuego - 2; i_ >= indexBusqRep_; i_ -= 2)        					\
 	{													\
 		if (juego.historicoJuego[i_].llaveHash == juego.llaveHash)					\
