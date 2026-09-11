@@ -186,7 +186,9 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 					//Actualizar Tabla Hash de Movimientos
 					if (esUsoTablaHash)
 					{
-						agregarMovTablaHash(0, capa, V, BANDERA_HASH_ABAJO, juego.Buffer_MOV[i]);
+						agregarMovTablaHash(0, capa, V,
+								   BANDERA_HASH_ABAJO,
+								   juego.Buffer_MOV[i], Vparcial);
 					}
 					return V;//beta;
 				}

@@ -428,11 +428,12 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	MOVIMIENTO h_mov 	= 0; 
 	int h_V 	 	= 0;
 	int h_banderas 	 	= BANDERA_HASH_VACIO;
+	int h_eval		= INT_MAX;
 	int i_alfa		= alfa;
 	int ext			= 0;
 	int tmp1		= 0;
 	int tmp2		= 0;
-	int vv			= 0;
+	int vv			= INT_MAX;
 	int vr;
 	BOOLEANO esAmenazaMate  = FALSO;
 	BOOLEANO esPodable	= FALSO;
@@ -512,7 +513,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	{
 		if (capa)
 		{
-			h_V = verificarTablaHash(alfa, beta,capa, profundidad, &h_banderas, &h_mov);
+			h_V = verificarTablaHash(alfa, beta, capa, profundidad,
+						&h_banderas, &h_mov, &h_eval);
 			if (h_banderas != BANDERA_HASH_VACIO) 
 			{
 				switch(h_banderas)
@@ -574,7 +576,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 						alfa -= (capa+2);
 					}
 
-					agregarMovTablaHash(256, capa, alfa, BANDERA_HASH_EXACTO, 0);
+					agregarMovTablaHash(256, capa, alfa,
+							   BANDERA_HASH_EXACTO, 0, INT_MAX);
 					return alfa;
 				}
 			}
@@ -586,7 +589,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	if (capa && !estaEnJaque && !h_mov && nodoPV && profundidad > 3 && hacerNULL)
 	{
 		V   = alfabetaNegado(capa, profundidad-2,alfa,beta, VERDADERO);
-		h_V = verificarTablaHash(alfa, beta,capa, profundidad, &h_banderas, &h_mov);
+		h_V = verificarTablaHash(alfa, beta, capa, profundidad,
+					&h_banderas, &h_mov, &h_eval);
 		if (h_banderas != BANDERA_HASH_VACIO) 
 		{
 			switch(h_banderas)
@@ -604,7 +608,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	if (capa && !estaEnJaque && !nodoPV && beta < VALOR_JAQUE_MATE-64)
 	{
 
-		vv = evaluacionTablero(-VALOR_JAQUE_MATE, VALOR_JAQUE_MATE);
+		vv = h_eval != INT_MAX ? h_eval :
+			evaluacionTablero(-VALOR_JAQUE_MATE, VALOR_JAQUE_MATE);
 		if (profundidad < 4 && hacerNULL)
 		{
 			vr = vv - 150;
@@ -651,7 +656,8 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 				{
 					if (esUsoTablaHash)
 					{
-						agregarMovTablaHash(profundidad, capa, V, BANDERA_HASH_ABAJO, 0);
+						agregarMovTablaHash(profundidad, capa, V,
+								   BANDERA_HASH_ABAJO, 0, vv);
 					}
 
 					if (V >= (VALOR_JAQUE_MATE-64)) V = beta;
@@ -876,7 +882,9 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 					//Actualizar Tabla Hash de Movimientos
 					if (esUsoTablaHash)
 					{
-						agregarMovTablaHash(profundidad, capa, V, BANDERA_HASH_ABAJO, juego.Buffer_MOV[i]);
+						agregarMovTablaHash(profundidad, capa, V,
+								   BANDERA_HASH_ABAJO,
+								   juego.Buffer_MOV[i], vv);
 					}
 					return V;//beta;
 				}
@@ -969,9 +977,13 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 	{
 		if (alfa > i_alfa)
 		{
-			agregarMovTablaHash(profundidad, capa, alfa, BANDERA_HASH_EXACTO, juego.triangularArray[capa][capa]);
+			agregarMovTablaHash(profundidad, capa, alfa,
+					   BANDERA_HASH_EXACTO,
+					   juego.triangularArray[capa][capa], vv);
 		} else {
-			agregarMovTablaHash(profundidad, capa, alfa, BANDERA_HASH_ARRIBA, juego.triangularArray[capa][capa]);
+			agregarMovTablaHash(profundidad, capa, alfa,
+					   BANDERA_HASH_ARRIBA,
+					   juego.triangularArray[capa][capa], vv);
 		}
 	}
 

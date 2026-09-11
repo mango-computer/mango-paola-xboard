@@ -292,29 +292,32 @@ int main(int argc, char **argv)
 	{
 		int flag = 0;
 		MOVIMIENTO mov = 0;
+		int staticEval = INT_MAX;
 		int score;
 
 		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		limpiarTablasHash();
-		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0);
-		score = verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
-		printf("score=%d flag=%d expected_flag=%d\n",
-		       score, flag, BANDERA_HASH_EXACTO);
+		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0, 17);
+		score = verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov,
+					  &staticEval);
+		printf("score=%d flag=%d expected_flag=%d static_eval=%d\n",
+		       score, flag, BANDERA_HASH_EXACTO, staticEval);
 	}
 	else if (strcmp(argv[1], "tt_context") == 0)
 	{
 		int flag = 0;
 		MOVIMIENTO mov = 0;
+		int staticEval = INT_MAX;
 
 		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		limpiarTablasHash();
-		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0);
+		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0, 17);
 		juego.reglaCincuentaMov = 99;
-		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
+		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov, &staticEval);
 		printf("clock_miss=%d ", flag == BANDERA_HASH_VACIO);
 		juego.reglaCincuentaMov = 0;
 		juego.ENROQUEB = ENROQUE_OO;
-		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
+		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov, &staticEval);
 		printf("history_miss=%d size=%zu\n",
 		       flag == BANDERA_HASH_VACIO,
 		       sizeof(REGISTRO_TABLA_HASH));

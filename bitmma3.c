@@ -56,6 +56,7 @@ http://chessprogramming.wikispaces.com/Efficient+Generation+of+Sliding+Piece+Att
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <sys/timeb.h>
 #include <ctype.h>
 //#include <termios.h>

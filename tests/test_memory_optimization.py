@@ -132,10 +132,8 @@ class MemoryOptimizationTests(unittest.TestCase):
         types = (ROOT / "tipoDatos.h").read_text(encoding="utf-8")
         search = (ROOT / "busquedad.c").read_text(encoding="utf-8")
         self.assertIn("uint16\t\tprofundidad;", types)
-        self.assertIn(
-            "agregarMovTablaHash(256, capa, alfa, BANDERA_HASH_EXACTO, 0)",
-            search,
-        )
+        self.assertIn("agregarMovTablaHash(256, capa, alfa,", search)
+        self.assertIn("BANDERA_HASH_EXACTO, 0, INT_MAX);", search)
 
     def test_current_book_is_loaded_completely_in_ram(self) -> None:
         result = self.run_stats(BOOK, 64)

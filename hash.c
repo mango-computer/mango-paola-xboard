@@ -227,7 +227,8 @@ static int puntajeHashAlLeer(int valor, int capa)
 	return valor;
 }
 
-void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOVIMIENTO mov)
+void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas,
+			 MOVIMIENTO mov, int evalEstatico)
 {
 	if (!tabla_hash || !entradasTablaHash)
 		return;
@@ -247,6 +248,7 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 	ptabla->profundidad	= profundidad;
 	ptabla->generacion	= generacionHash;
 	ptabla->reglaCincuentaMov = juego.reglaCincuentaMov;
+	ptabla->evalEstatico	= evalEstatico;
 	ptabla->puntaje		= valor;
 	ptabla->mov		= mov;
 	ptabla->banderas	= banderas;
@@ -254,10 +256,12 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 	ptabla->enroqueNegro	= juego.ENROQUEN;
 }
 
-int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *banderas, MOVIMIENTO *mov)
+int verificarTablaHash(int alfa, int beta, int capa, int profundidad,
+		       int *banderas, MOVIMIENTO *mov, int *evalEstatico)
 {
 	if (!tabla_hash || !entradasTablaHash) {
 		*banderas = BANDERA_HASH_VACIO;
+		*evalEstatico = INT_MAX;
 		return 0;
 	}
 	REGISTRO_TABLA_HASH *ptabla = tabla_hash + (juego.llaveHash & LARGO_TABLA_HASH);
@@ -266,6 +270,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 	int flag  = 0; 
 
 	*banderas = BANDERA_HASH_VACIO;
+	*evalEstatico = INT_MAX;
 
 	if (ptabla->generacion == generacionHash &&
 	    ptabla->id == juego.llaveHash &&
@@ -276,6 +281,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 		valor 		= ptabla->puntaje;
 		flag	 	= ptabla->banderas;
 		*mov		= ptabla->mov;
+		*evalEstatico	= ptabla->evalEstatico;
 
 		valor = puntajeHashAlLeer(valor, capa);
 

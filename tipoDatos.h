@@ -180,6 +180,7 @@ typedef struct
 	uint16		profundidad;
 	uint16		generacion;
 	uint16		reglaCincuentaMov;
+	int		evalEstatico;
 	int		puntaje;
 	MOVIMIENTO	mov;
 	uint8		banderas;

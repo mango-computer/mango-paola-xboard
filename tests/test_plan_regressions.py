@@ -244,7 +244,10 @@ class PlanRegressionTests(unittest.TestCase):
             timeout=30,
             check=True,
         )
-        self.assertIn("score=123 flag=4 expected_flag=4", result.stdout)
+        self.assertIn(
+            "score=123 flag=4 expected_flag=4 static_eval=17",
+            result.stdout,
+        )
 
     def test_tt_rejects_rule50_and_eval_history_mismatch(self) -> None:
         result = subprocess.run(

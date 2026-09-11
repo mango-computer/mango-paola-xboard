@@ -167,8 +167,10 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 uint64 obtPiezasClavadasPor(uint8 escaque, const COLOR lado, uint64 mapaPosiblesPiezasClavadas, uint64 mapaPosiblesPiezasAtaX,uint64 mapaPosiblesPiezasAtaNoX);
 void limpiarBufffer();
 void seleccionarMovimiento(int capa, int desde);
-void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOVIMIENTO mov);
-int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *banderas, MOVIMIENTO *mov);
+void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas,
+			 MOVIMIENTO mov, int evalEstatico);
+int verificarTablaHash(int alfa, int beta, int capa, int profundidad,
+		       int *banderas, MOVIMIENTO *mov, int *evalEstatico);
 void cerrarTablas();
 void seleccionarMov(int capa, int i, uint32 profundidad);
 void iniciarHash();
