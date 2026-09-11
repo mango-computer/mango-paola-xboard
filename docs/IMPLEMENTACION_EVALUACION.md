@@ -43,6 +43,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C07.d | GREEN | `6be579b` / `BASE-17` | `artifacts/gates/C07.d/20260911T200320Z` | Mate simétrico; cerrar core |
 | C08 | GREEN tras cadena | `ffd546a`, base `BASE-17` | `artifacts/gates/C08/20260911T200805Z` | Aceptado con C09.a |
 | C09.a | GREEN | `9d903e6` / `BASE-18` | `artifacts/gates/C09.a/20260911T201036Z` | Shelter reutilizado; promover |
+| C09.b | GREEN | `6ce1e70` / `BASE-19` | `artifacts/gates/C09.b/20260911T201302Z` | Material puro cacheado |
 
 ## BASE-00
 
@@ -245,6 +246,13 @@ El test envenena el shelter y confirma restauración y score idéntico con reyes
 distintos. Frente a C08, búsqueda `-0,819 %`; la cadena completa contra
 `BASE-17` queda estable (`43,445 → 43,437 ms`) con árbol idéntico. C08/C09.a
 se aceptan como `BASE-18`.
+
+## C09.b — Caché de material
+
+Una tabla directa de 1024 entradas guarda el resultado completo de
+`ini_material()` con firma de cuentas, turno y distribución por flancos. El
+segundo cálculo da hit y score idéntico. Frente a `BASE-18`, árbol idéntico,
+búsqueda `+0,149 %` y lote `-0,209 %`, ambos dentro del ruido; 67 tests verdes.
 
 ## Regresiones y bloqueos
 
