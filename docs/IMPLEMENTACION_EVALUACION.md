@@ -34,6 +34,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C05.a | GREEN | `2291494` / `BASE-09` | `artifacts/gates/C05.a/20260911T193859Z` | Lazy acotado; promover |
 | C05.b | GREEN | `bdccc6d` / `BASE-10` | `artifacts/gates/C05.b/20260911T194046Z` | Trazas estables; promover |
 | C05.c | GREEN | `5a64484` / `BASE-11` | `artifacts/gates/C05.c/20260911T194158Z` | Contrato explícito; Hito A |
+| C06.a | GREEN | `c49c7c6` / `BASE-12` | `artifacts/gates/C06.a/20260911T194337Z` | Intrínsecos equivalentes; promover |
 
 ## BASE-00
 
@@ -157,6 +158,13 @@ impide reutilizar un resultado lazy como exacto. Las 58 pruebas pasan.
 **Hito A alcanzado:** C01–C05 cumplen corrección de estado, terminales, mapas
 de ataque, finales y contrato de evaluación. `BASE-11` es la referencia para
 las optimizaciones mecánicas.
+
+## C06.a — Primitivas de bits
+
+GCC/Clang usan `ctzll`, `clzll` y `popcountll`, con implementación histórica
+como fallback portable. 100.000 palabras pseudoaleatorias coinciden con el
+oráculo escalar. A profundidad 7 el árbol fue idéntico y la mediana bajó de
+43,940 ms a 43,012 ms (`-2,112 %`); evaluación `+0,195 %`, dentro del ruido.
 
 ## Regresiones y bloqueos
 
