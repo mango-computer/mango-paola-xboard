@@ -82,6 +82,16 @@ int main(int argc, char **argv)
 		desHacerMovimiento(mov);
 		printf("quiet_undo=%u\n", (unsigned)juego.reglaCincuentaMov);
 	}
+	else if (strcmp(argv[1], "fen_reset") == 0)
+	{
+		juego.ENROQUEB = ENROQUE_OO;
+		juego.ENROQUEN = ENROQUE_OOO;
+		juego.indiceHJuego = 7;
+		load_fen("7k/8/8/8/8/8/P7/K7 w - - 0 1");
+		printf("castled_white=%d castled_black=%d history=%u\n",
+		       juego.ENROQUEB, juego.ENROQUEN,
+		       (unsigned)juego.indiceHJuego);
+	}
 	else
 	{
 		cerrarTablas();

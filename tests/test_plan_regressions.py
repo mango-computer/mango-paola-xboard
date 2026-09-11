@@ -68,6 +68,19 @@ class PlanRegressionTests(unittest.TestCase):
         self.assertIn("capture=0 capture_undo=25", result.stdout)
         self.assertIn("quiet=301 quiet_undo=300", result.stdout)
 
+    def test_loading_fen_resets_position_history(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "fen_reset"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn(
+            "castled_white=0 castled_black=0 history=0", result.stdout
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

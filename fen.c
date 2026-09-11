@@ -128,6 +128,9 @@ void setupFen(char *fen, char *fencolor, char *fenEnroque, char *fenPeonPaso, in
 
 	int i, file, rank, contador;
 	PIEZA pieza;
+	juego.ENROQUEB = SIN_ENROQUE;
+	juego.ENROQUEN = SIN_ENROQUE;
+	juego.indiceHJuego = 0;
 	juego.llaveHash ^= juego.llaveHash;
 
  
