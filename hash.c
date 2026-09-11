@@ -175,6 +175,8 @@ BOOLEANO cargarHashPeones(void)
 		peonesCandidatos[color] = entrada->candidatos[color];
 		peonesMapaFila[color] = entrada->filas[color];
 		peonesPasadosMapaFila[color] = entrada->filasPasados[color];
+		memcpy(peonDefectos[color], entrada->defectosRey[color],
+		       sizeof(entrada->defectosRey[color]));
 	}
 	return VERDADERO;
 }
@@ -198,6 +200,8 @@ void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior)
 		entrada->candidatos[color] = peonesCandidatos[color];
 		entrada->filas[color] = peonesMapaFila[color];
 		entrada->filasPasados[color] = peonesPasadosMapaFila[color];
+		memcpy(entrada->defectosRey[color], peonDefectos[color],
+		       sizeof(entrada->defectosRey[color]));
 	}
 	entrada->generacion = generacionHash;
 }

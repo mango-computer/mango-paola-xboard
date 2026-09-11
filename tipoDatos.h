@@ -170,6 +170,7 @@ typedef struct
 	uint64 candidatos[2];
 	uint8 filas[2];
 	uint8 filasPasados[2];
+	int defectosRey[2][8];
 	uint16 generacion;
 } HASH_PEONES;
 

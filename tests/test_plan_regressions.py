@@ -286,6 +286,17 @@ class PlanRegressionTests(unittest.TestCase):
         self.assertIsNotNone(match, result.stdout)
         self.assertGreater(int(match.group(1)), 50)
 
+    def test_pawn_hash_restores_reusable_king_shelter(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "pawn_shelter"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"shelter_restored=1 pawn_hits=[1-9]\d*")
+
 
 if __name__ == "__main__":
     unittest.main()

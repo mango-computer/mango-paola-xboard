@@ -241,6 +241,8 @@ int evaluacionTablero(int alfa, int beta)
 	{
 		evalPeones(BLANCO);
 		evalPeones(NEGRO);
+		evalFilaRey(NEGRO);
+		evalFilaRey(BLANCO);
 		guardarHashPeones(puntajeMAntesPeones, puntajeFAntesPeones);
 	}
 #ifdef VERVALORES
@@ -314,9 +316,6 @@ int evaluacionTablero(int alfa, int beta)
 	       puntaje_m[BLANCO], puntaje_f[BLANCO],
 	       puntaje_m[NEGRO], puntaje_f[NEGRO]);
 #endif
-
-	evalFilaRey(NEGRO);
-	evalFilaRey(BLANCO);
 
 	evalRey(NEGRO);
 	evalRey(BLANCO);

@@ -383,6 +383,20 @@ int main(int argc, char **argv)
 		}
 		printf("eval_state_transitions=%u\n", checked);
 	}
+	else if (strcmp(argv[1], "pawn_shelter") == 0)
+	{
+		int expected[2][8];
+
+		load_fen("7k/5pp1/8/3P4/2P5/8/7P/K7 w - - 0 1");
+		limpiarTablasHash();
+		full_uncached();
+		memcpy(expected, peonDefectos, sizeof(expected));
+		memset(peonDefectos, 0x55, sizeof(peonDefectos));
+		full_uncached();
+		printf("shelter_restored=%d pawn_hits=%llu\n",
+		       memcmp(expected, peonDefectos, sizeof(expected)) == 0,
+		       (unsigned long long)aciertosHashPeones);
+	}
 	else
 	{
 		cerrarTablas();
