@@ -21,6 +21,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | Entrega | Estado | Base/commit | Evidencia | Decisión |
 |---|---|---|---|---|
 | C00 | GREEN | `BASE-00` desde `43ed23b` | `artifacts/gates/C00/20260911T184919Z` | Referencia congelada |
+| C01.a | GREEN | `c743809` / `BASE-01` | `artifacts/gates/C01.a/20260911T185105Z` | Historial acotado; promover |
 
 ## BASE-00
 
@@ -36,6 +37,14 @@ Este documento registra la ejecución del plan de mejora sobre la rama
   neutra.
 - La compilación mantiene advertencias preexistentes; no se trataron como
   regresiones de C00.
+
+## C01.a — Historial de repetición
+
+Se convirtió la resta del índice a entero con signo y se acotó su límite
+inferior a cero en ambas macros de repetición. El caso con FEN, reloj 40 e
+historial vacío pasa bajo UBSan. También pasan las 45 pruebas anteriores más
+la nueva regresión dirigida. Duración del gate: 21,596 s; no se midió fuerza
+porque es una corrección de seguridad sin cambio heurístico previsto.
 
 ## Regresiones y bloqueos
 
