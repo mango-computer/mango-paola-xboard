@@ -23,6 +23,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C00 | GREEN | `BASE-00` desde `43ed23b` | `artifacts/gates/C00/20260911T184919Z` | Referencia congelada |
 | C01.a | GREEN | `c743809` / `BASE-01` | `artifacts/gates/C01.a/20260911T185105Z` | Historial acotado; promover |
 | C01.b | GREEN | `b0dd5e3` / `BASE-02` | `artifacts/gates/C01.b/20260911T185232Z` | Reloj unificado; promover |
+| C01.c | GREEN | `5ad6c24` / `BASE-03` | `artifacts/gates/C01.c/20260911T185347Z` | FEN limpia; promover |
 
 ## BASE-00
 
@@ -54,6 +55,13 @@ una vez desde el estado previo: peones y capturas lo reinician; los movimientos
 quietos lo incrementan con saturación. Se verificaron captura `25 → 0 → undo
 25` y movimiento quieto `300 → 301 → undo 300`. Pasaron la prueba dirigida y
 la regresión completa en 21,897 s.
+
+## C01.c — Construcción de posición FEN
+
+`setupFen()` reinicia las marcas históricas de enroque y el índice de historial
+antes de construir una posición. El test envenena ambos campos y confirma
+`castled_white=0 castled_black=0 history=0`. La regresión completa pasó; gate
+de 21,544 s.
 
 ## Regresiones y bloqueos
 
