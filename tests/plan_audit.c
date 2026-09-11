@@ -414,6 +414,36 @@ int main(int argc, char **argv)
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
 	}
+	else if (strcmp(argv[1], "qsearch_static") == 0)
+	{
+		HASH_EVAL *saved = hash_eval;
+		int full;
+		int score;
+		uint64 evalsCold;
+		uint64 evalsWarm;
+
+		load_fen("7k/8/8/8/8/8/8/KQ6 w - - 0 1");
+		hash_eval = NULL;
+		permitirLazyEval = FALSO;
+		full = evaluacionTablero(-INFINITO, INFINITO);
+		permitirLazyEval = VERDADERO;
+		limpiarAntesDeBusqueda();
+		limpiarTablasHash();
+		tiempoVencido = FALSO;
+		contadorDescendente = INT_MAX;
+		esUsoTablaHash = FALSO;
+		score = busquedadTranquilidad(0, 55, 56);
+		evalsCold = llamadasEval;
+		esUsoTablaHash = VERDADERO;
+		limpiarAntesDeBusqueda();
+		limpiarTablasHash();
+		agregarMovTablaHash(4, 0, 123, BANDERA_HASH_EXACTO, 0, full);
+		score = busquedadTranquilidad(0, 55, 56);
+		evalsWarm = llamadasEval;
+		hash_eval = saved;
+		printf("standpat=%d full=%d equal=%d reused=%d\n",
+		       score, full, score == full, evalsWarm < evalsCold);
+	}
 	else if (strcmp(argv[1], "qsearch_check") == 0)
 	{
 		int score;

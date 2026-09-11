@@ -116,7 +116,8 @@ uint64 			entornoRey[2];
 struct 			timeval 					tv;
 
 int			tipoDeBusqueda					= TIPO_BUSQUEDA_NORMAL;
-BOOLEANO		esPermitirEvalPersoso				= FALSO;					
+BOOLEANO		esPermitirEvalPersoso				= FALSO;
+BOOLEANO		permitirLazyEval				= VERDADERO;
 BOOLEANO		esUsoTablaHash					= VERDADERO;					
 uint64			LARGO_TABLA_HASH				= 0;
 size_t			entradasTablaHash				= 0;

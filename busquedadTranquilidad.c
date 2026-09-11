@@ -86,7 +86,22 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 		juego.Buffer_MOV_INDEXCAPAS[capa+1] = generarTodosMov(juego.Buffer_MOV_INDEXCAPAS[capa]);
 		ponderarMovimientos(capa, &h_mov, 2);
 	} else {
-		Vparcial = evaluacionTablero(alfa, beta);
+		if (esUsoTablaHash)
+		{
+			int qflag = BANDERA_HASH_VACIO;
+			MOVIMIENTO qmov = 0;
+
+			verificarTablaHash(alfa, beta, capa, 0, &qflag, &qmov,
+					  &Vparcial);
+		}
+		if (Vparcial == INT_MAX)
+		{
+			BOOLEANO lazyPrev = permitirLazyEval;
+
+			permitirLazyEval = FALSO;
+			Vparcial = evaluacionTablero(alfa, beta);
+			permitirLazyEval = lazyPrev;
+		}
 
 		if (Vparcial >= beta) return Vparcial;//beta;
 
@@ -146,14 +161,8 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 			if (!OBT_MOV_PROMOCION(juego.Buffer_MOV[i]) && !ALFA_BETA_PROXIMO_MATE && !esFinal &&
 			    !estoyJaque && ES_MOV_CAPTURA(juego.Buffer_MOV[i]))
 			{
-				nDama[colorMueve]  		= cuentaBit(juego.tablero[colorMueve][DAMA]);
-				nCaballos[colorMueve]		= cuentaBit(juego.tablero[colorMueve][CABALLO]);
-				nTorres[colorMueve]		= cuentaBit(juego.tablero[colorMueve][TORRE]);
-				nAlfil[colorMueve]		= cuentaBit(juego.tablero[colorMueve][ALFIL]);
-				fase[colorMueve] 		= MINIMO(31,((nDama[colorMueve]	   * 9)+
-									     (nTorres[colorMueve]  * 5)+
-									     (nCaballos[colorMueve]* 3)+
-									     (nAlfil[colorMueve]   * 3)));
+				fase[colorMueve] = MINIMO(31,
+					juego.estadoEvaluacion.fase[colorMueve]);
 
 				valorFC = VALORPIEZA_FASE[OBT_MOV_CAPTURA(juego.Buffer_MOV[i])];
 		

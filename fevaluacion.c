@@ -76,7 +76,8 @@ int evaluacionTablero(int alfa, int beta)
 	int EvalFlojo =  (juego.colorTurno ? -juego.material_total : juego.material_total);
 //*
 #ifndef DESHABILITAR_LAZY_EVAL
-	if (juego.reglaCincuentaMov <= 80 &&
+	if (permitirLazyEval &&
+	    juego.reglaCincuentaMov <= 80 &&
 	    (((EvalFlojo + LIMITE_MOV_NULL) < alfa) ||
 	     (beta < (EvalFlojo - LIMITE_MOV_NULL))))
 	{
@@ -281,7 +282,8 @@ int evaluacionTablero(int alfa, int beta)
 #ifdef DESHABILITAR_LAZY_EVAL
 	esEvaluarTodo = VERDADERO;
 #else
-	esEvaluarTodo = juego.reglaCincuentaMov > 80 ||
+	esEvaluarTodo = !permitirLazyEval ||
+		       juego.reglaCincuentaMov > 80 ||
 		       ((EvalFlojo + corteMargen) > alfa &&
 			(EvalFlojo - corteMargen) < beta);
 #endif

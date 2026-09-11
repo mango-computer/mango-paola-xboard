@@ -311,6 +311,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
 
+    def test_qsearch_reuses_static_eval_and_avoids_lazy(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "qsearch_static"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("equal=1 reused=1", result.stdout)
+
     def test_qsearch_does_not_evaluate_while_in_check(self) -> None:
         result = subprocess.run(
             [str(self.audit), "qsearch_check"],
