@@ -157,6 +157,17 @@ int main(int argc, char **argv)
 		       !!(mapaPosAtacadas[BLANCO] & BITSET[27]),
 		       puntajeAmenazas(NEGRO));
 	}
+	else if (strcmp(argv[1], "mobility") == 0)
+	{
+		uint64 raw, useful;
+
+		load_fen("7k/8/8/3P4/3R4/8/8/K7 w - - 0 1");
+		full_uncached();
+		raw = genTorreMOVAtaqueTablero(27, juego);
+		useful = areaMovilidadUtil(BLANCO, 27, raw);
+		printf("own_blocker_raw=%d own_blocker_useful=%d\n",
+		       !!(raw & BITSET[35]), !!(useful & BITSET[35]));
+	}
 	else
 	{
 		cerrarTablas();

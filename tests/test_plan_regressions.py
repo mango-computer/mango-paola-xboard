@@ -128,6 +128,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("raw=1 map=1 threat_black=0", result.stdout)
 
+    def test_mobility_excludes_friendly_blockers(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "mobility"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("own_blocker_raw=1 own_blocker_useful=0", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

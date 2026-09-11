@@ -863,7 +863,8 @@ uint64 ataquesEfectivosEval(COLOR colorEval, int origen, uint64 ataques)
 uint64 areaMovilidadUtil(COLOR colorEval, int origen, uint64 ataques)
 {
 	COLOR contrario = !colorEval;
-	uint64 excluidas = mapaPosAtacadasXPza[contrario][PEON] |
+	uint64 excluidas = (colorEval == BLANCO ? juego.blancos : juego.negros) |
+			   mapaPosAtacadasXPza[contrario][PEON] |
 			   juego.tablero[colorEval][REY] |
 			   juego.tablero[colorEval][DAMA];
 	uint64 bloqueados;
