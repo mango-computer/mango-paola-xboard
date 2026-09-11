@@ -347,6 +347,36 @@ G2 pendiente (fuera del gate diario): TSan con 2–4 workers y TT saturada,
 perft ampliado, siete pares de 400 vueltas contra `BASE-00` y un SPRT si se
 quiere publicar Elo.
 
+## Match de comprobación BASE-00 vs candidato
+
+Orquestador: `tools/match/run_veredicto.sh`.
+Árbitro legal: `tests/eval_compare/match_legal.py` (mate, ahogado, 50,
+repetición, material insuficiente; ilegal o crash = derrota).
+Sin libro (`UsarLibroAperturas 0`), Hash 64 MB, `Threads=1`, aperturas
+emparejadas con colores invertidos.
+
+| Prueba | Condición | Juegos | Concurrencia |
+| --- | --- | --- | --- |
+| NPS / nodos | profundidad 7, 7 repeticiones, 4 FEN | — | 1 |
+| Fuerza fija | `go depth 8`, tope 120 ply | 1000 | 8 |
+| Fuerza a tiempo | `go movetime 400`, tope 120 ply | 400 | 8 |
+
+Artefactos en `artifacts/match/` (gitignored): binarios, PGN, JSON y
+`veredicto.json`. El umbral de descarte fuerte sigue siendo >10 % de
+regresión reproducible o fallos funcionales (ilegales/crashes).
+
+Resultados (suite ~49 min, 0 ilegales/crashes en 1400 partidas):
+
+| Prueba | Marcador (C–B–T) | Puntuación | Elo (IC 95 %) | Notas |
+| --- | --- | --- | --- | --- |
+| Profundidad 7 | — | tiempo 1,005× | — | −6,8 % nodos; NPS parseado no comparable |
+| Profundidad 8 | 189–125–686 | 53,20 % | +22,3 [+10,3, +34,3] | significativo |
+| 400 ms/jugada | 64–44–292 | 52,50 % | +17,4 [−0,4, +35,2] | misma dirección, no significativo |
+
+Veredicto: el candidato no se descarta. Es más correcto (0 fallos
+funcionales) y más fuerte a profundidad fija. A tiempo la señal es
+positiva pero el IC cruza cero. No hay SPRT de publicación.
+
 ## Regresiones y bloqueos
 
 - C03.a y C03.b mostraron provisionalmente `+2,974 %` y `+4,942 %`.

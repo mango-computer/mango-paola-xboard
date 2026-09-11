@@ -23,3 +23,4 @@ tests/eval_compare/eval-benchmark.json
 
 # Evidencias locales de gates (resúmenes versionados en docs/)
 artifacts/gates/
+artifacts/match/

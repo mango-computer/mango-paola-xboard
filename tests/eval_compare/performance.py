@@ -28,9 +28,11 @@ def sample(engine: Path, depth: int, cpu: int | None) -> dict:
     command = [str(engine)]
     if cpu is not None and os.name == "posix":
         command = ["taskset", "-c", str(cpu), *command]
-    stdin = "uci\nisready\n" + "".join(
-        f"position fen {fen}\ngo depth {depth}\n" for fen in FENS
-    ) + "quit\n"
+    stdin = (
+        "uci\nsetoption name Threads value 1\nsetoption name Hash value 64\nisready\n"
+        + "".join(f"position fen {fen}\ngo depth {depth}\n" for fen in FENS)
+        + "quit\n"
+    )
     start = time.perf_counter_ns()
     result = subprocess.run(
         command, input=stdin, capture_output=True, text=True, timeout=120, check=True
