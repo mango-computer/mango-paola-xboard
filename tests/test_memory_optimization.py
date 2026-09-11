@@ -128,6 +128,17 @@ class MemoryOptimizationTests(unittest.TestCase):
             ROOT / "hash.c"
         ).read_text(encoding="utf-8"))
 
+    def test_position_and_new_game_preserve_cache_epochs(self) -> None:
+        commands = (ROOT / "comandos.c").read_text(encoding="utf-8")
+        new_game = commands.split("void nuevo_juego()", 1)[1].split("//*", 1)[0]
+        uci = (ROOT / "uci.c").read_text(encoding="utf-8")
+        position = uci.split("static void uciPosition", 1)[1].split(
+            "static int uciAsignarTiempo", 1
+        )[0]
+        self.assertNotIn("limpiarTablasHash", new_game)
+        self.assertNotIn("limpiarTablasHash", position)
+        self.assertIn("Clear Hash", uci)
+
     def test_transposition_depth_preserves_tablebase_sentinel(self) -> None:
         types = (ROOT / "tipoDatos.h").read_text(encoding="utf-8")
         search = (ROOT / "busquedad.c").read_text(encoding="utf-8")

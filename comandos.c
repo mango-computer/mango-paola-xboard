@@ -1151,6 +1151,7 @@ void verMov2(MOVIMIENTO mov)
 
 void nuevo_juego()
 {
+		/* Las cachés persisten; solo Clear Hash/resize avanza su epoch. */
 		inicializarTablero();
 		inicializarVar();
 		iniTablerosUtil();
