@@ -235,6 +235,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("printed_bitboard=1", result.stdout)
 
+    def test_tt_exact_hit_is_reused_at_equal_depth(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "tt_equal_depth"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("score=123 flag=4 expected_flag=4", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

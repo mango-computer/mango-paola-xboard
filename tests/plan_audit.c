@@ -288,6 +288,19 @@ int main(int argc, char **argv)
 		imprimirBitTablero(0x8000000000000001ULL);
 		printf("printed_bitboard=1\n");
 	}
+	else if (strcmp(argv[1], "tt_equal_depth") == 0)
+	{
+		int flag = 0;
+		MOVIMIENTO mov = 0;
+		int score;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		limpiarTablasHash();
+		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0);
+		score = verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov);
+		printf("score=%d flag=%d expected_flag=%d\n",
+		       score, flag, BANDERA_HASH_EXACTO);
+	}
 	else
 	{
 		cerrarTablas();

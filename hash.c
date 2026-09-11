@@ -268,7 +268,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 			*banderas = BANDERA_HASH_EVITAR_NULL;
 		}
 
-		if (ptabla->profundidad > profundidad)
+		if (ptabla->profundidad >= profundidad)
 		{
 			if ((flag == BANDERA_HASH_ARRIBA) && (valor <=alfa))
 			{
