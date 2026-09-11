@@ -168,6 +168,24 @@ int main(int argc, char **argv)
 		printf("own_blocker_raw=%d own_blocker_useful=%d\n",
 		       !!(raw & BITSET[35]), !!(useful & BITSET[35]));
 	}
+	else if (strcmp(argv[1], "promotion_path") == 0)
+	{
+		int safeMg, safeEg;
+
+		load_fen("7k/P7/8/8/8/8/8/K7 w - - 0 1");
+		full_uncached();
+		mapaPosAtacadas[NEGRO] = 0;
+		puntaje_m[BLANCO] = puntaje_f[BLANCO] = 0;
+		evalPeonesPasados(BLANCO);
+		safeMg = puntaje_m[BLANCO];
+		safeEg = puntaje_f[BLANCO];
+		mapaPosAtacadas[NEGRO] = BITSET[56];
+		puntaje_m[BLANCO] = puntaje_f[BLANCO] = 0;
+		evalPeonesPasados(BLANCO);
+		printf("promotion_delta_mg=%d promotion_delta_eg=%d\n",
+		       safeMg - puntaje_m[BLANCO],
+		       safeEg - puntaje_f[BLANCO]);
+	}
 	else
 	{
 		cerrarTablas();

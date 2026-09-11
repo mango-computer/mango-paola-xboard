@@ -528,7 +528,7 @@ void evalPeonesPasados(COLOR colorEval)
 
 		sqAdelante = sq + DIR[colorEval];
 		mapa = ((colorEval)?menos8dir[sq]:mas8dir[sq]);
-		mapaCamino = mapa & FILEMASK[sq];
+		mapaCamino = mapa;
 
 		if (mapa & juego.ocupados)
 		{

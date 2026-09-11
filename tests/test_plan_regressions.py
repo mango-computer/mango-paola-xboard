@@ -139,6 +139,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("own_blocker_raw=1 own_blocker_useful=0", result.stdout)
 
+    def test_passed_pawn_path_includes_promotion_square(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "promotion_path"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("promotion_delta_mg=3 promotion_delta_eg=8", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
