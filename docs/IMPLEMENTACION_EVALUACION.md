@@ -33,6 +33,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C04.b | GREEN | `cb16fe3` / `BASE-08` | `artifacts/gates/C04.b/20260911T193733Z` | Finales completos; promover |
 | C05.a | GREEN | `2291494` / `BASE-09` | `artifacts/gates/C05.a/20260911T193859Z` | Lazy acotado; promover |
 | C05.b | GREEN | `bdccc6d` / `BASE-10` | `artifacts/gates/C05.b/20260911T194046Z` | Trazas estables; promover |
+| C05.c | GREEN | `5a64484` / `BASE-11` | `artifacts/gates/C05.c/20260911T194158Z` | Contrato explícito; Hito A |
 
 ## BASE-00
 
@@ -146,6 +147,16 @@ los mapas con la misma semántica raw/efectiva/útil del evaluador. La caché
 normal continúa siendo sólo de puntuación: un hit devuelve el mismo valor sin
 pretender restaurar scratch global. Pasaron 57 tests; cambio limitado a
 instrumentación `PRUEBAS_HCE`.
+
+## C05.c — Clases de resultado
+
+La instrumentación distingue explícitamente `COMPLETO`, `LAZY` y `CACHE`.
+El test obtiene la secuencia `full=0 cache=2 lazy=1` y conserva el guard que
+impide reutilizar un resultado lazy como exacto. Las 58 pruebas pasan.
+
+**Hito A alcanzado:** C01–C05 cumplen corrección de estado, terminales, mapas
+de ataque, finales y contrato de evaluación. `BASE-11` es la referencia para
+las optimizaciones mecánicas.
 
 ## Regresiones y bloqueos
 
