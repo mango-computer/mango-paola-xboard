@@ -498,10 +498,13 @@ BOOLEANO ejecutarComando(const char *buff)
 		uint64 efectivos = 0;
 		uint64 utiles = 0;
 		int resulEval;
+		HASH_EVAL *hashEvalAnterior = hash_eval;
 
 		CONT_BUFF_COMANDOS = '\0';
 		sscanf(buff, "evalprobe %d %d %d", &origen, &tipo, &color);
+		hash_eval = NULL;
 		resulEval = evaluacionTablero(-INFINITO, INFINITO);
+		hash_eval = hashEvalAnterior;
 		if (origen >= 0 && origen < 64 && color >= BLANCO && color <= NEGRO)
 		{
 			switch (tipo)
@@ -510,16 +513,17 @@ BOOLEANO ejecutarComando(const char *buff)
 					pseudo = mascaraCapturarPeon[origen][color];
 					break;
 				case CABALLO:
-					pseudo = genCaballoAtaqueTablero(origen, juego);
+					pseudo = mascaraCaballo[origen];
 					break;
 				case ALFIL:
-					pseudo = genAlfilAtaqueTablero(origen, juego);
+					pseudo = genAlfilMOVAtaqueTablero(origen, juego);
 					break;
 				case TORRE:
-					pseudo = genTorreAtaqueTablero(origen, juego);
+					pseudo = genTorreMOVAtaqueTablero(origen, juego);
 					break;
 				case DAMA:
-					pseudo = genDamaAtaqueTablero(origen, juego);
+					pseudo = genTorreMOVAtaqueTablero(origen, juego) |
+						 genAlfilMOVAtaqueTablero(origen, juego);
 					break;
 			}
 			efectivos = ataquesEfectivosEval(color, origen, pseudo);

@@ -212,6 +212,19 @@ int main(int argc, char **argv)
 		printf("full=%d narrow=%d equal=%d\n",
 		       full, narrow, full == narrow);
 	}
+	else if (strcmp(argv[1], "eval_cache") == 0)
+	{
+		int cold, warm;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		limpiarTablasHash();
+		cold = evaluacionTablero(-INFINITO, INFINITO);
+		mapaPosAtacadas[BLANCO] = 0xdeadbeefULL;
+		warm = evaluacionTablero(-INFINITO, INFINITO);
+		printf("same_score=%d cache_is_score_only=%d\n",
+		       cold == warm,
+		       mapaPosAtacadas[BLANCO] == 0xdeadbeefULL);
+	}
 	else
 	{
 		cerrarTablas();

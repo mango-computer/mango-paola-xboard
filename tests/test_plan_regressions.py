@@ -179,6 +179,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"full=-?\d+ narrow=-?\d+ equal=1")
 
+    def test_eval_cache_contract_is_score_only(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "eval_cache"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("same_score=1 cache_is_score_only=1", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
