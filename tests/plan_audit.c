@@ -39,6 +39,17 @@ static void load_fen(const char *fen)
 	juego.Buffer_MOV_INDEXCAPAS[0] = 0;
 }
 
+static int full_uncached(void)
+{
+	HASH_EVAL *saved = hash_eval;
+	int value;
+
+	hash_eval = NULL;
+	value = evaluacionTablero(-INFINITO, INFINITO);
+	hash_eval = saved;
+	return value;
+}
+
 static MOVIMIENTO make_uci(const char *uci)
 {
 	MOVIMIENTO mov = 0;
@@ -127,6 +138,15 @@ int main(int argc, char **argv)
 		printf("insufficient=%d status=%d expected=%d\n",
 		       insuficiente, obtEstadoJuego(),
 		       STATUS_FIN_JUEGO_MATE_GANAN_B);
+	}
+	else if (strcmp(argv[1], "bishop_defense") == 0)
+	{
+		load_fen("7k/7p/8/8/r2R4/8/P7/K5B1 w - - 0 1");
+		full_uncached();
+		printf("raw=%d map=%d threat_black=%d\n",
+		       !!(genAlfilMOVAtaqueTablero(6, juego) & BITSET[27]),
+		       !!(mapaPosAtacadas[BLANCO] & BITSET[27]),
+		       puntajeAmenazas(NEGRO));
 	}
 	else
 	{

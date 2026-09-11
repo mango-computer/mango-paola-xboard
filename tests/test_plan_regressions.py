@@ -106,6 +106,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("insufficient=0 status=2 expected=2", result.stdout)
 
+    def test_slider_raw_attacks_include_friendly_defenders(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "bishop_defense"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("raw=1 map=1 threat_black=0", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

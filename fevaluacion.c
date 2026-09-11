@@ -1118,7 +1118,7 @@ void evalCaballo(COLOR colorEval)
 		puntaje_m[colorEval] += adjuste_caballo[nPeones[colorEval]];
 		puntaje_f[colorEval] += adjuste_caballo[nPeones[colorEval]];
 //*/
-		tempDestinos   		 		 = genCaballoAtaqueTablero(escaqueOrigen, juego);
+		tempDestinos   		 		 = mascaraCaballo[escaqueOrigen];
 		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
 		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
 		registrarAtaquesEval(colorEval, CABALLO, tempDestinos, 2);
@@ -1186,7 +1186,7 @@ void evalAlfil(COLOR colorEval)
 		puntaje_f[colorEval] +=
 			ALFIL_PUNTAJE_POS_FINAL[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
-		tempDestinos  		 		 = genAlfilAtaqueTablero(escaqueOrigen, juego);
+		tempDestinos  		 		 = genAlfilMOVAtaqueTablero(escaqueOrigen, juego);
 		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
 		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
 		registrarAtaquesEval(colorEval, ALFIL, tempDestinos, 2);
@@ -1276,7 +1276,7 @@ void evalTorre(COLOR colorEval)
 	{
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
 
-		tempDestinos  		 		 = genTorreAtaqueTablero(escaqueOrigen, juego);
+		tempDestinos  		 		 = genTorreMOVAtaqueTablero(escaqueOrigen, juego);
 		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
 		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
 		registrarAtaquesEval(colorEval, TORRE, tempDestinos, 3);
@@ -1385,7 +1385,9 @@ void evalDama(COLOR colorEval)
 		puntaje_f[colorEval] +=
 			DAMA_PUNTAJE_POS_FINAL[colorEval ? ESPEJO[escaqueOrigen] : escaqueOrigen];
 
-		tempDestinos  		 		 = genDamaAtaqueTablero(escaqueOrigen, juego);
+		tempDestinos  		 		 =
+			genTorreMOVAtaqueTablero(escaqueOrigen, juego) |
+			genAlfilMOVAtaqueTablero(escaqueOrigen, juego);
 		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
 		tempDestinos				 = ataquesEfectivosEval(colorEval, escaqueOrigen, tempDestinos);
 		registrarAtaquesEval(colorEval, DAMA, tempDestinos, 5);
