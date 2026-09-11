@@ -58,6 +58,15 @@ typedef struct
 
 typedef struct
 {
+	uint8 conteo[2][6];
+	uint8 fase[2];
+	uint8 escaqueRey[2];
+	int pstMedio[2];
+	int pstFinal[2];
+} ESTADO_EVALUACION;
+
+typedef struct
+{
 	BOOLEANO	OOB;
 	BOOLEANO	OOOB;
 	BOOLEANO	OON;
@@ -72,6 +81,7 @@ typedef struct
 	MOVALG		movAlg;
 	uint64		llaveHash;
 	uint64		llavePeones;
+	ESTADO_EVALUACION estadoEvaluacion;
 } DATAJUEGO;
 
 
@@ -107,6 +117,7 @@ typedef struct
 	uint32		material_lado_negro;
 	uint64		llaveHash;
 	uint64		llavePeones;
+	ESTADO_EVALUACION estadoEvaluacion;
 	uint32		maxTiempo;	
 
 	// Variables para la búsqueda iterativa de profundidad

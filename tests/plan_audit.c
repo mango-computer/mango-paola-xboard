@@ -333,6 +333,56 @@ int main(int argc, char **argv)
 		printf("positive_delta=%d negative_delta=%d ordinary=%d\n",
 		       positiveRead - positive, negativeRead - negative, ordinary);
 	}
+	else if (strcmp(argv[1], "eval_state") == 0)
+	{
+		static const char *positions[] = {
+			"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+			"r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1",
+			"4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+			"4k3/P7/8/8/8/8/7p/4K3 w - - 0 1"
+		};
+		unsigned position, checked = 0;
+
+		for (position = 0;
+		     position < sizeof(positions) / sizeof(positions[0]);
+		     position++)
+		{
+			ESTADO_EVALUACION initial;
+			unsigned index, end;
+
+			load_fen(positions[position]);
+			initial = juego.estadoEvaluacion;
+			end = generarTodosMov(0);
+			for (index = 0; index < end; index++)
+			{
+				MOVIMIENTO mov = juego.Buffer_MOV[index];
+				ESTADO_EVALUACION incremental;
+
+				hacerMovimiento(mov);
+				incremental = juego.estadoEvaluacion;
+				reconstruirEstadoEvaluacion();
+				if (memcmp(&incremental, &juego.estadoEvaluacion,
+					   sizeof(incremental)) != 0)
+				{
+					printf("eval_state_mismatch=%u:%u\n",
+					       position, index);
+					cerrarTablas();
+					return 1;
+				}
+				desHacerMovimiento(mov);
+				if (memcmp(&initial, &juego.estadoEvaluacion,
+					   sizeof(initial)) != 0)
+				{
+					printf("eval_state_undo_mismatch=%u:%u\n",
+					       position, index);
+					cerrarTablas();
+					return 1;
+				}
+				checked++;
+			}
+		}
+		printf("eval_state_transitions=%u\n", checked);
+	}
 	else
 	{
 		cerrarTablas();

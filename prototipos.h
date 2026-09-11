@@ -142,6 +142,7 @@ void verMovimentosLegales();
 void verMovimentosJuego();
 void hacerMovimiento(MOVIMIENTO mov);
 void desHacerMovimiento(MOVIMIENTO mov);
+void reconstruirEstadoEvaluacion(void);
 void hacerCaptura(PIEZA captura, uint8 destino);
 void desHacerCaptura(PIEZA captura, uint8 destino);
 void hacerPromocion(PIEZA piezaPromocion, uint8 posPromocion);

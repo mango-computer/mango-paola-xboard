@@ -305,6 +305,7 @@ void setupFen(char *fen, char *fencolor, char *fenEnroque, char *fenPeonPaso, in
 
 	iniciarTableroFEN();
 	recalcularLlavePeones();
+	reconstruirEstadoEvaluacion();
 
 	juego.Buffer_MOV_INDEXCAPAS[1] = generarTodosMov(0);
 

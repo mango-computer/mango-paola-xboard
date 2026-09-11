@@ -282,6 +282,7 @@ void iniHashTablero()
 	juego.llaveHash ^= arrayHash.OON;
 	juego.llaveHash ^= arrayHash.OOON;
 	recalcularLlavePeones();
+	reconstruirEstadoEvaluacion();
 }
 
 void iniTablerosUtil()

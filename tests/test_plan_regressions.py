@@ -273,6 +273,19 @@ class PlanRegressionTests(unittest.TestCase):
             result.stdout,
         )
 
+    def test_incremental_eval_state_matches_reconstruction_and_undo(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "eval_state"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        match = re.search(r"eval_state_transitions=(\d+)", result.stdout)
+        self.assertIsNotNone(match, result.stdout)
+        self.assertGreater(int(match.group(1)), 50)
+
 
 if __name__ == "__main__":
     unittest.main()

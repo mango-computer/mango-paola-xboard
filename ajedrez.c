@@ -801,6 +801,130 @@ BOOLEANO esValidoMovUsuario(const char *mov, MOVIMIENTO *m)
 	return FALSO;
 }
 
+static int indicePiezaEvaluacion(PIEZA pieza)
+{
+	switch (pieza)
+	{
+		case PEON_BLANCO: case PEON_NEGRO: return PEON;
+		case ALFIL_BLANCO: case ALFIL_NEGRO: return ALFIL;
+		case CABALLO_BLANCO: case CABALLO_NEGRO: return CABALLO;
+		case TORRE_BLANCO: case TORRE_NEGRO: return TORRE;
+		case DAMA_BLANCO: case DAMA_NEGRO: return DAMA;
+		case REY_BLANCO: case REY_NEGRO: return REY;
+		default: return -1;
+	}
+}
+
+static int fasePiezaEvaluacion(int tipo)
+{
+	switch (tipo)
+	{
+		case CABALLO: case ALFIL: return 3;
+		case TORRE: return 5;
+		case DAMA: return 9;
+		default: return 0;
+	}
+}
+
+static int pstMedioPieza(PIEZA pieza, COLOR color, int tipo, int sq)
+{
+	switch (tipo)
+	{
+		case PEON: return PEON_PUNTAJE_POS[color][sq];
+		case CABALLO: return CABALLO_PUNTAJE_POS[color][sq];
+		case ALFIL: return ALFIL_PUNTAJE_POS[color][sq];
+		case TORRE: return TORRE_PUNTAJE_POS[color ? ESPEJO[sq] : sq];
+		case DAMA: return DAMA_PUNTAJE_POS[color][sq];
+		default: (void)pieza; return 0;
+	}
+}
+
+static int pstFinalPieza(PIEZA pieza, COLOR color, int tipo, int sq)
+{
+	switch (tipo)
+	{
+		case PEON: return PEON_PUNTAJE_POS[color][sq];
+		case CABALLO: return CABALLO_PUNTAJE_POS_FINAL[color ? ESPEJO[sq] : sq];
+		case ALFIL: return ALFIL_PUNTAJE_POS_FINAL[color ? ESPEJO[sq] : sq];
+		case TORRE: return TORRE_PUNTAJE_POS[color ? ESPEJO[sq] : sq];
+		case DAMA: return DAMA_PUNTAJE_POS_FINAL[color ? ESPEJO[sq] : sq];
+		default: (void)pieza; return 0;
+	}
+}
+
+static void sumarPiezaEstadoEvaluacion(PIEZA pieza, int sq, int delta)
+{
+	int tipo = indicePiezaEvaluacion(pieza);
+	COLOR color;
+
+	if (tipo < 0)
+		return;
+	color = OBT_COLOR_PIEZA(pieza);
+	juego.estadoEvaluacion.conteo[color][tipo] =
+		(uint8)(juego.estadoEvaluacion.conteo[color][tipo] + delta);
+	juego.estadoEvaluacion.fase[color] =
+		(uint8)(juego.estadoEvaluacion.fase[color] +
+			delta * fasePiezaEvaluacion(tipo));
+	juego.estadoEvaluacion.pstMedio[color] +=
+		delta * pstMedioPieza(pieza, color, tipo, sq);
+	juego.estadoEvaluacion.pstFinal[color] +=
+		delta * pstFinalPieza(pieza, color, tipo, sq);
+	if (tipo == REY && delta > 0)
+		juego.estadoEvaluacion.escaqueRey[color] = (uint8)sq;
+}
+
+void reconstruirEstadoEvaluacion(void)
+{
+	int sq;
+
+	memset(&juego.estadoEvaluacion, 0, sizeof(juego.estadoEvaluacion));
+	for (sq = 0; sq < 64; sq++)
+		sumarPiezaEstadoEvaluacion(ESCAQUES[sq], sq, 1);
+}
+
+static void actualizarEstadoEvaluacionMovimiento(MOVIMIENTO mov)
+{
+	int origen = OBT_MOV_ORIGEN(mov);
+	int destino = OBT_MOV_DESTINO(mov);
+	PIEZA pieza = OBT_MOV_PIEZA(mov);
+	PIEZA captura = OBT_MOV_CAPTURA(mov);
+	int escaqueCaptura = destino;
+
+	sumarPiezaEstadoEvaluacion(pieza, origen, -1);
+	sumarPiezaEstadoEvaluacion(pieza, destino, 1);
+	if (captura)
+	{
+		if (ES_MOV_CAPT_PEON_PASO(mov))
+			escaqueCaptura = pieza == PEON_BLANCO ? destino - 8 : destino + 8;
+		sumarPiezaEstadoEvaluacion(captura, escaqueCaptura, -1);
+	}
+	if (ES_MOV_PROMOCION(mov))
+	{
+		sumarPiezaEstadoEvaluacion(pieza, destino, -1);
+		sumarPiezaEstadoEvaluacion(OBT_MOV_PROMOCION(mov), destino, 1);
+	}
+	if (mov == ENROQUE_BLANCO_OO)
+	{
+		sumarPiezaEstadoEvaluacion(TORRE_BLANCO, 7, -1);
+		sumarPiezaEstadoEvaluacion(TORRE_BLANCO, 5, 1);
+	}
+	else if (mov == ENROQUE_BLANCO_OOO)
+	{
+		sumarPiezaEstadoEvaluacion(TORRE_BLANCO, 0, -1);
+		sumarPiezaEstadoEvaluacion(TORRE_BLANCO, 3, 1);
+	}
+	else if (mov == ENROQUE_NEGRO_OO)
+	{
+		sumarPiezaEstadoEvaluacion(TORRE_NEGRO, 63, -1);
+		sumarPiezaEstadoEvaluacion(TORRE_NEGRO, 61, 1);
+	}
+	else if (mov == ENROQUE_NEGRO_OOO)
+	{
+		sumarPiezaEstadoEvaluacion(TORRE_NEGRO, 56, -1);
+		sumarPiezaEstadoEvaluacion(TORRE_NEGRO, 59, 1);
+	}
+}
+
 void hacerMovimiento(MOVIMIENTO mov)
 {
 	uint8 		origen;
@@ -836,6 +960,8 @@ void hacerMovimiento(MOVIMIENTO mov)
 	juego.historicoJuego[juego.indiceHJuego].mov			= mov;
 	juego.historicoJuego[juego.indiceHJuego].llaveHash		= juego.llaveHash;
 	juego.historicoJuego[juego.indiceHJuego].llavePeones		= juego.llavePeones;
+	juego.historicoJuego[juego.indiceHJuego].estadoEvaluacion	= juego.estadoEvaluacion;
+	actualizarEstadoEvaluacionMovimiento(mov);
 
 	juego.llaveHash ^= (arrayHash.llaves[origen][pieza] ^ arrayHash.llaves[destino][pieza]);
 	if (pieza == PEON_BLANCO || pieza == PEON_NEGRO)
@@ -1595,6 +1721,7 @@ void desHacerMovimiento(MOVIMIENTO mov)
 	mov			= juego.historicoJuego[juego.indiceHJuego].mov;
 	juego.llaveHash		= juego.historicoJuego[juego.indiceHJuego].llaveHash;
 	juego.llavePeones	= juego.historicoJuego[juego.indiceHJuego].llavePeones;
+	juego.estadoEvaluacion	= juego.historicoJuego[juego.indiceHJuego].estadoEvaluacion;
 
 
 #ifdef DEBUG_MANGO_AJEDREZ 
