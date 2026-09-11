@@ -48,6 +48,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C10.b | GREEN | `f545ec8` / `BASE-21` | `artifacts/gates/C10.b/20260911T201826Z` | Epochs UCI persistentes |
 | C10.c | GREEN | `9626ca5` / `BASE-22` | `artifacts/gates/C10.c/20260911T202012Z` | Layout 32 B e invalidación |
 | C11.a | GREEN | `26b6c6d` / `BASE-23` | `artifacts/gates/C11.a/20260911T202459Z` | Quiescencia sin eval en jaque |
+| C11.b | GREEN | `389d021` / `BASE-24` | `artifacts/gates/C11.b/20260911T202631Z` | Static eval y lazy de qsearch |
 
 ## BASE-00
 
@@ -291,6 +292,14 @@ de jaque. El stand-pat y el delta pruning quedan solo en nodos sin jaque; en
 jaque se generan evasiones y la TT guarda `INT_MAX` como static eval. El
 fixture con una sola evasión reporta `evals_in_check=0`. Gate verde en
 22,950 s.
+
+## C11.b — Static eval y lazy en quiescencia
+
+El stand-pat reutiliza `evalEstatico` de TT cuando el contexto coincide; si
+falta, evalúa con `permitirLazyEval=0` para no cortar por material o margen
+intermedio. La poda EET lee la fase incremental en lugar de reconstruir
+cuentas. El fixture KQ contra K confirma stand-pat igual a la evaluación
+completa y menos llamadas con la TT caliente. Gate verde en ~23 s.
 
 ## Regresiones y bloqueos
 
