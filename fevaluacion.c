@@ -1592,6 +1592,21 @@ void ini_material()
 	}
 }
 
+static int defectosShelterColumnaRey(COLOR colorEval)
+{
+	int file = (int)FILES[escaqueReyEval[colorEval]];
+	int pivote;
+
+	if (file >= 5)
+		pivote = (file > 5) ? 7 : 5;
+	else
+		pivote = (file < 4) ? 2 : 4;
+#ifdef PRUEBAS_HCE
+	auditShelterPivote[colorEval] = pivote;
+#endif
+	return peonDefectos[colorEval][pivote];
+}
+
 void evalRey(COLOR colorEval)
 {
 	COLOR xcolorEval = !colorEval;
@@ -1623,23 +1638,7 @@ void evalRey(COLOR colorEval)
 		HUBO_ENROQUE = (colorEval)?juego.ENROQUEN:juego.ENROQUEB;
 		if (HUBO_ENROQUE) //Enroque
 		{
-			if (FILES[escaqueReyEval[colorEval]] >= 5)
-			{
-				if (FILES[escaqueReyEval[colorEval]] > 5)
-				{
-					defectos = peonDefectos[colorEval][7];
-				} else {
-					defectos = peonDefectos[colorEval][5];
-				}
-
-			} else {
-
-				if (FILES[escaqueReyEval[colorEval]] < 4) {
-					defectos = peonDefectos[colorEval][2];
-				} else {
-					defectos = peonDefectos[colorEval][4];
-				}
-			}
+			defectos = defectosShelterColumnaRey(colorEval);
 
 		} else { //sin haber hecho enroque
 			
@@ -1650,13 +1649,17 @@ void evalRey(COLOR colorEval)
 			{
 				defectos = MINIMO(MINIMO(peonDefectos[colorEval][7], peonDefectos[colorEval][5]),
 						peonDefectos[colorEval][2]);
-			} else if (!E_OOO && E_OO) {
+			} else if (E_OO) {
 
 				defectos = MINIMO(peonDefectos[colorEval][7], peonDefectos[colorEval][5]);
-	
+
+			} else if (E_OOO) {
+
+				defectos = peonDefectos[colorEval][2];
+
 			} else {
 
-				defectos = MINIMO(peonDefectos[colorEval][2], peonDefectos[colorEval][5]);
+				defectos = defectosShelterColumnaRey(colorEval);
 			}
 
 			if (defectos < 3) defectos = 3;

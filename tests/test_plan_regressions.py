@@ -345,6 +345,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("blocked=0 candidate=1", result.stdout)
 
+    def test_shelter_uses_current_file_without_rights(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "shelter_rights"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"pivot=5 queenside=\d+ efile=\d+ used_current=1")
+
     def test_qsearch_reuses_static_eval_and_avoids_lazy(self) -> None:
         result = subprocess.run(
             [str(self.audit), "qsearch_static"],

@@ -467,6 +467,19 @@ int main(int argc, char **argv)
 		full_uncached();
 		printf("candidate=%d\n", !!(peonesCandidatos[BLANCO] & BITSET[26]));
 	}
+	else if (strcmp(argv[1], "shelter_rights") == 0)
+	{
+		auditShelterPivote[BLANCO] = 0;
+		load_fen("4k3/3q4/8/8/8/8/PPP5/4K3 w - - 0 1");
+		limpiarTablasHash();
+		full_uncached();
+		printf("pivot=%d queenside=%d efile=%d used_current=%d\n",
+		       auditShelterPivote[BLANCO],
+		       peonDefectos[BLANCO][2],
+		       peonDefectos[BLANCO][5],
+		       auditShelterPivote[BLANCO] == 5 &&
+			       peonDefectos[BLANCO][2] < peonDefectos[BLANCO][5]);
+	}
 	else if (strcmp(argv[1], "qsearch_static") == 0)
 	{
 		HASH_EVAL *saved = hash_eval;
