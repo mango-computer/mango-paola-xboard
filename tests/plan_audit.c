@@ -39,18 +39,54 @@ static void load_fen(const char *fen)
 	juego.Buffer_MOV_INDEXCAPAS[0] = 0;
 }
 
+static MOVIMIENTO make_uci(const char *uci)
+{
+	MOVIMIENTO mov = 0;
+	char command[32];
+
+	snprintf(command, sizeof(command), "move %s", uci);
+	if (!esValidoMovUsuario(command, &mov))
+		abort();
+	hacerMovimiento(mov);
+	return mov;
+}
+
 int main(int argc, char **argv)
 {
-	if (argc != 2 || strcmp(argv[1], "repetition") != 0)
+	if (argc != 2)
 		return 2;
 
 	init_audit();
-	load_fen("7k/8/8/8/8/8/P7/K7 w - - 40 1");
-	limpiarAntesDeBusqueda();
-	tiempoVencido = FALSO;
-	contadorDescendente = INT_MAX;
-	printf("repetition_search=%d\n",
-	       busquedadTranquilidad(0, -INFINITO, INFINITO));
+	if (strcmp(argv[1], "repetition") == 0)
+	{
+		load_fen("7k/8/8/8/8/8/P7/K7 w - - 40 1");
+		limpiarAntesDeBusqueda();
+		tiempoVencido = FALSO;
+		contadorDescendente = INT_MAX;
+		printf("repetition_search=%d\n",
+		       busquedadTranquilidad(0, -INFINITO, INFINITO));
+	}
+	else if (strcmp(argv[1], "rule50") == 0)
+	{
+		MOVIMIENTO mov;
+
+		load_fen("7k/8/8/8/r2R4/8/8/K7 w - - 25 1");
+		mov = make_uci("d4a4");
+		printf("capture=%u ", (unsigned)juego.reglaCincuentaMov);
+		desHacerMovimiento(mov);
+		printf("capture_undo=%u\n", (unsigned)juego.reglaCincuentaMov);
+
+		load_fen("7k/8/8/8/3R4/8/8/K7 w - - 300 1");
+		mov = make_uci("d4d5");
+		printf("quiet=%u ", (unsigned)juego.reglaCincuentaMov);
+		desHacerMovimiento(mov);
+		printf("quiet_undo=%u\n", (unsigned)juego.reglaCincuentaMov);
+	}
+	else
+	{
+		cerrarTablas();
+		return 2;
+	}
 	cerrarTablas();
 	return 0;
 }

@@ -809,6 +809,8 @@ void hacerMovimiento(MOVIMIENTO mov)
 	uint8 		captura;
 	uint8		postmp;
 	PIEZA		piezaPromocion;
+	uint16		relojPrevio;
+	BOOLEANO	eraPeon;
 
 	uint64 bitmapOri, bitmapOriDes, bitmapTorreEnroque;
 
@@ -816,6 +818,8 @@ void hacerMovimiento(MOVIMIENTO mov)
 	destino = OBT_MOV_DESTINO(mov);
 	pieza 	= OBT_MOV_PIEZA(mov);
 	captura	= OBT_MOV_CAPTURA(mov);
+	relojPrevio = juego.reglaCincuentaMov;
+	eraPeon = (pieza == PEON_BLANCO || pieza == PEON_NEGRO);
 
 	bitmapOri    = BITSET[origen];
 	bitmapOriDes = BITSET[origen] | BITSET[destino];
@@ -1256,6 +1260,12 @@ void hacerMovimiento(MOVIMIENTO mov)
 			juego.colorTurno 	= BLANCO;
 			break;
 	}
+
+	if (eraPeon || captura)
+		juego.reglaCincuentaMov = 0;
+	else
+		juego.reglaCincuentaMov =
+			(relojPrevio < 65535u) ? (uint16)(relojPrevio + 1u) : 65535u;
 
 	juego.totalMov++;
 	juego.indiceHJuego++;

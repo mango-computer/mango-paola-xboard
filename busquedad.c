@@ -612,7 +612,7 @@ int alfabetaNegado(int capa, int profundidad, int alfa, int beta, BOOLEANO hacer
 				int	 RENROQUEB	= juego.ENROQUEB;
 				int	 RENROQUEN	= juego.ENROQUEN;
 				uint8	 RposPeonPaso	= juego.posPeonPaso;
-				uint8	 RreglaCincuentaMov= juego.reglaCincuentaMov;
+				uint16	 RreglaCincuentaMov= juego.reglaCincuentaMov;
 				uint32	 RtotalMov	= juego.totalMov;
 				uint64	 RllaveHash	= juego.llaveHash;
 

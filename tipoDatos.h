@@ -65,7 +65,7 @@ typedef struct
 	BOOLEANO	ENROQUEB;
 	BOOLEANO	ENROQUEN;
 	uint8		posPeonPaso;
-	uint8		reglaCincuentaMov;
+	uint16		reglaCincuentaMov;
 	uint32		totalMov;
 	MOVIMIENTO	mov;
 	VISTATABLERO	vistaTablero[64];
@@ -91,7 +91,7 @@ typedef struct
 	int		ENROQUEB;
 	int		ENROQUEN;
 	uint8		posPeonPaso;
-	uint8		reglaCincuentaMov;
+	uint16		reglaCincuentaMov;
 	uint32		totalMov;
 	uint32 		Buffer_MOV[MAX_BUFF_MOV];
 	int 		Buffer_MOV_PONDERACION[MAX_BUFF_MOV];

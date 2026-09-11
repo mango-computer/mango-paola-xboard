@@ -56,6 +56,18 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("repetition_search=", result.stdout)
 
+    def test_rule50_capture_quiet_move_and_undo(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "rule50"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("capture=0 capture_undo=25", result.stdout)
+        self.assertIn("quiet=301 quiet_undo=300", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
