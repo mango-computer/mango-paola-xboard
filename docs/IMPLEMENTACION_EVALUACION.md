@@ -44,6 +44,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C08 | GREEN tras cadena | `ffd546a`, base `BASE-17` | `artifacts/gates/C08/20260911T200805Z` | Aceptado con C09.a |
 | C09.a | GREEN | `9d903e6` / `BASE-18` | `artifacts/gates/C09.a/20260911T201036Z` | Shelter reutilizado; promover |
 | C09.b | GREEN | `6ce1e70` / `BASE-19` | `artifacts/gates/C09.b/20260911T201302Z` | Material puro cacheado |
+| C10.a | GREEN | `e938b01` / `BASE-20` | `artifacts/gates/C10.a/20260911T201709Z` | Static eval en TT |
 
 ## BASE-00
 
@@ -253,6 +254,14 @@ Una tabla directa de 1024 entradas guarda el resultado completo de
 `ini_material()` con firma de cuentas, turno y distribución por flancos. El
 segundo cálculo da hit y score idéntico. Frente a `BASE-18`, árbol idéntico,
 búsqueda `+0,149 %` y lote `-0,209 %`, ambos dentro del ruido; 67 tests verdes.
+
+## C10.a — Evaluación estática en TT
+
+La TT conserva `evalEstatico` sin aumentar su layout de 32 bytes y lo devuelve
+a nodos con contexto coincidente. Búsqueda/null/futility lo reutilizan; qsearch
+y cortes guardan el valor conocido o `INT_MAX`. La prueba TT recupera score
+123 y static 17. Árbol idéntico, búsqueda `+1,738 %` y lote `+1,639 %`,
+dentro de la banda neutra; 67 tests verdes.
 
 ## Regresiones y bloqueos
 
