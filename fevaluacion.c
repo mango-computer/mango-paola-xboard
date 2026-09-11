@@ -206,32 +206,6 @@ int evaluacionTablero(int alfa, int beta)
 		} while(0);
 	}
 
-	if (!mapaTodosPeones)
-	{
-		if ((fase[BLANCO]>3) || (fase[NEGRO]>3))
-		{
-			if (juego.material_total > 0)
-			{
-				evaluarMate(BLANCO);
-
-			} else if (juego.material_total < 0) {
-
-				evaluarMate(NEGRO);
-			}
-
-			puntajeTemporal = puntaje_f[BLANCO] - puntaje_f[NEGRO];
-
-			if ((puntajeTemporal > 0) && !(puedeGanar & 1))
-				puntajeTemporal = puntajeTemporal/4;
-
-			if ((puntajeTemporal < 0) && !(puedeGanar & 2))
-				puntajeTemporal = puntajeTemporal/4;
-
-			puntajeTemporal = ajustarReglaCincuenta(puntajeTemporal);
-			return (juego.colorTurno) ? -puntajeTemporal:puntajeTemporal;
-		}
-	} 
-
 	//Peones
 	registrarAtaquesPeonesEval();
 	for (int color = BLANCO; color <= NEGRO; color++)

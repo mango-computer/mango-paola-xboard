@@ -186,6 +186,19 @@ int main(int argc, char **argv)
 		       safeMg - puntaje_m[BLANCO],
 		       safeEg - puntaje_f[BLANCO]);
 	}
+	else if (strcmp(argv[1], "pawnless") == 0)
+	{
+		int first, second;
+
+		load_fen("6k1/1q6/8/8/8/8/8/K6Q w - - 0 1");
+		first = full_uncached();
+		load_fen("6k1/1q6/8/8/7Q/8/8/K7 w - - 0 1");
+		second = full_uncached();
+		printf("queen_h1=%d queen_h4=%d attacks=%llu\n",
+		       first, second,
+		       (unsigned long long)
+		       (mapaPosAtacadas[BLANCO] | mapaPosAtacadas[NEGRO]));
+	}
 	else
 	{
 		cerrarTablas();

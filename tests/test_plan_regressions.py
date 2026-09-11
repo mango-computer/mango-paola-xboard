@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 import unittest
@@ -149,6 +150,23 @@ class PlanRegressionTests(unittest.TestCase):
             check=True,
         )
         self.assertIn("promotion_delta_mg=3 promotion_delta_eg=8", result.stdout)
+
+    def test_general_pawnless_positions_use_full_evaluation(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "pawnless"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        match = re.search(
+            r"queen_h1=(-?\d+) queen_h4=(-?\d+) attacks=(\d+)",
+            result.stdout,
+        )
+        self.assertIsNotNone(match, result.stdout)
+        self.assertNotEqual(match.group(1), match.group(2))
+        self.assertNotEqual(match.group(3), "0")
 
 
 if __name__ == "__main__":
