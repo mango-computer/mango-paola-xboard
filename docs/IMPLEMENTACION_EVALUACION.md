@@ -26,6 +26,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C01.c | GREEN | `5ad6c24` / `BASE-03` | `artifacts/gates/C01.c/20260911T185347Z` | FEN limpia; promover |
 | C01.d | GREEN | `83ded49` / `BASE-04` | `artifacts/gates/C01.d/20260911T185511Z` | Null reversible; promover |
 | C02 | GREEN | `53caefd` / `BASE-05` | `artifacts/gates/C02/20260911T185648Z` | Terminales corregidos; promover |
+| C03.a | PROVISIONAL | `63ad082`, base `BASE-05` | `artifacts/gates/C03.a/20260911T185843Z` | Mantener para medir cadena C03 |
 
 ## BASE-00
 
@@ -80,6 +81,16 @@ alfiles exclusivamente del mismo color de casilla. KNN contra K ya no se marca
 como material muerto. `obtEstadoJuego()` comprueba mate/ahogado antes de tablas:
 el fixture KNNK devuelve mate blanco (`status=2`). Gate verde en 21,192 s.
 
+## C03.a — Ataques geométricos
+
+Caballo, alfil, torre y dama registran ataques geométricos antes de filtrar
+clavadas. El alfil de g1 vuelve a defender la torre de d4 y elimina la amenaza
+falsa. Los 51 tests pasan. El lote de evaluación pasó de 149,744 ms a
+154,198 ms (`+2,974 %`), una regresión menor al umbral fuerte; el cambio queda
+`PROVISIONAL` para medirlo junto con defensa de rey y movilidad.
+
 ## Regresiones y bloqueos
 
-Todavía no se han observado regresiones durante esta ejecución.
+- C03.a: `+2,974 %` en lote de evaluación, por debajo del umbral fuerte del
+  10 %. Se conserva provisionalmente porque corrige la semántica requerida por
+  C03.b/C03.c.
