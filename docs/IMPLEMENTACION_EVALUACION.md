@@ -49,6 +49,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C10.c | GREEN | `9626ca5` / `BASE-22` | `artifacts/gates/C10.c/20260911T202012Z` | Layout 32 B e invalidación |
 | C11.a | GREEN | `26b6c6d` / `BASE-23` | `artifacts/gates/C11.a/20260911T202459Z` | Quiescencia sin eval en jaque |
 | C11.b | GREEN | `389d021` / `BASE-24` | `artifacts/gates/C11.b/20260911T202631Z` | Static eval y lazy de qsearch |
+| C12 | GREEN | `0c7d0ce` / `BASE-25` | `artifacts/gates/C12/20260911T202804Z` | Candidatos con estado local |
 
 ## BASE-00
 
@@ -300,6 +301,14 @@ falta, evalúa con `permitirLazyEval=0` para no cortar por material o margen
 intermedio. La poda EET lee la fase incremental en lugar de reconstruir
 cuentas. El fixture KQ contra K confirma stand-pat igual a la evaluación
 completa y menos llamadas con la TT caliente. Gate verde en ~23 s.
+
+## C12 — Familia de peones candidatos
+
+Las familias HCE presentes en `BASE-00` (incluido el descuento de doblados
+solo cuando el peón no es aislado) quedan congeladas. La única familia nueva
+es el estado local de candidatos: ataque, defensa y casilla evaluada no se
+comparten con peones previos ni con un bloqueo inmediato. El fixture marca
+`blocked=0 candidate=1`. Gate verde.
 
 ## Regresiones y bloqueos
 
