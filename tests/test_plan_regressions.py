@@ -95,6 +95,17 @@ class PlanRegressionTests(unittest.TestCase):
             result.stdout,
         )
 
+    def test_knnk_mate_is_not_declared_dead_material(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "material"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("insufficient=0 status=2 expected=2", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

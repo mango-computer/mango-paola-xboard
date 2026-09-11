@@ -43,8 +43,13 @@ int obtEstadoJuego()
 	BOOLEANO jaque;
 	BOOLEANO es;
 
-	// Verificar la regla de triple repetición
-//*
+	jaque = ES_ESTADO_JUEGO_JAQUE;
+	if (!contarMovLegales())
+	{
+		if (jaque)
+			return juego.colorTurno ? STATUS_FIN_JUEGO_MATE_GANAN_B : STATUS_FIN_JUEGO_MATE_GANAN_N;
+		return STATUS_FIN_JUEGO_TABLAS;
+	}
 
 	// Solicitar tablas según el caso y si vamos perdiendo
 
@@ -68,31 +73,8 @@ int obtEstadoJuego()
 			return STATUS_FIN_JUEGO_TABLAS_REGLA_50MOV;
 		}
 	}
-//*/
 
-	jaque = ES_ESTADO_JUEGO_JAQUE;
-
-	if (!contarMovLegales())
-	{
-		if (jaque)
-		{
-			return juego.colorTurno ? STATUS_FIN_JUEGO_MATE_GANAN_B : STATUS_FIN_JUEGO_MATE_GANAN_N;
-		} else {
-			return STATUS_FIN_JUEGO_TABLAS;
-		}
-
-	} else {
-
-		if (jaque)
-		{
-			return STATUS_FIN_JUEGO_JAQUE;
-		} else {
-			return STATUS_FIN_JUEGO_SIN_ESTATUS;
-		}
-
-	}
-
-	return STATUS_FIN_JUEGO_SIN_ESTATUS;
+	return jaque ? STATUS_FIN_JUEGO_JAQUE : STATUS_FIN_JUEGO_SIN_ESTATUS;
 }
 
 

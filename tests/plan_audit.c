@@ -117,6 +117,17 @@ int main(int argc, char **argv)
 		       juego.reglaCincuentaMov == relojAntes &&
 		       juego.colorTurno == colorAntes);
 	}
+	else if (strcmp(argv[1], "material") == 0)
+	{
+		BOOLEANO insuficiente = FALSO;
+
+		load_fen("7k/5K2/5NN1/8/8/8/8/8 b - - 0 1");
+		ES_INSUFICIENTE_MATERIAL(insuficiente);
+		computadora = NEGRO;
+		printf("insufficient=%d status=%d expected=%d\n",
+		       insuficiente, obtEstadoJuego(),
+		       STATUS_FIN_JUEGO_MATE_GANAN_B);
+	}
 	else
 	{
 		cerrarTablas();

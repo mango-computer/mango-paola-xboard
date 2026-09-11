@@ -337,47 +337,22 @@
 #define		ES_MATADOR_MOV(capa, a)	((juego.historicoMovMatadores[MATADOR_MOV][0][capa]==a) || 		\
 					 (juego.historicoMovMatadores[MATADOR_MOV][1][capa]==a)) 
 
-#define		ES_INSUFICIENTE_MATERIAL(es) 									\
-	uint64 piezasBlancas = juego.blancos ^ juego.tablero[BLANCO][REY]; 					\
-	uint64 piezasNegras  = juego.negros  ^ juego.tablero[NEGRO][REY];					\
-														\
-	if (!juego.tablero[BLANCO][PEON] && !juego.tablero[NEGRO][PEON]) /* No hay peones en el tablero	*/	\
+#define		ES_INSUFICIENTE_MATERIAL(es)									\
+	uint64 mayores_ = juego.tablero[BLANCO][PEON] | juego.tablero[NEGRO][PEON] |			\
+			  juego.tablero[BLANCO][TORRE] | juego.tablero[NEGRO][TORRE] |			\
+			  juego.tablero[BLANCO][DAMA] | juego.tablero[NEGRO][DAMA];			\
+	uint64 caballos_ = juego.tablero[BLANCO][CABALLO] | juego.tablero[NEGRO][CABALLO];		\
+	uint64 alfiles_ = juego.tablero[BLANCO][ALFIL] | juego.tablero[NEGRO][ALFIL];			\
+	uint32 menores_ = cuentaBit(caballos_ | alfiles_);							\
+	es = FALSO;												\
+	if (!mayores_)											\
 	{													\
-		/* material insuficiente */									\
-		if ((juego.material_lado_blanco < VALOR_TORRE) && (juego.material_lado_negro < VALOR_TORRE))	\
-		{												\
+		if (menores_ <= 1)										\
 			es = VERDADERO;										\
-														\
-		} else if (!piezasBlancas && !piezasNegras) /* Rey vs Rey */					\
-		{												\
+		else if (!caballos_ &&									\
+			 (!(alfiles_ & ESCAQUES_BLANCOS) || !(alfiles_ & ESCAQUES_NEGROS)))		\
 			es = VERDADERO;										\
-														\
-		}else if (((piezasBlancas == juego.tablero[BLANCO][CABALLO]) && !piezasNegras) || /* Rey y caballo(s) contra rey */ \
-		    ((piezasNegras == juego.tablero[NEGRO][CABALLO])  && !piezasBlancas))			\
-		{												\
-			es = VERDADERO;										\
-														\
-		} else if (juego.material_lado_blanco < VALOR_TORRE) 						\
-		{												\
-		/* Rey blanco con material insuficiente contra rey con dos alfiles del mismo color */			\
-			if ((cuentaBit(juego.tablero[NEGRO][ALFIL] & ESCAQUES_BLANCOS) == 2) ||			\
-			    (cuentaBit(juego.tablero[NEGRO][ALFIL] & ESCAQUES_NEGROS)  == 2))			\
-			{											\
-				es =  VERDADERO;								\
-			}											\
-		} else if (juego.material_lado_negro < VALOR_TORRE)						\
-		{												\
-			/* Rey negro con material insuficiente contra rey con dos alfiles del mismo color */		\
-			if ((cuentaBit(juego.tablero[BLANCO][ALFIL] & ESCAQUES_BLANCOS) == 2) ||		\
-			    (cuentaBit(juego.tablero[BLANCO][ALFIL] & ESCAQUES_NEGROS)  == 2))			\
-			{											\
-				es = VERDADERO;									\
-			}											\
-		} 												\
-	} else {												\
-														\
-		es = FALSO;											\
-	}	
+	}
 
 #define		ES_REPETICION_TABLERO(es)									\
 	int i_;													\
