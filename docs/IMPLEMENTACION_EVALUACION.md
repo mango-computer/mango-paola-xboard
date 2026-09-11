@@ -46,6 +46,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C09.b | GREEN | `6ce1e70` / `BASE-19` | `artifacts/gates/C09.b/20260911T201302Z` | Material puro cacheado |
 | C10.a | GREEN | `e938b01` / `BASE-20` | `artifacts/gates/C10.a/20260911T201709Z` | Static eval en TT |
 | C10.b | GREEN | `f545ec8` / `BASE-21` | `artifacts/gates/C10.b/20260911T201826Z` | Epochs UCI persistentes |
+| C10.c | GREEN | `9626ca5` / `BASE-22` | `artifacts/gates/C10.c/20260911T202012Z` | Layout 32 B e invalidación |
 
 ## BASE-00
 
@@ -269,6 +270,18 @@ dentro de la banda neutra; 67 tests verdes.
 `position` y `nuevo_juego` conservan las generaciones de caché; únicamente
 `Clear Hash` y el resize explícito las invalidan. El contrato queda
 documentado junto al constructor y protegido por test. Las 68 pruebas pasan.
+
+## C10.c — Layout e invalidación TT
+
+La entrada permanece en 32 bytes y un `Clear Hash` incrementa la generación:
+una sonda posterior no reutiliza ni la cota ni el `evalEstatico` anterior.
+El test confirma `epoch_miss=1 static_unknown=1 size=32`. Gate verde en
+19,938 s; 69 pruebas en la suite completa.
+
+**Hito B alcanzado:** incrementales, pawn/material hash y TT con static eval,
+contexto, persistencia e invalidación quedan estabilizados en un hilo.
+`BASE-22` es la referencia para C11–C13. Comparar contra `BASE-00` y contra
+esta base, sin atribuir a un solo cambio la suma del hito.
 
 ## Regresiones y bloqueos
 
