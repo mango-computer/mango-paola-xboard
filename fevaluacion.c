@@ -46,6 +46,11 @@ int evaluacionTablero(int alfa, int beta)
 {
 
 	int puntaje = 0;
+#ifdef PRUEBAS_HCE
+	llamadasEval++;
+	if (ES_ESTADO_JUEGO_JAQUE)
+		llamadasEvalEnJaque++;
+#endif
 //	BOOLEANO esFinal = ES_ETAPA_FINAL;
 
 //****************************************************************************************************************

@@ -311,6 +311,23 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
 
+    def test_qsearch_does_not_evaluate_while_in_check(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "qsearch_check"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        match = re.search(
+            r"evals_in_check=(\d+) evals=(\d+) score=(-?\d+)",
+            result.stdout,
+        )
+        self.assertIsNotNone(match, result.stdout)
+        self.assertEqual(match.group(1), "0")
+        self.assertGreater(int(match.group(2)), 0)
+
     def test_tt_layout_and_epoch_invalidation(self) -> None:
         result = subprocess.run(
             [str(self.audit), "tt_epoch"],

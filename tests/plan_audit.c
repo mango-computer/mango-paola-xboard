@@ -414,6 +414,20 @@ int main(int argc, char **argv)
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
 	}
+	else if (strcmp(argv[1], "qsearch_check") == 0)
+	{
+		int score;
+
+		load_fen("8/8/8/8/8/k7/r7/K7 w - - 0 1");
+		limpiarAntesDeBusqueda();
+		tiempoVencido = FALSO;
+		contadorDescendente = INT_MAX;
+		score = busquedadTranquilidad(0, -INFINITO, INFINITO);
+		printf("evals_in_check=%llu evals=%llu score=%d\n",
+		       (unsigned long long)llamadasEvalEnJaque,
+		       (unsigned long long)llamadasEval,
+		       score);
+	}
 	else if (strcmp(argv[1], "tt_epoch") == 0)
 	{
 		int flag = 0;

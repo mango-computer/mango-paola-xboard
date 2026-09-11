@@ -66,6 +66,8 @@ void limpiarAntesDeBusqueda()
 #ifdef PRUEBAS_HCE
 	contadorPodasEET	= 0;
 	contadorExtensionesEET	= 0;
+	llamadasEval		= 0;
+	llamadasEvalEnJaque	= 0;
 #endif
 	nodoRaiz		= 0;
 	memset(juego.historicoMovMatadores, -INFINITO, largoResetMatadores); 

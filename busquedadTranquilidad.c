@@ -79,16 +79,14 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 	if (capa >= MAX_CAPAS_QBUSQUEDAD) 	return evaluacionTablero(alfa, beta);	
 
 	estoyJaque = ES_ESTADO_JUEGO_JAQUE;
-	Vparcial   = evaluacionTablero(alfa, beta);
+	Vparcial = INT_MAX;
 
-	// Si le toca al negro, se comprueba que el rey negro esté en jaque, o viceversa
 	if (estoyJaque)
 	{
 		juego.Buffer_MOV_INDEXCAPAS[capa+1] = generarTodosMov(juego.Buffer_MOV_INDEXCAPAS[capa]);
 		ponderarMovimientos(capa, &h_mov, 2);
-
-
 	} else {
+		Vparcial = evaluacionTablero(alfa, beta);
 
 		if (Vparcial >= beta) return Vparcial;//beta;
 

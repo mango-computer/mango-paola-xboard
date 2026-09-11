@@ -156,6 +156,8 @@ int 			QcontadorNodos					= 0;
 #ifdef PRUEBAS_HCE
 int			contadorPodasEET				= 0;
 int			contadorExtensionesEET				= 0;
+uint64			llamadasEval					= 0;
+uint64			llamadasEvalEnJaque				= 0;
 uint64			llamadasEETCompleto				= 0;
 uint64			llamadasEETUmbral				= 0;
 uint64			ramasEETCompleto				= 0;
