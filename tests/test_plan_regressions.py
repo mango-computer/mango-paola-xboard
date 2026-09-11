@@ -259,6 +259,20 @@ class PlanRegressionTests(unittest.TestCase):
             result.stdout, r"clock_miss=1 history_miss=1 size=(24|32)"
         )
 
+    def test_tt_mate_score_normalization_is_symmetric(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "tt_mate"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn(
+            "positive_delta=4 negative_delta=-4 ordinary=123",
+            result.stdout,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

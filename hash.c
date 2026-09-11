@@ -205,6 +205,24 @@ void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior)
 
 //**************************************************************************
 
+static int puntajeHashAlGuardar(int valor, int capa)
+{
+	if (valor > VALOR_ALTO)
+		return valor + capa;
+	if (valor < VALOR_BAJO)
+		return valor - capa;
+	return valor;
+}
+
+static int puntajeHashAlLeer(int valor, int capa)
+{
+	if (valor > VALOR_ALTO)
+		return valor - capa;
+	if (valor < VALOR_BAJO)
+		return valor + capa;
+	return valor;
+}
+
 void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOVIMIENTO mov)
 {
 	if (!tabla_hash || !entradasTablaHash)
@@ -219,15 +237,7 @@ void agregarMovTablaHash(int profundidad, int capa, int valor, int banderas, MOV
 	    (ptabla->enroqueNegro == juego.ENROQUEN))
 		return;
 
-	if ((valor > VALOR_ALTO) || (valor < VALOR_BAJO))
-	{
-		if (valor > 0)
-		{
-			valor += capa;
-		} else {
-			valor -= capa;
-		}
-	}
+	valor = puntajeHashAlGuardar(valor, capa);
 
 	ptabla->id 		= (uint64)juego.llaveHash;
 	ptabla->profundidad	= profundidad;
@@ -263,15 +273,7 @@ int verificarTablaHash(int alfa, int beta, int capa, int profundidad, int *bande
 		flag	 	= ptabla->banderas;
 		*mov		= ptabla->mov;
 
-		if ((valor > VALOR_ALTO) || (valor < VALOR_BAJO))
-		{
-			if (valor > 0)
-			{
-				valor -= capa;
-			} else {
-				valor += capa;
-			}
-		}
+		valor = puntajeHashAlLeer(valor, capa);
 
 		if ((ptabla->profundidad >= profundidad-REDUCCION_MOV_NULL) && (valor < beta) && (flag == BANDERA_HASH_ARRIBA))
 		{

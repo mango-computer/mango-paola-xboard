@@ -319,6 +319,20 @@ int main(int argc, char **argv)
 		       flag == BANDERA_HASH_VACIO,
 		       sizeof(REGISTRO_TABLA_HASH));
 	}
+	else if (strcmp(argv[1], "tt_mate") == 0)
+	{
+		int positive = VALOR_JAQUE_MATE - 10;
+		int negative = -VALOR_JAQUE_MATE + 10;
+		int positiveRead =
+			puntajeHashAlLeer(puntajeHashAlGuardar(positive, 7), 3);
+		int negativeRead =
+			puntajeHashAlLeer(puntajeHashAlGuardar(negative, 7), 3);
+		int ordinary =
+			puntajeHashAlLeer(puntajeHashAlGuardar(123, 7), 3);
+
+		printf("positive_delta=%d negative_delta=%d ordinary=%d\n",
+		       positiveRead - positive, negativeRead - negative, ordinary);
+	}
 	else
 	{
 		cerrarTablas();
