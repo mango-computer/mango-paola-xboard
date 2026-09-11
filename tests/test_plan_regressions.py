@@ -168,6 +168,17 @@ class PlanRegressionTests(unittest.TestCase):
         self.assertNotEqual(match.group(1), match.group(2))
         self.assertNotEqual(match.group(3), "0")
 
+    def test_lazy_evaluation_is_disabled_near_rule50_draw(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "lazy_rule50"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"full=-?\d+ narrow=-?\d+ equal=1")
+
 
 if __name__ == "__main__":
     unittest.main()

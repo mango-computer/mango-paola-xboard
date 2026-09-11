@@ -199,6 +199,19 @@ int main(int argc, char **argv)
 		       (unsigned long long)
 		       (mapaPosAtacadas[BLANCO] | mapaPosAtacadas[NEGRO]));
 	}
+	else if (strcmp(argv[1], "lazy_rule50") == 0)
+	{
+		HASH_EVAL *saved = hash_eval;
+		int full, narrow;
+
+		load_fen("7k/8/8/8/8/8/8/KQ6 w - - 99 1");
+		hash_eval = NULL;
+		full = evaluacionTablero(-INFINITO, INFINITO);
+		narrow = evaluacionTablero(55, 56);
+		hash_eval = saved;
+		printf("full=%d narrow=%d equal=%d\n",
+		       full, narrow, full == narrow);
+	}
 	else
 	{
 		cerrarTablas();
