@@ -68,7 +68,7 @@ def block_descendants(registry: dict, failed_id: str) -> None:
     while changed:
         changed = False
         for change_id, item in registry["changes"].items():
-            if item["status"] in {"GREEN", "PROVISIONAL", "RED"}:
+            if item["status"] in {"GREEN", "PROVISIONAL", "RED", "BLOCKED"}:
                 continue
             if any(dependency in blocked for dependency in item["requires"]):
                 item["status"] = "BLOCKED"

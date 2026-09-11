@@ -39,6 +39,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C06.c | GREEN | `aaa7d2b` / `BASE-14` | `artifacts/gates/C06.c/20260911T194607Z` | Impresión sin OOB |
 | C07.a | GREEN tras cadena | `592aa48`, base `BASE-14` | `artifacts/gates/C07.a/20260911T194734Z` | Aceptado con C07.b |
 | C07.b | GREEN | `2fa1f7c` / `BASE-15` | `artifacts/gates/C07.b/20260911T194844Z` | Banderas aisladas; promover |
+| C07.c | GREEN | `1958dc2` / `BASE-16` | `artifacts/gates/C07.c/20260911T200207Z` | Contexto validado; promover |
 
 ## BASE-00
 
@@ -197,6 +198,20 @@ ya no cae accidentalmente en las cotas superior/inferior. La cadena conserva
 la reducción de nodos (`-15,922 %`) y queda en `+1,259 %` de tiempo, dentro de
 ruido; el lote de evaluación mejora `0,779 %`. C07.a/b se aceptan como
 `BASE-15`.
+
+## C07.c — Contexto TT
+
+Cada entrada conserva reloj de cincuenta movimientos y las marcas históricas
+de enroque que aún afectan la evaluación. Una clave de tablero igual con
+contexto distinto ya no produce hit. El registro crece a 32 bytes: las
+reservas de 64 MiB pasan a aprovechar exactamente 64 MiB y el fallback de
+6 MiB reserva 4 MiB por redondeo a potencia de dos. A profundidad 7 el tiempo
+queda estable (`43,424 → 43,421 ms`), con `+12,909 %` de nodos necesarios para
+eliminar hits semánticamente inválidos.
+
+La primera ejecución detectó dos expectativas de memoria antiguas; se
+actualizaron al nuevo layout y las 63 pruebas pasaron. Además se corrigió un
+bucle del orquestador que remarcaba descendientes ya bloqueados.
 
 ## Regresiones y bloqueos
 
