@@ -31,6 +31,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C03.c | GREEN | `61cf97a` / `BASE-06` | `artifacts/gates/C03.c/20260911T193415Z` | Cadena C03 neutral; promover |
 | C04.a | GREEN | `3922475` / `BASE-07` | `artifacts/gates/C04.a/20260911T193554Z` | Coronación visible; promover |
 | C04.b | GREEN | `cb16fe3` / `BASE-08` | `artifacts/gates/C04.b/20260911T193733Z` | Finales completos; promover |
+| C05.a | GREEN | `2291494` / `BASE-09` | `artifacts/gates/C05.a/20260911T193859Z` | Lazy acotado; promover |
 
 ## BASE-00
 
@@ -129,6 +130,13 @@ finales no especializados. Dos posiciones Q contra Q con la dama en h1/h4
 ahora recorren la evaluación completa y producen mapas no vacíos. La búsqueda
 corta mantuvo árbol y tiempo; el lote pasó de 153,802 ms a 150,500 ms
 (`-2,147 %`). Gate verde.
+
+## C05.a — Lazy y regla de cincuenta
+
+Ambos cortes lazy se desactivan cuando el reloj supera 80. En KQ contra K con
+reloj 99, una ventana estrecha coincide con la evaluación completa. Frente a
+`BASE-08`, árbol idéntico, tiempo de búsqueda `-0,94 %` y lote de evaluación
+`-0,84 %`; 55 tests verdes.
 
 ## Regresiones y bloqueos
 
