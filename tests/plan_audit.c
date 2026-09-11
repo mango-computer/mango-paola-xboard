@@ -271,6 +271,18 @@ int main(int argc, char **argv)
 		}
 		printf("bitops_samples=100000\n");
 	}
+	else if (strcmp(argv[1], "pin_clear") == 0)
+	{
+		unsigned index, dirty = 0;
+
+		for (index = 0; index < 64; index++)
+			mapaRayosClavada[index] = ~(uint64)0;
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		full_uncached();
+		for (index = 0; index < 64; index++)
+			dirty += mapaRayosClavada[index] != 0;
+		printf("dirty_pin_rays=%u\n", dirty);
+	}
 	else
 	{
 		cerrarTablas();

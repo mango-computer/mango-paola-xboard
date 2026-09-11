@@ -213,6 +213,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("bitops_samples=100000", result.stdout)
 
+    def test_full_evaluation_clears_all_pin_rays(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "pin_clear"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("dirty_pin_rays=0", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
