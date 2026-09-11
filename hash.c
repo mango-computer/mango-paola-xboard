@@ -40,8 +40,14 @@
 
 #ifdef MANGO_SMP
 static pthread_mutex_t mutexTablaHash = PTHREAD_MUTEX_INITIALIZER;
-#define BLOQUEAR_TT() pthread_mutex_lock(&mutexTablaHash)
-#define DESBLOQUEAR_TT() pthread_mutex_unlock(&mutexTablaHash)
+#define BLOQUEAR_TT() do { \
+	if (esBusquedaParalela) \
+		pthread_mutex_lock(&mutexTablaHash); \
+} while (0)
+#define DESBLOQUEAR_TT() do { \
+	if (esBusquedaParalela) \
+		pthread_mutex_unlock(&mutexTablaHash); \
+} while (0)
 #else
 #define BLOQUEAR_TT() ((void)0)
 #define DESBLOQUEAR_TT() ((void)0)
