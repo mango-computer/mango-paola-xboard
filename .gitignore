@@ -20,3 +20,6 @@ tests/eval_compare/eval-benchmark.json
 
 # Archivo suelto, no el libro PGN del repo
 .pgn
+
+# Evidencias locales de gates (resúmenes versionados en docs/)
+artifacts/gates/
