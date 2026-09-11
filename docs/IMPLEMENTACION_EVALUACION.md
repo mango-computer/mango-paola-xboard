@@ -25,6 +25,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C01.b | GREEN | `b0dd5e3` / `BASE-02` | `artifacts/gates/C01.b/20260911T185232Z` | Reloj unificado; promover |
 | C01.c | GREEN | `5ad6c24` / `BASE-03` | `artifacts/gates/C01.c/20260911T185347Z` | FEN limpia; promover |
 | C01.d | GREEN | `83ded49` / `BASE-04` | `artifacts/gates/C01.d/20260911T185511Z` | Null reversible; promover |
+| C02 | GREEN | `53caefd` / `BASE-05` | `artifacts/gates/C02/20260911T185648Z` | Terminales corregidos; promover |
 
 ## BASE-00
 
@@ -71,6 +72,13 @@ Al hacerlo elimina EP y su componente Zobrist, crea una barrera conservadora
 de repetición mediante reloj cero y nunca almacena una jugada ajena en el corte
 null. El estado se restauró bit a bit en el caso dirigido; regresión completa
 verde en 21,796 s.
+
+## C02 — Material muerto y prioridad de mate
+
+La detección automática quedó limitada a rey solo, una pieza menor total o
+alfiles exclusivamente del mismo color de casilla. KNN contra K ya no se marca
+como material muerto. `obtEstadoJuego()` comprueba mate/ahogado antes de tablas:
+el fixture KNNK devuelve mate blanco (`status=2`). Gate verde en 21,192 s.
 
 ## Regresiones y bloqueos
 
