@@ -176,8 +176,8 @@ class HceRegressionTests(unittest.TestCase):
         self.assertTrue(probe["pinsW"] & (1 << 12))
         self.assertFalse(probe["pieceEffective"] & (1 << 11))
         self.assertFalse(probe["pieceEffective"] & (1 << 13))
-        self.assertFalse(probe["attacksW"] & (1 << 11))
-        self.assertFalse(probe["attacksW"] & (1 << 13))
+        # The aggregate map also includes the king's legitimate d2/f2 attacks.
+        # The piece-specific fields above are the pin-ray oracle.
         self.assertTrue(probe["pseudoW"] & (1 << 11))
         self.assertTrue(probe["pseudoW"] & (1 << 13))
         self.assertTrue(probe["pieceEffective"] & (1 << 60))

@@ -117,6 +117,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertIn("raw=1 map=1 threat_black=0", result.stdout)
 
+    def test_king_attacks_defend_friendly_pieces(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "king_defense"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("raw=1 map=1 threat_black=0", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

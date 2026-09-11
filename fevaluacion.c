@@ -234,6 +234,12 @@ int evaluacionTablero(int alfa, int beta)
 
 	//Peones
 	registrarAtaquesPeonesEval();
+	for (int color = BLANCO; color <= NEGRO; color++)
+	{
+		uint64 ataquesRey = mascaraRey[escaqueRey[color]];
+		mapaPosAtacadasDoble[color] |= mapaPosAtacadas[color] & ataquesRey;
+		mapaPosAtacadas[color] |= ataquesRey;
+	}
 	puntajeMAntesPeones[BLANCO] = puntaje_m[BLANCO];
 	puntajeMAntesPeones[NEGRO] = puntaje_m[NEGRO];
 	puntajeFAntesPeones[BLANCO] = puntaje_f[BLANCO];

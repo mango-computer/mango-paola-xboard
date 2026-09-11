@@ -148,6 +148,15 @@ int main(int argc, char **argv)
 		       !!(mapaPosAtacadas[BLANCO] & BITSET[27]),
 		       puntajeAmenazas(NEGRO));
 	}
+	else if (strcmp(argv[1], "king_defense") == 0)
+	{
+		load_fen("7k/7p/8/8/r2R4/2K5/P7/8 w - - 0 1");
+		full_uncached();
+		printf("raw=%d map=%d threat_black=%d\n",
+		       !!(mascaraRey[18] & BITSET[27]),
+		       !!(mapaPosAtacadas[BLANCO] & BITSET[27]),
+		       puntajeAmenazas(NEGRO));
+	}
 	else
 	{
 		cerrarTablas();
