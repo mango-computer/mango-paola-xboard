@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_commit": "43ed23bfd6aa5df1e5d14a406d71a9fc35693859",
-  "current_base": "BASE-14",
+  "current_base": "BASE-15",
   "policy": {
     "timeout_seconds": 600,
     "neutral_percent": 2.0,
@@ -177,16 +177,20 @@
       "requires": [
         "C05.c"
       ],
-      "status": "PROVISIONAL",
+      "status": "GREEN",
       "last_commit": "592aa489f31b41d56e532fbacefc53eb6d18f3cd",
       "last_evidence": "artifacts/gates/C07.a/20260911T194734Z",
-      "reason": "Regresi\u00f3n menor de 2.197 %; se evaluar\u00e1 con dependientes."
+      "reason": "Aceptado al completar C07.b: cadena temporal dentro de ruido y menos nodos."
     },
     "C07.b": {
       "requires": [
         "C07.a"
       ],
-      "status": "PENDING"
+      "status": "GREEN",
+      "last_commit": "2fa1f7c961485e48c50e66cbec8b6247d1f98a77",
+      "last_evidence": "artifacts/gates/C07.b/20260911T194844Z",
+      "reason": "Correcci\u00f3n v\u00e1lida dentro de la banda neutra (1.259 %).",
+      "promoted_base": "BASE-15"
     },
     "C07.c": {
       "requires": [
