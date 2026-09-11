@@ -40,6 +40,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C07.a | GREEN tras cadena | `592aa48`, base `BASE-14` | `artifacts/gates/C07.a/20260911T194734Z` | Aceptado con C07.b |
 | C07.b | GREEN | `2fa1f7c` / `BASE-15` | `artifacts/gates/C07.b/20260911T194844Z` | Banderas aisladas; promover |
 | C07.c | GREEN | `1958dc2` / `BASE-16` | `artifacts/gates/C07.c/20260911T200207Z` | Contexto validado; promover |
+| C07.d | GREEN | `6be579b` / `BASE-17` | `artifacts/gates/C07.d/20260911T200320Z` | Mate simétrico; cerrar core |
 
 ## BASE-00
 
@@ -212,6 +213,15 @@ eliminar hits semánticamente inválidos.
 La primera ejecución detectó dos expectativas de memoria antiguas; se
 actualizaron al nuevo layout y las 63 pruebas pasaron. Además se corrigió un
 bucle del orquestador que remarcaba descendientes ya bloqueados.
+
+## C07.d — Normalización de mate
+
+El ajuste al guardar/leer TT está centralizado en dos funciones simétricas.
+Guardar en ply 7 y leer en ply 3 produce deltas `+4/-4` para ambos signos y
+deja 123 sin cambio. Las 64 pruebas pasan.
+
+**Core C06–C07 cerrado:** primitivas de bits equivalentes, límites de memoria
+verificados y TT con profundidad, banderas, contexto y mate explícitos.
 
 ## Regresiones y bloqueos
 
