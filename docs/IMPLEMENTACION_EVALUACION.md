@@ -29,6 +29,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C03.a | GREEN tras cadena | `63ad082`, base `BASE-05` | `artifacts/gates/C03.a/20260911T185843Z` | Aceptado con C03.c |
 | C03.b | GREEN tras cadena | `f71ee2b`, base `BASE-05` | `artifacts/gates/C03.b/20260911T193245Z` | Aceptado con C03.c |
 | C03.c | GREEN | `61cf97a` / `BASE-06` | `artifacts/gates/C03.c/20260911T193415Z` | Cadena C03 neutral; promover |
+| C04.a | GREEN | `3922475` / `BASE-07` | `artifacts/gates/C04.a/20260911T193554Z` | Coronación visible; promover |
 
 ## BASE-00
 
@@ -112,6 +113,13 @@ propio bloqueador está en el rayo raw pero no suma movilidad. En la medición
 de cierre, la cadena completa quedó en 159,362 ms frente a 159,208 ms
 (`+0,097 %`), dentro del ruido, con 53 tests verdes. C03.a–C03.c se promueven
 juntas como `BASE-06`.
+
+## C04.a — Camino de coronación
+
+El camino dinámico del pasado usa el rayo delantero completo, incluida la
+casilla de coronación. El cambio de control de a8 produce exactamente delta
+MG 3 / EG 8. Frente a `BASE-06`, el lote pasó de 157,729 ms a 149,355 ms
+(`-5,309 %`) con árbol de búsqueda idéntico. Regresión completa verde.
 
 ## Regresiones y bloqueos
 
