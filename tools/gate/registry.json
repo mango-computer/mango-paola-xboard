@@ -313,6 +313,15 @@
       "last_evidence": "",
       "reason": "Shelter por derechos o columna real; match 1000 pendiente."
     },
+    "C12.d": {
+      "requires": [
+        "C12"
+      ],
+      "status": "PENDING",
+      "last_commit": "",
+      "last_evidence": "",
+      "reason": "Pareja de alfiles de colores opuestos; match 1000 pendiente."
+    },
     "C13.a": {
       "requires": [
         "C10.c"

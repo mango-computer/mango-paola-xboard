@@ -170,6 +170,7 @@ uint64			cortesEETUmbral				= 0;
 uint64			llamadasEETPOS					= 0;
 int			profundidadMaxEET				= 0;
 int			auditShelterPivote[2]				= {0, 0};
+int			auditParejaAlfiles[2]				= {0, 0};
 #endif
 int 			alfaGlobal 					= 0;
 int 			betaGlobal 					= 0;
