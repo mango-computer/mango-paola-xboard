@@ -165,7 +165,7 @@ typedef struct
 typedef struct
 {
 	uint64		id;
-	uint8		profundidad;
+	uint16		profundidad;
 	uint16		generacion;
 	int		puntaje;
 	MOVIMIENTO	mov;

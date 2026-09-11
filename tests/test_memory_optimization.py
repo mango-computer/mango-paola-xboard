@@ -125,6 +125,15 @@ class MemoryOptimizationTests(unittest.TestCase):
             ROOT / "hash.c"
         ).read_text(encoding="utf-8"))
 
+    def test_transposition_depth_preserves_tablebase_sentinel(self) -> None:
+        types = (ROOT / "tipoDatos.h").read_text(encoding="utf-8")
+        search = (ROOT / "busquedad.c").read_text(encoding="utf-8")
+        self.assertIn("uint16\t\tprofundidad;", types)
+        self.assertIn(
+            "agregarMovTablaHash(256, capa, alfa, BANDERA_HASH_EXACTO, 0)",
+            search,
+        )
+
     def test_current_book_is_loaded_completely_in_ram(self) -> None:
         result = self.run_stats(BOOK, 64)
         self.assertEqual(result.stdout.strip(), "3680 58880")
