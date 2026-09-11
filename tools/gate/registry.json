@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_commit": "43ed23bfd6aa5df1e5d14a406d71a9fc35693859",
-  "current_base": "BASE-07",
+  "current_base": "BASE-08",
   "policy": {
     "timeout_seconds": 600,
     "neutral_percent": 2.0,
@@ -107,7 +107,11 @@
       "requires": [
         "C04.a"
       ],
-      "status": "PENDING"
+      "status": "GREEN",
+      "last_commit": "cb16fe367b9d7be01a68e335b21f4f7c9dd47572",
+      "last_evidence": "artifacts/gates/C04.b/20260911T193733Z",
+      "reason": "Mejora de 2.147 %.",
+      "promoted_base": "BASE-08"
     },
     "C05.a": {
       "requires": [

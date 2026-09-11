@@ -30,6 +30,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C03.b | GREEN tras cadena | `f71ee2b`, base `BASE-05` | `artifacts/gates/C03.b/20260911T193245Z` | Aceptado con C03.c |
 | C03.c | GREEN | `61cf97a` / `BASE-06` | `artifacts/gates/C03.c/20260911T193415Z` | Cadena C03 neutral; promover |
 | C04.a | GREEN | `3922475` / `BASE-07` | `artifacts/gates/C04.a/20260911T193554Z` | Coronación visible; promover |
+| C04.b | GREEN | `cb16fe3` / `BASE-08` | `artifacts/gates/C04.b/20260911T193733Z` | Finales completos; promover |
 
 ## BASE-00
 
@@ -120,6 +121,14 @@ El camino dinámico del pasado usa el rayo delantero completo, incluida la
 casilla de coronación. El cambio de control de a8 produce exactamente delta
 MG 3 / EG 8. Frente a `BASE-06`, el lote pasó de 157,729 ms a 149,355 ms
 (`-5,309 %`) con árbol de búsqueda idéntico. Regresión completa verde.
+
+## C04.b — Finales sin peones
+
+Se retiró el retorno general que evitaba movilidad, ataques y amenazas en
+finales no especializados. Dos posiciones Q contra Q con la dama en h1/h4
+ahora recorren la evaluación completa y producen mapas no vacíos. La búsqueda
+corta mantuvo árbol y tiempo; el lote pasó de 153,802 ms a 150,500 ms
+(`-2,147 %`). Gate verde.
 
 ## Regresiones y bloqueos
 
