@@ -41,6 +41,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C07.b | GREEN | `2fa1f7c` / `BASE-15` | `artifacts/gates/C07.b/20260911T194844Z` | Banderas aisladas; promover |
 | C07.c | GREEN | `1958dc2` / `BASE-16` | `artifacts/gates/C07.c/20260911T200207Z` | Contexto validado; promover |
 | C07.d | GREEN | `6be579b` / `BASE-17` | `artifacts/gates/C07.d/20260911T200320Z` | Mate simétrico; cerrar core |
+| C08 | PROVISIONAL | `ffd546a`, base `BASE-17` | `artifacts/gates/C08/20260911T200805Z` | Mantener para C09 |
 
 ## BASE-00
 
@@ -223,6 +224,18 @@ deja 123 sin cambio. Las 64 pruebas pasan.
 **Core C06–C07 cerrado:** primitivas de bits equivalentes, límites de memoria
 verificados y TT con profundidad, banderas, contexto y mate explícitos.
 
+## C08 — Estado incremental de evaluación
+
+`ESTADO_EVALUACION` mantiene cuentas por pieza/color, fase raw, casillas de rey
+y PST MG/EG. Make aplica deltas para quietas, capturas, EP, promociones y
+enroques; undo restaura el snapshot exacto; FEN/inicio reconstruyen la
+referencia. Más de 50 transiciones dirigidas coinciden campo a campo con una
+reconstrucción y pasan 65 tests.
+
+El árbol permanece idéntico, pero el gate corto muestra `+2,190 %` de búsqueda
+y `+4,151 %` de lote. Es una regresión menor y esperable antes de reutilizar
+material/shelter; C08 queda `PROVISIONAL` para C09.
+
 ## Regresiones y bloqueos
 
 - C03.a y C03.b mostraron provisionalmente `+2,974 %` y `+4,942 %`.
@@ -230,3 +243,5 @@ verificados y TT con profundidad, banderas, contexto y mate explícitos.
   la corrección semántica completa.
 - C07.a fue provisional con `+2,197 %`; C07.b cerró la cadena en `+1,259 %`
   y mantuvo `-15,922 %` de nodos. Se aceptó.
+- C08: `+4,151 %` en lote y `+2,190 %` en búsqueda, sin cambio de nodos. Se
+  conserva provisionalmente por dependencia directa de las cachés C09.

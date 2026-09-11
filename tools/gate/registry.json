@@ -218,7 +218,10 @@
         "C06.c",
         "C07.d"
       ],
-      "status": "PENDING"
+      "status": "PROVISIONAL",
+      "last_commit": "ffd546a458b82c2bb595d27540bf43829077aa6f",
+      "last_evidence": "artifacts/gates/C08/20260911T200805Z",
+      "reason": "Regresi\u00f3n menor de 4.152 %; se evaluar\u00e1 con dependientes."
     },
     "C09.a": {
       "requires": [
