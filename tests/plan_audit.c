@@ -467,6 +467,19 @@ int main(int argc, char **argv)
 		full_uncached();
 		printf("candidate=%d\n", !!(peonesCandidatos[BLANCO] & BITSET[26]));
 	}
+	else if (strcmp(argv[1], "isolated_doubled") == 0)
+	{
+		auditAisladosAplicados = 0;
+		auditDobladosAplicados = 0;
+		load_fen("4k3/8/8/8/P7/P7/8/4K3 w - - 0 1");
+		limpiarTablasHash();
+		full_uncached();
+		printf("isolated=%d doubled=%d aislado_mg=%d doblado_mg=%d\n",
+		       auditAisladosAplicados > 0,
+		       auditDobladosAplicados > 0,
+		       peon_aislado[MEDIO_JUEGO],
+		       peon_doblado[MEDIO_JUEGO]);
+	}
 	else if (strcmp(argv[1], "qsearch_static") == 0)
 	{
 		HASH_EVAL *saved = hash_eval;

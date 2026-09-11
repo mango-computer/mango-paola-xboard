@@ -973,11 +973,11 @@ void evalPeones(COLOR colorEval)
 		
 			peonesDebiles[colorEval] |= BITSET[escaqueOrigen];
 			esAislado 		  = VERDADERO;
+#ifdef PRUEBAS_HCE
+			auditAisladosAplicados++;
+#endif
 
 		} else {
-			/* Familia BASE-00: aislado y doblado no se acumulan.
-			   El descuento de doblados vive solo en esta rama. */
-
 			//Peones Debiles
 			ataque  = 0;
 			defensa = 0;
@@ -1009,20 +1009,22 @@ void evalPeones(COLOR colorEval)
 				}
 			} 
 
-			//Peones Dobles
-			if ((juego.tablero[colorEval][PEON] ^ BITSET[escaqueOrigen]) & FILEMASK[escaqueOrigen])
-			{
-				//DESCUENTO_PEONES_DOBLADOS[escaqueOrigen];
-				puntajeEval_m[colorEval] -= peon_doblado[MEDIO_JUEGO]; 
-				puntajeEval_f[colorEval] -= peon_doblado[FINAL_JUEGO]; 
-			}
-
 			//Peon Duo
 			if (MASCARA_PEON_CC[escaqueOrigen] & juego.tablero[colorEval][PEON])
 			{
 				puntajeEval_m[colorEval] += peon_duo[MEDIO_JUEGO]; 
 				puntajeEval_f[colorEval] += peon_duo[FINAL_JUEGO];
 			} 
+		}
+
+		// Peones doblados: también cuando el peón es aislado.
+		if ((juego.tablero[colorEval][PEON] ^ BITSET[escaqueOrigen]) & FILEMASK[escaqueOrigen])
+		{
+			puntajeEval_m[colorEval] -= peon_doblado[MEDIO_JUEGO];
+			puntajeEval_f[colorEval] -= peon_doblado[FINAL_JUEGO];
+#ifdef PRUEBAS_HCE
+			auditDobladosAplicados++;
+#endif
 		}
 
 		//Comprobar si es peon abierto

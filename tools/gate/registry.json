@@ -304,6 +304,15 @@
       "reason": "Todas las comprobaciones bloqueantes pasaron.",
       "promoted_base": "BASE-25"
     },
+    "C12.b": {
+      "requires": [
+        "C12"
+      ],
+      "status": "PENDING",
+      "last_commit": "",
+      "last_evidence": "",
+      "reason": "Aislado y doblado acumulados; match 1000 pendiente."
+    },
     "C13.a": {
       "requires": [
         "C10.c"
