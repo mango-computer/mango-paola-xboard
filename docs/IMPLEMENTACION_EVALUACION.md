@@ -47,6 +47,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C10.a | GREEN | `e938b01` / `BASE-20` | `artifacts/gates/C10.a/20260911T201709Z` | Static eval en TT |
 | C10.b | GREEN | `f545ec8` / `BASE-21` | `artifacts/gates/C10.b/20260911T201826Z` | Epochs UCI persistentes |
 | C10.c | GREEN | `9626ca5` / `BASE-22` | `artifacts/gates/C10.c/20260911T202012Z` | Layout 32 B e invalidación |
+| C11.a | GREEN | `26b6c6d` / `BASE-23` | `artifacts/gates/C11.a/20260911T202459Z` | Quiescencia sin eval en jaque |
 
 ## BASE-00
 
@@ -282,6 +283,14 @@ El test confirma `epoch_miss=1 static_unknown=1 size=32`. Gate verde en
 contexto, persistencia e invalidación quedan estabilizados en un hilo.
 `BASE-22` es la referencia para C11–C13. Comparar contra `BASE-00` y contra
 esta base, sin atribuir a un solo cambio la suma del hito.
+
+## C11.a — Quiescencia sin evaluación en jaque
+
+`busquedadTranquilidad()` ya no llama al evaluador antes de separar la rama
+de jaque. El stand-pat y el delta pruning quedan solo en nodos sin jaque; en
+jaque se generan evasiones y la TT guarda `INT_MAX` como static eval. El
+fixture con una sola evasión reporta `evals_in_check=0`. Gate verde en
+22,950 s.
 
 ## Regresiones y bloqueos
 
