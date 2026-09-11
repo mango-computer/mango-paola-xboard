@@ -175,16 +175,16 @@ int main(int argc, char **argv)
 		load_fen("7k/P7/8/8/8/8/8/K7 w - - 0 1");
 		full_uncached();
 		mapaPosAtacadas[NEGRO] = 0;
-		puntaje_m[BLANCO] = puntaje_f[BLANCO] = 0;
+		puntajeEval_m[BLANCO] = puntajeEval_f[BLANCO] = 0;
 		evalPeonesPasados(BLANCO);
-		safeMg = puntaje_m[BLANCO];
-		safeEg = puntaje_f[BLANCO];
+		safeMg = puntajeEval_m[BLANCO];
+		safeEg = puntajeEval_f[BLANCO];
 		mapaPosAtacadas[NEGRO] = BITSET[56];
-		puntaje_m[BLANCO] = puntaje_f[BLANCO] = 0;
+		puntajeEval_m[BLANCO] = puntajeEval_f[BLANCO] = 0;
 		evalPeonesPasados(BLANCO);
 		printf("promotion_delta_mg=%d promotion_delta_eg=%d\n",
-		       safeMg - puntaje_m[BLANCO],
-		       safeEg - puntaje_f[BLANCO]);
+		       safeMg - puntajeEval_m[BLANCO],
+		       safeEg - puntajeEval_f[BLANCO]);
 	}
 	else if (strcmp(argv[1], "pawnless") == 0)
 	{
@@ -413,6 +413,32 @@ int main(int argc, char **argv)
 		printf("same_score=%d material_hits=%llu\n",
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
+	}
+	else if (strcmp(argv[1], "thread_eval") == 0)
+	{
+		static const char *positions[] = {
+			"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+			"r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1",
+			"7k/8/8/8/8/8/8/KQ6 w - - 0 1"
+		};
+		int first[3];
+		int second[3];
+		unsigned index;
+		int same = 1;
+
+		for (index = 0; index < 3; index++)
+		{
+			hiloActual = &hilosBusqueda[0];
+			load_fen(positions[index]);
+			first[index] = full_uncached();
+			hilosBusqueda[1] = hilosBusqueda[0];
+			hiloActual = &hilosBusqueda[1];
+			second[index] = full_uncached();
+			same = same && first[index] == second[index];
+		}
+		hiloActual = &hilosBusqueda[0];
+		printf("same=%d workers=2 scores=%d,%d,%d\n",
+		       same, first[0], first[1], first[2]);
 	}
 	else if (strcmp(argv[1], "candidate_local") == 0)
 	{

@@ -311,6 +311,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
 
+    def test_thread_state_eval_is_worker_independent(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "thread_eval"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertRegex(result.stdout, r"same=1 workers=2 scores=-?\d+,-?\d+,-?\d+")
+
     def test_candidate_pawn_uses_local_attack_state(self) -> None:
         result = subprocess.run(
             [str(self.audit), "candidate_local"],

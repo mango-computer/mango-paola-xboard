@@ -28,6 +28,10 @@
 #ifndef TIPO_DATOS_H
 #define TIPO_DATOS_H
 
+#ifndef MAX_HILOS
+#define MAX_HILOS 4
+#endif
+
 typedef unsigned char 	uint8;
 typedef signed   char 	sint8;
 typedef unsigned short 	uint16;
@@ -129,6 +133,58 @@ typedef struct
 	uint32 		heuristicaBlanca[64][64];
 	uint32 		heuristicaNegra[64][64];
 } BITTABLERO;
+
+typedef BITTABLERO Position;
+
+typedef struct
+{
+	int nPeones[2];
+	int nDama[2];
+	int nCaballos[2];
+	int nTorres[2];
+	int nAlfil[2];
+	int nPiezasSP[2];
+	int nPiezas[2];
+	int totalPiezasSP;
+	int totalPeones;
+	int totalPiezas;
+	int materialTotal;
+	int valorPiezas[2];
+	int valorPeones[2];
+	uint64 mapaTodosPeones;
+	int FASE;
+	uint64 piezasBlancas;
+	uint64 piezasNegras;
+	int fase[2];
+	int peonDefectos[2][8];
+	int puntaje_m[2];
+	int puntaje_f[2];
+	BOOLEANO esPeligroso[2];
+	int PIEZAS_MAYORES[2];
+	int PIEZAS_MENORES[2];
+	uint64 mapaPosAtacadasXPza[2][6];
+	uint64 mapaPosAtacadas[2];
+	uint64 mapaPosAtacadasPseudo[2];
+	uint64 mapaPosAtacadasDoble[2];
+	uint64 mapaClavadas[2];
+	uint64 mapaClavadasRey[2];
+	uint64 mapaRayosClavada[64];
+	int atacantesRey[2];
+	int pesoAtaqueRey[2];
+	uint64 peonesDebiles[2];
+	uint64 peonesPasados[2];
+	uint64 peonesCandidatos[2];
+	uint8 escaqueRey[2];
+	uint64 entornoRey[2];
+	unsigned char peonesMapaFila[2];
+	unsigned char peonesPasadosMapaFila[2];
+} EvalScratch;
+
+typedef struct
+{
+	Position posicion;
+	EvalScratch scratch;
+} ThreadState;
 
 typedef struct
 {

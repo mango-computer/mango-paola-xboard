@@ -55,62 +55,60 @@ MOVIMIENTO		mponder						= 0;
 COLOR 			computadora 					= NEGRO;
 
 int			numEstatico					= 0;
-int 			nPeones[2]					= {0,0};
-int 			nDama[2]					= {0,0};
-int 			nCaballos[2]					= {0,0};
-int 			nTorres[2]					= {0,0};
-int 			nAlfil[2]					= {0,0};
-int 			nPiezasSP[2]					= {0,0};
-int 			nPiezas[2]					= {0,0};
-int 			totalPiezasSP					= 0;
-int 			totalPeones					= 0;
-int 			totalPiezas					= 0;
-int 			materialTotal					= 0;
-int			valorPiezas[2]					= {0,0};
-int			valorPeones[2]					= {0,0};
-uint64			mapaTodosPeones					= 0;
+ThreadState		hilosBusqueda[MAX_HILOS];
+ThreadState		*hiloActual					= &hilosBusqueda[0];
+int			numHilosBusqueda				= 1;
+#define			nPeones		(hiloActual->scratch.nPeones)
+#define			nDama		(hiloActual->scratch.nDama)
+#define			nCaballos	(hiloActual->scratch.nCaballos)
+#define			nTorres		(hiloActual->scratch.nTorres)
+#define			nAlfil		(hiloActual->scratch.nAlfil)
+#define			nPiezasSP	(hiloActual->scratch.nPiezasSP)
+#define			nPiezas		(hiloActual->scratch.nPiezas)
+#define			totalPiezasSP	(hiloActual->scratch.totalPiezasSP)
+#define			totalPeones	(hiloActual->scratch.totalPeones)
+#define			totalPiezas	(hiloActual->scratch.totalPiezas)
+#define			materialTotal	(hiloActual->scratch.materialTotal)
+#define			valorPiezas	(hiloActual->scratch.valorPiezas)
+#define			valorPeones	(hiloActual->scratch.valorPeones)
+#define			mapaTodosPeones	(hiloActual->scratch.mapaTodosPeones)
 uint64 			CARRERA_PEONES[2][2][64];
 uint64 			PEON_ESCONDIDO_I[2][9];
 uint64 			PEON_ESCONDIDO_D[2][9];
 uint64			MASCARA_PEON_CC[64];
 unsigned char 		is_outside[256][256];
-unsigned char		peonesMapaFila[2];
-unsigned char		peonesPasadosMapaFila[2];
+#define			peonesMapaFila		(hiloActual->scratch.peonesMapaFila)
+#define			peonesPasadosMapaFila	(hiloActual->scratch.peonesPasadosMapaFila)
 int 			MATRIZ_SEGURIDAD_REY[16][16];
 uint64	 		MATRIZ_MOV_ALFIL[64];
 uint64 			MATRIZ_MOV_TORRE[64];
 unsigned char 		msb_8bit[256];
 unsigned char 		lsb_8bit[256];
 unsigned char 		pop_cnt_8bit[256];
-int 			FASE;
-
-uint64 			piezasBlancas; 		
-uint64 			piezasNegras;  		
-int			fase[2]						={0,0};
-int			peonDefectos[2][8];
-
-
-int 			puntaje_m[2]					= {0,0};
-int 			puntaje_f[2]					= {0,0};
-BOOLEANO		esPeligroso[2]					= {FALSO, FALSO};
-int			PIEZAS_MAYORES[2]				= {0,0};
-int			PIEZAS_MENORES[2]				= {0,0};
-
-uint64 			mapaPosAtacadasXPza[2][6]			= {{0,0,0,0,0,0},{0,0,0,0,0,0}};
-uint64 			mapaPosAtacadas[2]				= {0,0};
-uint64 			mapaPosAtacadasPseudo[2]			= {0,0};
-uint64 			mapaPosAtacadasDoble[2]				= {0,0};
-uint64 			mapaClavadas[2]					= {0,0};
-uint64 			mapaClavadasRey[2]				= {0,0};
-uint64 			mapaRayosClavada[64]				= {0};
-int			atacantesRey[2]					= {0,0};
-int			pesoAtaqueRey[2]				= {0,0};
-uint64 			peonesDebiles[2]				= {0,0};
-uint64 			peonesPasados[2] 				= {0,0};
-uint64 			peonesCandidatos[2] 				= {0,0};
-
-uint8 			escaqueRey[2];
-uint64 			entornoRey[2]; 
+#define			FASE			(hiloActual->scratch.FASE)
+#define			piezasBlancas		(hiloActual->scratch.piezasBlancas)
+#define			piezasNegras		(hiloActual->scratch.piezasNegras)
+#define			faseEval		(hiloActual->scratch.fase)
+#define			peonDefectos		(hiloActual->scratch.peonDefectos)
+#define			puntajeEval_m		(hiloActual->scratch.puntaje_m)
+#define			puntajeEval_f		(hiloActual->scratch.puntaje_f)
+#define			esPeligroso		(hiloActual->scratch.esPeligroso)
+#define			PIEZAS_MAYORES		(hiloActual->scratch.PIEZAS_MAYORES)
+#define			PIEZAS_MENORES		(hiloActual->scratch.PIEZAS_MENORES)
+#define			mapaPosAtacadasXPza	(hiloActual->scratch.mapaPosAtacadasXPza)
+#define			mapaPosAtacadas		(hiloActual->scratch.mapaPosAtacadas)
+#define			mapaPosAtacadasPseudo	(hiloActual->scratch.mapaPosAtacadasPseudo)
+#define			mapaPosAtacadasDoble	(hiloActual->scratch.mapaPosAtacadasDoble)
+#define			mapaClavadas		(hiloActual->scratch.mapaClavadas)
+#define			mapaClavadasRey		(hiloActual->scratch.mapaClavadasRey)
+#define			mapaRayosClavada	(hiloActual->scratch.mapaRayosClavada)
+#define			atacantesRey		(hiloActual->scratch.atacantesRey)
+#define			pesoAtaqueRey		(hiloActual->scratch.pesoAtaqueRey)
+#define			peonesDebiles		(hiloActual->scratch.peonesDebiles)
+#define			peonesPasados		(hiloActual->scratch.peonesPasados)
+#define			peonesCandidatos	(hiloActual->scratch.peonesCandidatos)
+#define			escaqueReyEval		(hiloActual->scratch.escaqueRey)
+#define			entornoRey		(hiloActual->scratch.entornoRey) 
 
 
 struct 			timeval 					tv;
@@ -144,7 +142,7 @@ TIPS 			listaTips[100];
 int			evalInicioBusquedad[2]				= {INFINITO,INFINITO};
 
 int 			nodoRaiz	 				= 0;
-BITTABLERO 		juego;
+#define			juego			(hiloActual->posicion)
 BOOLEANO		esActivoBusTranquilidad				= VERDADERO;
 uint8 			PROMOCION[2]; 
 uint32 			CONT_BUFF_COMANDOS 				= 0;

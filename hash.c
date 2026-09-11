@@ -171,8 +171,8 @@ BOOLEANO cargarHashPeones(void)
 	aciertosHashPeones++;
 	for (color = BLANCO; color <= NEGRO; color++)
 	{
-		puntaje_m[color] += entrada->puntaje_m[color];
-		puntaje_f[color] += entrada->puntaje_f[color];
+		puntajeEval_m[color] += entrada->puntaje_m[color];
+		puntajeEval_f[color] += entrada->puntaje_f[color];
 		peonesDebiles[color] = entrada->debiles[color];
 		peonesPasados[color] = entrada->pasados[color];
 		peonesCandidatos[color] = entrada->candidatos[color];
@@ -196,8 +196,8 @@ void guardarHashPeones(const int *puntajeMAnterior, const int *puntajeFAnterior)
 	entrada->peonesNegros = juego.tablero[NEGRO][PEON];
 	for (color = BLANCO; color <= NEGRO; color++)
 	{
-		entrada->puntaje_m[color] = puntaje_m[color] - puntajeMAnterior[color];
-		entrada->puntaje_f[color] = puntaje_f[color] - puntajeFAnterior[color];
+		entrada->puntaje_m[color] = puntajeEval_m[color] - puntajeMAnterior[color];
+		entrada->puntaje_f[color] = puntajeEval_f[color] - puntajeFAnterior[color];
 		entrada->debiles[color] = peonesDebiles[color];
 		entrada->pasados[color] = peonesPasados[color];
 		entrada->candidatos[color] = peonesCandidatos[color];

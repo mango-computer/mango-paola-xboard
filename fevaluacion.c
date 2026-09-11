@@ -98,9 +98,9 @@ int evaluacionTablero(int alfa, int beta)
 	nAlfil[BLANCO]			= juego.estadoEvaluacion.conteo[BLANCO][ALFIL];
 	nAlfil[NEGRO]			= juego.estadoEvaluacion.conteo[NEGRO][ALFIL];
 
-	fase[BLANCO] 			= MINIMO(31, juego.estadoEvaluacion.fase[BLANCO]);
-	fase[NEGRO]  			= MINIMO(31, juego.estadoEvaluacion.fase[NEGRO]);
-	FASE	 			= fase[BLANCO] + fase[NEGRO];
+	faseEval[BLANCO] 			= MINIMO(31, juego.estadoEvaluacion.fase[BLANCO]);
+	faseEval[NEGRO]  			= MINIMO(31, juego.estadoEvaluacion.fase[NEGRO]);
+	FASE	 			= faseEval[BLANCO] + faseEval[NEGRO];
 /*
 	int margenEvalFlojo = (535-(FASE*6));
 	if (!esFinal && (((EvalFlojo + margenEvalFlojo) < alfa) || (beta < (EvalFlojo - LIMITE_MOV_NULL))))
@@ -108,11 +108,11 @@ int evaluacionTablero(int alfa, int beta)
 		return EvalFlojo;
 	} 
 //*/
-	escaqueRey[BLANCO]		= juego.estadoEvaluacion.escaqueRey[BLANCO];
-	escaqueRey[NEGRO]		= juego.estadoEvaluacion.escaqueRey[NEGRO];
+	escaqueReyEval[BLANCO]		= juego.estadoEvaluacion.escaqueRey[BLANCO];
+	escaqueReyEval[NEGRO]		= juego.estadoEvaluacion.escaqueRey[NEGRO];
 
-	entornoRey[BLANCO] 		= mascaraRey[escaqueRey[BLANCO]];
-	entornoRey[NEGRO] 		= mascaraRey[escaqueRey[NEGRO]];
+	entornoRey[BLANCO] 		= mascaraRey[escaqueReyEval[BLANCO]];
+	entornoRey[NEGRO] 		= mascaraRey[escaqueReyEval[NEGRO]];
 
 	mapaTodosPeones			= (juego.tablero[BLANCO][PEON] | juego.tablero[NEGRO][PEON]);
 
@@ -169,10 +169,10 @@ int evaluacionTablero(int alfa, int beta)
 	PIEZAS_MENORES[BLANCO] 		= nCaballos[BLANCO] + nAlfil[BLANCO];				
 	PIEZAS_MENORES[NEGRO]  		= nCaballos[NEGRO] + nAlfil[NEGRO];
 
-	puntaje_m[BLANCO]		= 0;
-	puntaje_m[NEGRO]		= 0;
-	puntaje_f[BLANCO]		= 0;
-	puntaje_f[NEGRO]		= 0;
+	puntajeEval_m[BLANCO]		= 0;
+	puntajeEval_m[NEGRO]		= 0;
+	puntajeEval_f[BLANCO]		= 0;
+	puntajeEval_f[NEGRO]		= 0;
 
 	int puedeGanar			= 3;
 	int mn				= 0;
@@ -189,19 +189,19 @@ int evaluacionTablero(int alfa, int beta)
 
 	calcularMapasClavadas();
 	ini_material();
-	puntaje_m[BLANCO] += juego.estadoEvaluacion.pstMedio[BLANCO];
-	puntaje_m[NEGRO] += juego.estadoEvaluacion.pstMedio[NEGRO];
-	puntaje_f[BLANCO] += juego.estadoEvaluacion.pstFinal[BLANCO];
-	puntaje_f[NEGRO] += juego.estadoEvaluacion.pstFinal[NEGRO];
+	puntajeEval_m[BLANCO] += juego.estadoEvaluacion.pstMedio[BLANCO];
+	puntajeEval_m[NEGRO] += juego.estadoEvaluacion.pstMedio[NEGRO];
+	puntajeEval_f[BLANCO] += juego.estadoEvaluacion.pstFinal[BLANCO];
+	puntajeEval_f[NEGRO] += juego.estadoEvaluacion.pstFinal[NEGRO];
 
 	// Determinar si un lado es peligroso
 	//Blanco
-	esPeligroso[BLANCO] = ((juego.tablero[BLANCO][DAMA] && (fase[BLANCO] > 13)) || ((nTorres[BLANCO]>1) && (fase[BLANCO] > 15)));
-	esPeligroso[NEGRO]  = ((juego.tablero[NEGRO][DAMA]  && (fase[NEGRO]  > 13)) || ((nTorres[NEGRO] >1) && (fase[NEGRO]  > 15)));
+	esPeligroso[BLANCO] = ((juego.tablero[BLANCO][DAMA] && (faseEval[BLANCO] > 13)) || ((nTorres[BLANCO]>1) && (faseEval[BLANCO] > 15)));
+	esPeligroso[NEGRO]  = ((juego.tablero[NEGRO][DAMA]  && (faseEval[NEGRO]  > 13)) || ((nTorres[NEGRO] >1) && (faseEval[NEGRO]  > 15)));
 
 
 	// Evaluación de empate e insuficiencia de material
-	if ((fase[BLANCO] < 13) && (fase[NEGRO] < 13))
+	if ((faseEval[BLANCO] < 13) && (faseEval[NEGRO] < 13))
 	{
 		do {
 			if (!FASE && (mascaraSinPeonTorre & juego.tablero[BLANCO][PEON]) && 
@@ -235,14 +235,14 @@ int evaluacionTablero(int alfa, int beta)
 	registrarAtaquesPeonesEval();
 	for (int color = BLANCO; color <= NEGRO; color++)
 	{
-		uint64 ataquesRey = mascaraRey[escaqueRey[color]];
+		uint64 ataquesRey = mascaraRey[escaqueReyEval[color]];
 		mapaPosAtacadasDoble[color] |= mapaPosAtacadas[color] & ataquesRey;
 		mapaPosAtacadas[color] |= ataquesRey;
 	}
-	puntajeMAntesPeones[BLANCO] = puntaje_m[BLANCO];
-	puntajeMAntesPeones[NEGRO] = puntaje_m[NEGRO];
-	puntajeFAntesPeones[BLANCO] = puntaje_f[BLANCO];
-	puntajeFAntesPeones[NEGRO] = puntaje_f[NEGRO];
+	puntajeMAntesPeones[BLANCO] = puntajeEval_m[BLANCO];
+	puntajeMAntesPeones[NEGRO] = puntajeEval_m[NEGRO];
+	puntajeFAntesPeones[BLANCO] = puntajeEval_f[BLANCO];
+	puntajeFAntesPeones[NEGRO] = puntajeEval_f[NEGRO];
 	if (!cargarHashPeones())
 	{
 		evalPeones(BLANCO);
@@ -254,13 +254,13 @@ int evaluacionTablero(int alfa, int beta)
 #ifdef VERVALORES
 	printf("******Peones*******\n");
 	printf("m[B]=%d f[B]=%d m[N]=%d f[N]=%d\n",
-	       puntaje_m[BLANCO], puntaje_f[BLANCO],
-	       puntaje_m[NEGRO], puntaje_f[NEGRO]);
+	       puntajeEval_m[BLANCO], puntajeEval_f[BLANCO],
+	       puntajeEval_m[NEGRO], puntajeEval_f[NEGRO]);
 #endif
 
 	if (peonesPasados[NEGRO] || peonesPasados[BLANCO])
 	{
-		if (((fase[BLANCO]==0) &&  peonesPasados[NEGRO]) || ((fase[NEGRO]==0) &&  peonesPasados[BLANCO]))
+		if (((faseEval[BLANCO]==0) &&  peonesPasados[NEGRO]) || ((faseEval[NEGRO]==0) &&  peonesPasados[BLANCO]))
 		{
 			evalCarreraPeonesPasados();
 		}
@@ -270,8 +270,8 @@ int evaluacionTablero(int alfa, int beta)
 	evalEntorno(NEGRO);
 	evalEntorno(BLANCO);
 
-	int pN = ((puntaje_m[NEGRO]  * FASE) + (puntaje_f[NEGRO]  * (62 - FASE))) / 62;			
-	int pB = ((puntaje_m[BLANCO] * FASE) + (puntaje_f[BLANCO] * (62 - FASE))) / 62;			
+	int pN = ((puntajeEval_m[NEGRO]  * FASE) + (puntajeEval_f[NEGRO]  * (62 - FASE))) / 62;			
+	int pB = ((puntajeEval_m[BLANCO] * FASE) + (puntajeEval_f[BLANCO] * (62 - FASE))) / 62;			
 
 	EvalFlojo = pB-pN;
 	EvalFlojo = (juego.colorTurno ? -EvalFlojo : EvalFlojo);
@@ -320,8 +320,8 @@ int evaluacionTablero(int alfa, int beta)
 #ifdef VERVALORES
 	printf("******Pasados*******\n");
 	printf("m[B]=%d f[B]=%d m[N]=%d f[N]=%d\n",
-	       puntaje_m[BLANCO], puntaje_f[BLANCO],
-	       puntaje_m[NEGRO], puntaje_f[NEGRO]);
+	       puntajeEval_m[BLANCO], puntajeEval_f[BLANCO],
+	       puntajeEval_m[NEGRO], puntajeEval_f[NEGRO]);
 #endif
 
 	evalRey(NEGRO);
@@ -329,14 +329,14 @@ int evaluacionTablero(int alfa, int beta)
 
 #ifdef VERVALORES
 	printf("******FINAL*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 
-	puntajeNegro  =	((puntaje_m[NEGRO]  * FASE) + (puntaje_f[NEGRO]  * (62 - FASE))) / 62;			
-	puntajeBlanco =	((puntaje_m[BLANCO] * FASE) + (puntaje_f[BLANCO] * (62 - FASE))) / 62;			
+	puntajeNegro  =	((puntajeEval_m[NEGRO]  * FASE) + (puntajeEval_f[NEGRO]  * (62 - FASE))) / 62;			
+	puntajeBlanco =	((puntajeEval_m[BLANCO] * FASE) + (puntajeEval_f[BLANCO] * (62 - FASE))) / 62;			
 
 #ifdef VERVALORES
 	printf("******FINAL 2*******\n");
@@ -431,7 +431,7 @@ void evalEntorno(COLOR colorEval)
 		if ((BITSET[esqC2[colorEval]] & juego.tablero[colorEval][PEON]) && 
 			(BITSET[esqC3[colorEval]] & (juego.tablero[colorEval][CABALLO] | juego.tablero[colorEval][ALFIL])))
 		{
-			puntaje_m[colorEval] -= 12;
+			puntajeEval_m[colorEval] -= 12;
 		}
 	}
 
@@ -443,15 +443,15 @@ void evalEntorno(COLOR colorEval)
 
 			if (juego.OON && juego.OOON)
 			{
-				puntaje_m[colorEval] -= (ajuste * DESCUENTO_X_NO_ENRROCAR);
+				puntajeEval_m[colorEval] -= (ajuste * DESCUENTO_X_NO_ENRROCAR);
 
 			} else  if (!juego.OON && !juego.OOON) {
 
-				puntaje_m[colorEval] -= (ajuste * DESCUENTO_PERDIDA_ENROQUE);
+				puntajeEval_m[colorEval] -= (ajuste * DESCUENTO_PERDIDA_ENROQUE);
 
 			} else  {
 
-				puntaje_m[colorEval] -= ((ajuste * DESCUENTO_PERDIDA_ENROQUE)/2);
+				puntajeEval_m[colorEval] -= ((ajuste * DESCUENTO_PERDIDA_ENROQUE)/2);
 			}
 		}
 
@@ -463,15 +463,15 @@ void evalEntorno(COLOR colorEval)
 
 			if (juego.OOB && juego.OOOB)
 			{
-				puntaje_m[colorEval] -= (ajuste * DESCUENTO_X_NO_ENRROCAR);
+				puntajeEval_m[colorEval] -= (ajuste * DESCUENTO_X_NO_ENRROCAR);
 
 			} else  if (!juego.OOB && !juego.OOOB) {
 
-				puntaje_m[colorEval] -= (ajuste * DESCUENTO_PERDIDA_ENROQUE);
+				puntajeEval_m[colorEval] -= (ajuste * DESCUENTO_PERDIDA_ENROQUE);
 
 			} else  {
 
-				puntaje_m[colorEval] -= ((ajuste * DESCUENTO_PERDIDA_ENROQUE)/2);
+				puntajeEval_m[colorEval] -= ((ajuste * DESCUENTO_PERDIDA_ENROQUE)/2);
 			}
 		}
 	}
@@ -567,10 +567,10 @@ void evalPeonesPasados(COLOR colorEval)
 		    (BITSET[sqAdelante] & mapaPosAtacadas[colorEval]))
 			egsc += 15;
 		
-		puntaje_m[colorEval] += ((BONO_PEON_CC[rank_sq] * mgsc) / 100);
-		puntaje_f[colorEval] += ((BONO_PEON_CC[rank_sq] * egsc) / 100);
-		puntaje_f[colorEval] -= ((DISTANCIA[sqAdelante][escaqueRey[colorEval]] - 
-					  DISTANCIA[sqAdelante][escaqueRey[xcolorEval]]) * bono);
+		puntajeEval_m[colorEval] += ((BONO_PEON_CC[rank_sq] * mgsc) / 100);
+		puntajeEval_f[colorEval] += ((BONO_PEON_CC[rank_sq] * egsc) / 100);
+		puntajeEval_f[colorEval] -= ((DISTANCIA[sqAdelante][escaqueReyEval[colorEval]] - 
+					  DISTANCIA[sqAdelante][escaqueReyEval[xcolorEval]]) * bono);
 
 	} // Fin for Peon 
 
@@ -578,8 +578,8 @@ void evalPeonesPasados(COLOR colorEval)
 	{
 		if (is_outside[peonesPasadosMapaFila[colorEval]][peonesMapaFila[xcolorEval]])
 		{
-			puntaje_m[colorEval] += outside_pp[MEDIO_JUEGO];
-			puntaje_f[colorEval] += outside_pp[FINAL_JUEGO];
+			puntajeEval_m[colorEval] += outside_pp[MEDIO_JUEGO];
+			puntajeEval_f[colorEval] += outside_pp[FINAL_JUEGO];
 		}
 	}	
 
@@ -612,67 +612,67 @@ void evalCarreraPeonesPasados()
 	{
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
 
-		if ((signo[colorEval] * RANKS[escaqueRey[colorEval]]) <= (RANKS[escaqueOrigen] * signo[colorEval])) continue;
+		if ((signo[colorEval] * RANKS[escaqueReyEval[colorEval]]) <= (RANKS[escaqueOrigen] * signo[colorEval])) continue;
 
 		
 		if (FILES[escaqueOrigen] == 1)
 		{
-			if ((FILES[escaqueRey[colorEval]] == 2) && 
-				(DISTANCIA[escaqueRey[colorEval]][POSCORONACION[colorEval][escaqueOrigen]] < 			
-				 DISTANCIA[escaqueRey[xcolorEval]][POSCORONACION[colorEval][escaqueOrigen]]))
+			if ((FILES[escaqueReyEval[colorEval]] == 2) && 
+				(DISTANCIA[escaqueReyEval[colorEval]][POSCORONACION[colorEval][escaqueOrigen]] < 			
+				 DISTANCIA[escaqueReyEval[xcolorEval]][POSCORONACION[colorEval][escaqueOrigen]]))
 			{
-				puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+				puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 				return;
 			}
 			continue;
 		} else if (FILES[escaqueOrigen] == 8) {
 
-			if ((FILES[escaqueRey[colorEval]] == 7) && 
-				(DISTANCIA[escaqueRey[colorEval]][POSCORONACION[colorEval][escaqueOrigen]] < 			
-				 DISTANCIA[escaqueRey[xcolorEval]][POSCORONACION[colorEval][escaqueOrigen]]))
+			if ((FILES[escaqueReyEval[colorEval]] == 7) && 
+				(DISTANCIA[escaqueReyEval[colorEval]][POSCORONACION[colorEval][escaqueOrigen]] < 			
+				 DISTANCIA[escaqueReyEval[xcolorEval]][POSCORONACION[colorEval][escaqueOrigen]]))
 			{
-				puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+				puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 				return;
 			}
 			continue;
 		}
 
-		if (DISTANCIA[escaqueRey[colorEval]][escaqueOrigen] < DISTANCIA[escaqueRey[xcolorEval]][escaqueOrigen])
+		if (DISTANCIA[escaqueReyEval[colorEval]][escaqueOrigen] < DISTANCIA[escaqueReyEval[xcolorEval]][escaqueOrigen])
 		{
-			if ((signo[colorEval] * RANKS[escaqueRey[colorEval]]) > 
+			if ((signo[colorEval] * RANKS[escaqueReyEval[colorEval]]) > 
 				(RANKS[escaqueOrigen] * (signo[colorEval])+1-2*colorEval)) 
 			{
-				puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+				puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 				return;
 			}
 
 			if (colorEval) //Negro
 			{
-				if (RANKS[escaqueRey[colorEval]] == 3)
+				if (RANKS[escaqueReyEval[colorEval]] == 3)
 				{
-					puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+					puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 					return;
 				}
 			} else {
 
-				if (RANKS[escaqueRey[colorEval]] == 6)
+				if (RANKS[escaqueReyEval[colorEval]] == 6)
 				{
-					puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+					puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 					return;
 				}
 			}
 		}
 
-		if ((RANKS[escaqueRey[colorEval]] == (RANKS[escaqueOrigen] + 1 - 2 * colorEval)) && 
+		if ((RANKS[escaqueReyEval[colorEval]] == (RANKS[escaqueOrigen] + 1 - 2 * colorEval)) && 
 			evalOposicionReyes(colorEval))
 		{
-			puntaje_f[colorEval] += PEON_PUEDE_CORONAR;
+			puntajeEval_f[colorEval] += PEON_PUEDE_CORONAR;
 			return;
 		} 
 	} // fin for de peones
   } 
 
-	if (!fase[xcolorEval] && peonesPasados[colorEval])
+	if (!faseEval[xcolorEval] && peonesPasados[colorEval])
 	{
 		mapaPP = peonesPasadosMapaFila[colorEval];
 		for (;mapaPP;mapaPP &= mapaPP - 1)		
@@ -720,23 +720,23 @@ void evalCarreraPeonesPasados()
 
 	if ((damer[BLANCO] < 8) && (damer[NEGRO]==8))
 	{
-		puntaje_f[BLANCO] += (PEON_PUEDE_CORONAR + ((5-damer[BLANCO])*10));
+		puntajeEval_f[BLANCO] += (PEON_PUEDE_CORONAR + ((5-damer[BLANCO])*10));
 		return;
 
 	} else if ((damer[NEGRO] < 8) && (damer[BLANCO]==8)) {
 
-		puntaje_f[NEGRO] += (PEON_PUEDE_CORONAR + ((5-damer[NEGRO])*10));
+		puntajeEval_f[NEGRO] += (PEON_PUEDE_CORONAR + ((5-damer[NEGRO])*10));
 		return;
 	}
 
 	if ((damer[BLANCO] < damer[NEGRO]) && f[BLANCO] && !f[NEGRO])
 	{
-		puntaje_f[BLANCO] += (PEON_PUEDE_CORONAR + ((5-damer[BLANCO])*10));
+		puntajeEval_f[BLANCO] += (PEON_PUEDE_CORONAR + ((5-damer[BLANCO])*10));
 		return;
 
 	} else if ((damer[NEGRO] < damer[BLANCO]) && f[NEGRO] && !f[BLANCO]){
 
-		puntaje_f[NEGRO] += (PEON_PUEDE_CORONAR + ((5-damer[NEGRO])*10));
+		puntajeEval_f[NEGRO] += (PEON_PUEDE_CORONAR + ((5-damer[NEGRO])*10));
 		return;
 	}
 
@@ -836,20 +836,20 @@ void calcularMapasClavadas(void)
 		propias = color == BLANCO ? juego.blancos : juego.negros;
 		propias ^= juego.tablero[color][REY];
 		clavadores =
-			(MATRIZ_MOV_ALFIL[escaqueRey[color]] &
+			(MATRIZ_MOV_ALFIL[escaqueReyEval[color]] &
 			 (juego.tablero[contrario][DAMA] | juego.tablero[contrario][ALFIL])) |
-			(MATRIZ_MOV_TORRE[escaqueRey[color]] &
+			(MATRIZ_MOV_TORRE[escaqueReyEval[color]] &
 			 (juego.tablero[contrario][DAMA] | juego.tablero[contrario][TORRE]));
 		while (clavadores)
 		{
 			clavador = bitScanForwardBruijn(clavadores);
-			entre = ESCAQUES_INTERMEDIOS[escaqueRey[color]][clavador] & juego.ocupados;
+			entre = ESCAQUES_INTERMEDIOS[escaqueReyEval[color]][clavador] & juego.ocupados;
 			if (cuentaBit(entre) == 1 && (entre & propias))
 			{
 				clavada = bitScanForwardBruijn(entre);
 				mapaClavadasRey[color] |= BITSET[clavada];
 				mapaRayosClavada[clavada] =
-					ESCAQUES_INTERMEDIOS[escaqueRey[color]][clavador] |
+					ESCAQUES_INTERMEDIOS[escaqueReyEval[color]][clavador] |
 					BITSET[clavador];
 			}
 			clavadores ^= BITSET[clavador];
@@ -968,8 +968,8 @@ void evalPeones(COLOR colorEval)
 		//Evaluar peones aislados
 		if (!(AISLADO[escaqueOrigen] & juego.tablero[colorEval][PEON]))
 		{
-			puntaje_m[colorEval] -=  peon_aislado[MEDIO_JUEGO];
-			puntaje_f[colorEval] -=  peon_aislado[FINAL_JUEGO];
+			puntajeEval_m[colorEval] -=  peon_aislado[MEDIO_JUEGO];
+			puntajeEval_f[colorEval] -=  peon_aislado[FINAL_JUEGO];
 		
 			peonesDebiles[colorEval] |= BITSET[escaqueOrigen];
 			esAislado 		  = VERDADERO;
@@ -1004,8 +1004,8 @@ void evalPeones(COLOR colorEval)
 				{
 					esDebil = VERDADERO;
 					peonesDebiles[colorEval] |= BITSET[escaqueOrigen];
-					puntaje_m[colorEval] -= DESCUENTO_PEON_DEBIL_M;
-					puntaje_f[colorEval] -= DESCUENTO_PEON_DEBIL_F;
+					puntajeEval_m[colorEval] -= DESCUENTO_PEON_DEBIL_M;
+					puntajeEval_f[colorEval] -= DESCUENTO_PEON_DEBIL_F;
 				}
 			} 
 
@@ -1013,15 +1013,15 @@ void evalPeones(COLOR colorEval)
 			if ((juego.tablero[colorEval][PEON] ^ BITSET[escaqueOrigen]) & FILEMASK[escaqueOrigen])
 			{
 				//DESCUENTO_PEONES_DOBLADOS[escaqueOrigen];
-				puntaje_m[colorEval] -= peon_doblado[MEDIO_JUEGO]; 
-				puntaje_f[colorEval] -= peon_doblado[FINAL_JUEGO]; 
+				puntajeEval_m[colorEval] -= peon_doblado[MEDIO_JUEGO]; 
+				puntajeEval_f[colorEval] -= peon_doblado[FINAL_JUEGO]; 
 			}
 
 			//Peon Duo
 			if (MASCARA_PEON_CC[escaqueOrigen] & juego.tablero[colorEval][PEON])
 			{
-				puntaje_m[colorEval] += peon_duo[MEDIO_JUEGO]; 
-				puntaje_f[colorEval] += peon_duo[FINAL_JUEGO];
+				puntajeEval_m[colorEval] += peon_duo[MEDIO_JUEGO]; 
+				puntajeEval_f[colorEval] += peon_duo[FINAL_JUEGO];
 			} 
 		}
 
@@ -1035,13 +1035,13 @@ void evalPeones(COLOR colorEval)
 		{
 			if (esDebil)
 			{
-				puntaje_m[colorEval] -= DESCUENTO_PEON_DEBIL_M_PA;
+				puntajeEval_m[colorEval] -= DESCUENTO_PEON_DEBIL_M_PA;
 			}
 
 			if (esAislado)
 			{
-				puntaje_m[colorEval] -=  peon_aislado[MEDIO_JUEGO]/2;  
-				puntaje_f[colorEval] -=  peon_aislado[FINAL_JUEGO]/2;  
+				puntajeEval_m[colorEval] -=  peon_aislado[MEDIO_JUEGO]/2;  
+				puntajeEval_f[colorEval] -=  peon_aislado[FINAL_JUEGO]/2;  
 			}
 		}
 
@@ -1085,9 +1085,9 @@ void evalPeones(COLOR colorEval)
 				    !(PASADO[colorEval][esqCandidato + DIR[colorEval]] &
 				      juego.tablero[xcolorEval][PEON]))
 				{
-					puntaje_m[colorEval] +=
+					puntajeEval_m[colorEval] +=
 					  peon_pasado_candidato[MEDIO_JUEGO][colorEval][RANKS[escaqueOrigen]];
-					puntaje_f[colorEval] +=
+					puntajeEval_f[colorEval] +=
 					  peon_pasado_candidato[FINAL_JUEGO][colorEval][RANKS[escaqueOrigen]];
 
 					peonesCandidatos[colorEval] |= BITSET[escaqueOrigen];
@@ -1102,8 +1102,8 @@ void evalPeones(COLOR colorEval)
 	              (FILES[escaqueOrigen] > 1 && BITSET[escaqueOrigen-9+16*colorEval] & juego.tablero[colorEval][PEON] && 
 		          !(PEON_ESCONDIDO_I[colorEval][FILES[escaqueOrigen]] & juego.tablero[xcolorEval][PEON]))))	
 		{
-			puntaje_m[colorEval] += peon_pasado_escondido[MEDIO_JUEGO];
-			puntaje_f[colorEval] += peon_pasado_escondido[FINAL_JUEGO];
+			puntajeEval_m[colorEval] += peon_pasado_escondido[MEDIO_JUEGO];
+			puntajeEval_f[colorEval] += peon_pasado_escondido[FINAL_JUEGO];
 		}
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
@@ -1129,8 +1129,8 @@ void evalCaballo(COLOR colorEval)
 		escaqueOrigen = bitScanForwardBruijn(tempOrigenes);
 
 		// Ajuste del caballo según el número de peones
-		puntaje_m[colorEval] += adjuste_caballo[nPeones[colorEval]];
-		puntaje_f[colorEval] += adjuste_caballo[nPeones[colorEval]];
+		puntajeEval_m[colorEval] += adjuste_caballo[nPeones[colorEval]];
+		puntajeEval_f[colorEval] += adjuste_caballo[nPeones[colorEval]];
 //*/
 		tempDestinos   		 		 = mascaraCaballo[escaqueOrigen];
 		mapaPosAtacadasPseudo[colorEval]	|= tempDestinos;
@@ -1141,33 +1141,33 @@ void evalCaballo(COLOR colorEval)
 		i = CABALLO_PUESTO_AVANZADA[colorEval][escaqueOrigen];
 		if (!((PASADO[colorEval][escaqueOrigen] & AISLADO[escaqueOrigen]) & juego.tablero[xcolorEval][PEON]) && i)
 		{
-			puntaje_m[colorEval] += i;
-			puntaje_f[colorEval] += i;
+			puntajeEval_m[colorEval] += i;
+			puntajeEval_f[colorEval] += i;
 
 			if (mascaraCapturarPeon[escaqueOrigen][xcolorEval] & juego.tablero[colorEval][PEON])
 			{
-				puntaje_m[colorEval] += i/2;
-				puntaje_f[colorEval] += i/2;
+				puntajeEval_m[colorEval] += i/2;
+				puntajeEval_f[colorEval] += i/2;
 				if (!juego.tablero[xcolorEval][CABALLO])
 				{
 					if ((BITSET[escaqueOrigen] & ESCAQUES_NEGROS) && 
 						!(juego.tablero[xcolorEval][ALFIL] & ESCAQUES_NEGROS))
 					{
-						puntaje_m[colorEval] += i;
-						puntaje_f[colorEval] += i;
+						puntajeEval_m[colorEval] += i;
+						puntajeEval_f[colorEval] += i;
 						
 					} else if ((BITSET[escaqueOrigen] & ESCAQUES_BLANCOS) && 
 						!(juego.tablero[xcolorEval][ALFIL] & ESCAQUES_BLANCOS)) {
-						puntaje_m[colorEval] += i;
-						puntaje_f[colorEval] += i;
+						puntajeEval_m[colorEval] += i;
+						puntajeEval_f[colorEval] += i;
 					}
 				}
 			}
 		}
 
 		i = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
-		puntaje_m[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
-		puntaje_f[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_m[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_f[colorEval] += movilidadCaballo[i] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1203,8 +1203,8 @@ void evalAlfil(COLOR colorEval)
 		//Con peones Ganadores
 		if ((mapaTodosPeones & mascaraFGH) && (mapaTodosPeones & mascaraABC))
 		{
-			puntaje_m[colorEval] += alfil_peon_ganador[MEDIO_JUEGO];
-			puntaje_f[colorEval] += alfil_peon_ganador[FINAL_JUEGO];
+			puntajeEval_m[colorEval] += alfil_peon_ganador[MEDIO_JUEGO];
+			puntajeEval_f[colorEval] += alfil_peon_ganador[FINAL_JUEGO];
 		}
 
 		// Puesto avanzado
@@ -1215,26 +1215,26 @@ void evalAlfil(COLOR colorEval)
 		   {
 			if (!((PASADO[colorEval][escaqueOrigen] & AISLADO[escaqueOrigen]) & juego.tablero[xcolorEval][PEON]))
 			{
-				puntaje_m[colorEval] += i;
-				puntaje_f[colorEval] += i;
+				puntajeEval_m[colorEval] += i;
+				puntajeEval_f[colorEval] += i;
 
 				if (mascaraCapturarPeon[escaqueOrigen][xcolorEval] & juego.tablero[colorEval][PEON])
 				{
-					puntaje_m[colorEval] += i/2;
-					puntaje_f[colorEval] += i/2;
+					puntajeEval_m[colorEval] += i/2;
+					puntajeEval_f[colorEval] += i/2;
 
 					if (!juego.tablero[xcolorEval][CABALLO])
 					{
 						if ((BITSET[escaqueOrigen] & ESCAQUES_NEGROS) && 
 							!(juego.tablero[xcolorEval][ALFIL] & ESCAQUES_NEGROS))
 						{
-							puntaje_m[colorEval] += i;
-							puntaje_f[colorEval] += i;
+							puntajeEval_m[colorEval] += i;
+							puntajeEval_f[colorEval] += i;
 						
 						} else if ((BITSET[escaqueOrigen] & ESCAQUES_BLANCOS) && 
 							!(juego.tablero[xcolorEval][ALFIL] & ESCAQUES_BLANCOS)) {
-							puntaje_m[colorEval] += i;
-							puntaje_f[colorEval] += i;
+							puntajeEval_m[colorEval] += i;
+							puntajeEval_f[colorEval] += i;
 						}
 					}
 
@@ -1247,21 +1247,21 @@ void evalAlfil(COLOR colorEval)
 			{
 				if (BITSET[esqB6[colorEval]] & juego.tablero[xcolorEval][PEON])
 				{
-					puntaje_m[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
-					puntaje_f[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
+					puntajeEval_m[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
+					puntajeEval_f[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
 				}
 
 			} else if (BITSET[esqG6[colorEval]] & juego.tablero[xcolorEval][PEON]) {
 
-					puntaje_m[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
-					puntaje_f[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
+					puntajeEval_m[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
+					puntajeEval_f[colorEval] -= DESCUENTO_ALFIL_ATRAPADO;
 			}
                     }
 		}
 
 		i = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
-		puntaje_m[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
-		puntaje_f[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_m[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_f[colorEval] += movilidadAlfil[i] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1291,8 +1291,8 @@ void evalTorre(COLOR colorEval)
 		registrarAtaquesEval(colorEval, TORRE, tempDestinos, 3);
 
 		// Ajuste de la torre según el número de peones
-		puntaje_m[colorEval] += adjuste_torre[nPeones[colorEval]];
-		puntaje_f[colorEval] += adjuste_torre[nPeones[colorEval]];
+		puntajeEval_m[colorEval] += adjuste_torre[nPeones[colorEval]];
+		puntajeEval_f[colorEval] += adjuste_torre[nPeones[colorEval]];
 
 
 		//Evaluar torre en columna semi-abierta
@@ -1300,66 +1300,66 @@ void evalTorre(COLOR colorEval)
 		{
 			if (!(juego.tablero[xcolorEval][PEON] & FILEMASK[escaqueOrigen]))
 			{
-				puntaje_m[colorEval] += torre_fila_abierta[MEDIO_JUEGO];
-				puntaje_f[colorEval] += torre_fila_abierta[FINAL_JUEGO];
+				puntajeEval_m[colorEval] += torre_fila_abierta[MEDIO_JUEGO];
+				puntajeEval_f[colorEval] += torre_fila_abierta[FINAL_JUEGO];
 
 			} else {
 
-				puntaje_m[colorEval] += torre_media_fila_abierta[MEDIO_JUEGO];
-				puntaje_f[colorEval] += torre_media_fila_abierta[FINAL_JUEGO];
+				puntajeEval_m[colorEval] += torre_media_fila_abierta[MEDIO_JUEGO];
+				puntajeEval_f[colorEval] += torre_media_fila_abierta[FINAL_JUEGO];
 			}
 		}
 
 		//Evaluar Torre 7 Rank 
 		if (colorEval)
 		{
-			if ((RANKS[escaqueOrigen] == 8) && (RANKS[escaqueRey[colorEval]]==8))
+			if ((RANKS[escaqueOrigen] == 8) && (RANKS[escaqueReyEval[colorEval]]==8))
 			{
-				if ((FILES[escaqueRey[colorEval]] > 5) && (FILES[escaqueOrigen] > FILES[escaqueRey[colorEval]]))
+				if ((FILES[escaqueReyEval[colorEval]] > 5) && (FILES[escaqueOrigen] > FILES[escaqueReyEval[colorEval]]))
 				{
-					puntaje_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
-					puntaje_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
 
-				} else if ((FILES[escaqueRey[colorEval]] < 4) && 
-						(FILES[escaqueOrigen] < FILES[escaqueRey[colorEval]])) {
+				} else if ((FILES[escaqueReyEval[colorEval]] < 4) && 
+						(FILES[escaqueOrigen] < FILES[escaqueReyEval[colorEval]])) {
 
-					puntaje_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
-					puntaje_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
 				}
 				
 			} else if (RANKS[escaqueOrigen] == 2){
 
-				puntaje_m[colorEval] += torre_7rank[MEDIO_JUEGO];
-				puntaje_f[colorEval] += torre_7rank[FINAL_JUEGO];
+				puntajeEval_m[colorEval] += torre_7rank[MEDIO_JUEGO];
+				puntajeEval_f[colorEval] += torre_7rank[FINAL_JUEGO];
 			}
 
 		} else {
 
-			if ((RANKS[escaqueOrigen] == 1) && (RANKS[escaqueRey[colorEval]] == 1))
+			if ((RANKS[escaqueOrigen] == 1) && (RANKS[escaqueReyEval[colorEval]] == 1))
 			{
-				if ((FILES[escaqueRey[colorEval]] > 5) && (FILES[escaqueOrigen] > FILES[escaqueRey[colorEval]]))
+				if ((FILES[escaqueReyEval[colorEval]] > 5) && (FILES[escaqueOrigen] > FILES[escaqueReyEval[colorEval]]))
 				{
-					puntaje_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
-					puntaje_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
 
-				} else if ((FILES[escaqueRey[colorEval]] < 4) && 
-						(FILES[escaqueOrigen] < FILES[escaqueRey[colorEval]])) {
+				} else if ((FILES[escaqueReyEval[colorEval]] < 4) && 
+						(FILES[escaqueOrigen] < FILES[escaqueReyEval[colorEval]])) {
 
-					puntaje_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
-					puntaje_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_m[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
+					puntajeEval_f[colorEval] -= DESCUENTO_TORRE_ATRAPADA;
 				}
 				
 			} else if (RANKS[escaqueOrigen] == 7){
 
-				puntaje_m[colorEval] += torre_7rank[MEDIO_JUEGO];
-				puntaje_f[colorEval] += torre_7rank[FINAL_JUEGO];
+				puntajeEval_m[colorEval] += torre_7rank[MEDIO_JUEGO];
+				puntajeEval_f[colorEval] += torre_7rank[FINAL_JUEGO];
 			}
 		}
 
 		// Analisis Movilidad
 		indicador = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
-		puntaje_m[colorEval] += movilidadTorre[indicador] * MOVILIDAD_ESCALA / 100;
-		puntaje_f[colorEval] += movilidadTorreFinal[indicador] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_m[colorEval] += movilidadTorre[indicador] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_f[colorEval] += movilidadTorreFinal[indicador] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1391,8 +1391,8 @@ void evalDama(COLOR colorEval)
 		registrarAtaquesEval(colorEval, DAMA, tempDestinos, 5);
 
 		valor = cuentaBit(areaMovilidadUtil(colorEval, escaqueOrigen, tempDestinos));
-		puntaje_m[colorEval] += movilidadDama[valor] * MOVILIDAD_ESCALA / 100;
-		puntaje_f[colorEval] += movilidadDamaFinal[valor] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_m[colorEval] += movilidadDama[valor] * MOVILIDAD_ESCALA / 100;
+		puntajeEval_f[colorEval] += movilidadDamaFinal[valor] * MOVILIDAD_ESCALA / 100;
 
 		tempOrigenes ^= BITSET[escaqueOrigen];
 	}
@@ -1435,8 +1435,8 @@ void ini_material()
 
 	if (entrada->generacion == generacionHash && entrada->firma == firma)
 	{
-		memcpy(puntaje_m, entrada->puntajeM, sizeof(entrada->puntajeM));
-		memcpy(puntaje_f, entrada->puntajeF, sizeof(entrada->puntajeF));
+		memcpy(puntajeEval_m, entrada->puntajeM, sizeof(entrada->puntajeM));
+		memcpy(puntajeEval_f, entrada->puntajeF, sizeof(entrada->puntajeF));
 #ifdef PRUEBAS_HCE
 		aciertosHashMaterial++;
 #endif
@@ -1445,41 +1445,41 @@ void ini_material()
 
 	if (juego.material_total < 0)
 	{
-		puntaje_m[NEGRO]   = (-juego.material_total);
-		puntaje_f[NEGRO]   = (-juego.material_total);
+		puntajeEval_m[NEGRO]   = (-juego.material_total);
+		puntajeEval_f[NEGRO]   = (-juego.material_total);
 
 	} else if (juego.material_total > 0) { 
 
-		puntaje_m[BLANCO]  = juego.material_total;
-		puntaje_f[BLANCO]  = juego.material_total;
+		puntajeEval_m[BLANCO]  = juego.material_total;
+		puntajeEval_f[BLANCO]  = juego.material_total;
 
 	}
 
 #ifdef VERVALORES
 	printf("******Material base*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 
 
 	if (juego.colorTurno)
 	{
-		puntaje_m[NEGRO]  += BONO_TURNO[MEDIO_JUEGO];
-		puntaje_f[NEGRO]  += BONO_TURNO[FINAL_JUEGO];
+		puntajeEval_m[NEGRO]  += BONO_TURNO[MEDIO_JUEGO];
+		puntajeEval_f[NEGRO]  += BONO_TURNO[FINAL_JUEGO];
 
 	} else { 
-		puntaje_m[BLANCO] += BONO_TURNO[MEDIO_JUEGO];
-		puntaje_f[BLANCO] += BONO_TURNO[FINAL_JUEGO];
+		puntajeEval_m[BLANCO] += BONO_TURNO[MEDIO_JUEGO];
+		puntajeEval_f[BLANCO] += BONO_TURNO[FINAL_JUEGO];
 	}
 
 #ifdef VERVALORES
 	printf("******Material base + bono de turno*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 
 
@@ -1494,59 +1494,59 @@ void ini_material()
 
 	if (balance > 0)
 	{
-		puntaje_m[BLANCO] += balance;
-		puntaje_f[BLANCO] += balance;
+		puntajeEval_m[BLANCO] += balance;
+		puntajeEval_f[BLANCO] += balance;
 
 	} else if (balance < 0) {
 
-		puntaje_m[NEGRO] += -balance;
-		puntaje_f[NEGRO] += -balance;
+		puntajeEval_m[NEGRO] += -balance;
+		puntajeEval_f[NEGRO] += -balance;
 	}
 
 #ifdef VERVALORES
 	printf("******Material base + bono de turno + desequilibrio*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 	printf("balance[%d][%d]=%d\n",mayores,menores,balance);
 #endif
 
 
 	if (nAlfil[BLANCO] > 1)
 	{
-		puntaje_m[BLANCO] += 38;
-		puntaje_f[BLANCO] += 56;
+		puntajeEval_m[BLANCO] += 38;
+		puntajeEval_f[BLANCO] += 56;
 	}	
 
 	if (nAlfil[NEGRO] > 1)
 	{
-		puntaje_m[NEGRO] += 38;
-		puntaje_f[NEGRO] += 56;
+		puntajeEval_m[NEGRO] += 38;
+		puntajeEval_f[NEGRO] += 56;
 	}
 
 	/* Interacciones compactas por pares de tipos, una vez por evaluación. */
 #ifndef DESHABILITAR_INTERACCIONES_MATERIAL
-	puntaje_m[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO] * 2;
-	puntaje_f[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO];
-	puntaje_m[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO] * 2;
-	puntaje_f[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO];
+	puntajeEval_m[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO] * 2;
+	puntajeEval_f[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO];
+	puntajeEval_m[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO] * 2;
+	puntajeEval_f[NEGRO] += nCaballos[NEGRO] * nPeones[NEGRO];
 	if (nTorres[BLANCO] > 1)
-		puntaje_m[BLANCO] -= 8;
+		puntajeEval_m[BLANCO] -= 8;
 	if (nTorres[NEGRO] > 1)
-		puntaje_m[NEGRO] -= 8;
+		puntajeEval_m[NEGRO] -= 8;
 	if (nDama[BLANCO] && nCaballos[BLANCO])
-		puntaje_m[BLANCO] += 6;
+		puntajeEval_m[BLANCO] += 6;
 	if (nDama[NEGRO] && nCaballos[NEGRO])
-		puntaje_m[NEGRO] += 6;
+		puntajeEval_m[NEGRO] += 6;
 #endif
 
 #ifdef VERVALORES
 	printf("******Material base + bono de turno + desequilibrio + ajuste de alfil*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 	
 /*
@@ -1562,29 +1562,29 @@ void ini_material()
 			balance = b[totalPeones];
 			if (nAlfil[BLANCO])
 			{
-				puntaje_m[BLANCO] += balance;
-				puntaje_f[BLANCO] += balance;
+				puntajeEval_m[BLANCO] += balance;
+				puntajeEval_f[BLANCO] += balance;
 			}
 
 			if (nAlfil[NEGRO])
 			{
-				puntaje_m[NEGRO] += balance;
-				puntaje_f[NEGRO] += balance;
+				puntajeEval_m[NEGRO] += balance;
+				puntajeEval_f[NEGRO] += balance;
 			}
 
 		}
 	}
 #ifdef VERVALORES
 	printf("******Material base + bono de turno + desequilibrio + ajuste de alfil + alfil en finales*******\n");
-	printf("m[B]=%d\n",puntaje_m[BLANCO]);
-	printf("f[B]=%d\n",puntaje_f[BLANCO]);
-	printf("m[N]=%d\n",puntaje_m[NEGRO]);
-	printf("f[N]=%d\n",puntaje_f[NEGRO]);
+	printf("m[B]=%d\n",puntajeEval_m[BLANCO]);
+	printf("f[B]=%d\n",puntajeEval_f[BLANCO]);
+	printf("m[N]=%d\n",puntajeEval_m[NEGRO]);
+	printf("f[N]=%d\n",puntajeEval_f[NEGRO]);
 #endif
 
 	entrada->firma = firma;
-	memcpy(entrada->puntajeM, puntaje_m, sizeof(entrada->puntajeM));
-	memcpy(entrada->puntajeF, puntaje_f, sizeof(entrada->puntajeF));
+	memcpy(entrada->puntajeM, puntajeEval_m, sizeof(entrada->puntajeM));
+	memcpy(entrada->puntajeF, puntajeEval_f, sizeof(entrada->puntajeF));
 	entrada->generacion = generacionHash;
 }
 
@@ -1601,15 +1601,15 @@ void evalRey(COLOR colorEval)
 	{
 		if ((mapaTodosPeones & mascaraEFGH) && (mapaTodosPeones & mascaraABCD))
 		{
-			puntaje_f[colorEval] += REY_PUNTAJE_RESGUARDO[colorEval][escaqueRey[colorEval]];
+			puntajeEval_f[colorEval] += REY_PUNTAJE_RESGUARDO[colorEval][escaqueReyEval[colorEval]];
 
 		} else if (mapaTodosPeones & mascaraEFGH) {
 
-			puntaje_f[colorEval] += REY_PUNTAJE_RESGUARDO_R[colorEval][escaqueRey[colorEval]];
+			puntajeEval_f[colorEval] += REY_PUNTAJE_RESGUARDO_R[colorEval][escaqueReyEval[colorEval]];
 
 		} else {
 
-			puntaje_f[colorEval] += REY_PUNTAJE_RESGUARDO_D[colorEval][escaqueRey[colorEval]];
+			puntajeEval_f[colorEval] += REY_PUNTAJE_RESGUARDO_D[colorEval][escaqueReyEval[colorEval]];
 		}
 	}
 
@@ -1619,9 +1619,9 @@ void evalRey(COLOR colorEval)
 		HUBO_ENROQUE = (colorEval)?juego.ENROQUEN:juego.ENROQUEB;
 		if (HUBO_ENROQUE) //Enroque
 		{
-			if (FILES[escaqueRey[colorEval]] >= 5)
+			if (FILES[escaqueReyEval[colorEval]] >= 5)
 			{
-				if (FILES[escaqueRey[colorEval]] > 5)
+				if (FILES[escaqueReyEval[colorEval]] > 5)
 				{
 					defectos = peonDefectos[colorEval][7];
 				} else {
@@ -1630,7 +1630,7 @@ void evalRey(COLOR colorEval)
 
 			} else {
 
-				if (FILES[escaqueRey[colorEval]] < 4) {
+				if (FILES[escaqueReyEval[colorEval]] < 4) {
 					defectos = peonDefectos[colorEval][2];
 				} else {
 					defectos = peonDefectos[colorEval][4];
@@ -1669,15 +1669,15 @@ void evalRey(COLOR colorEval)
 		if (atacantesRey[xcolorEval] < 2)
 			peligro /= 2;
 		peligro = MINIMO(31, peligro);
-		puntaje_m[colorEval] -= INSEGURIDAD_REY[peligro];
+		puntajeEval_m[colorEval] -= INSEGURIDAD_REY[peligro];
 	}
 }
 
 BOOLEANO evalOposicionReyes(COLOR colorEval)
 {
 	COLOR xcolorEval   = !colorEval;
-	int distancia_file = FileDistancia(escaqueRey[colorEval], escaqueRey[xcolorEval]);
-	int distancia_rank = RankDistancia(escaqueRey[colorEval], escaqueRey[xcolorEval]);
+	int distancia_file = FileDistancia(escaqueReyEval[colorEval], escaqueReyEval[xcolorEval]);
+	int distancia_rank = RankDistancia(escaqueReyEval[colorEval], escaqueReyEval[xcolorEval]);
 
 	/* Oposición directa: reyes alineados y separados por una casilla. */
 	if ((distancia_file == 0 && distancia_rank == 2) ||
@@ -1749,26 +1749,26 @@ BOOLEANO esPosibilidadVictoria(COLOR colorEval)
 
 	if (!juego.tablero[colorEval][PEON])
 	{
-		if (fase[colorEval] < 4) 
+		if (faseEval[colorEval] < 4) 
 			return FALSO;
 
-		if (((fase[colorEval] - fase[xcolorEval]) < 4) && (juego.tablero[xcolorEval][REY] & mascaraSinPeonTorre))
+		if (((faseEval[colorEval] - faseEval[xcolorEval]) < 4) && (juego.tablero[xcolorEval][REY] & mascaraSinPeonTorre))
 			return FALSO;
 	}
 
 	if (juego.tablero[colorEval][PEON] && !(juego.tablero[colorEval][PEON] & mascaraSinPeonTorre))
 	{
 		do {
-			if ((fase[colorEval] > 3) || ((fase[colorEval] == 3) && juego.tablero[colorEval][CABALLO]))
+			if ((faseEval[colorEval] > 3) || ((faseEval[colorEval] == 3) && juego.tablero[colorEval][CABALLO]))
 				continue;
 
-			if (!fase[colorEval]  && 
+			if (!faseEval[colorEval]  && 
 				(juego.tablero[colorEval][PEON] & FILEBIT[1]) && (juego.tablero[colorEval][PEON] & FILEBIT[8]))
 				continue;
 
 			if (juego.tablero[colorEval][ALFIL])
 			{
-				if (!fase[xcolorEval])
+				if (!faseEval[xcolorEval])
 				{
 					if (juego.tablero[colorEval][ALFIL] & ESCAQUES_NEGROS)
 					{
@@ -1793,14 +1793,14 @@ BOOLEANO esPosibilidadVictoria(COLOR colorEval)
 					esqPromo = POSCORONACION[colorEval][7];
 				}
 
-				erd = DISTANCIA[escaqueRey[xcolorEval]][esqPromo] - (juego.colorTurno != colorEval);
+				erd = DISTANCIA[escaqueReyEval[xcolorEval]][esqPromo] - (juego.colorTurno != colorEval);
 
 				if (erd < 2)
 				{
 					return FALSO;
 
 				} else {
-					ard = DISTANCIA[escaqueRey[colorEval]][esqPromo] - (juego.colorTurno == colorEval);
+					ard = DISTANCIA[escaqueReyEval[colorEval]][esqPromo] - (juego.colorTurno == colorEval);
 
 					promod = DISTANCIA[
 					CABEZA_ESQ(colorEval, juego.tablero[colorEval][PEON] & FILEBIT[FILES[esqPromo]])][esqPromo]
@@ -1815,27 +1815,27 @@ BOOLEANO esPosibilidadVictoria(COLOR colorEval)
 
 	if (juego.tablero[colorEval][PEON]) return VERDADERO;
 
-	if (!juego.tablero[colorEval][PEON] && fase[colorEval]==6 && fase[xcolorEval]==3 && 
+	if (!juego.tablero[colorEval][PEON] && faseEval[colorEval]==6 && faseEval[xcolorEval]==3 && 
 	    (juego.tablero[colorEval][CABALLO] || !juego.tablero[xcolorEval][CABALLO]))
 		return FALSO;
 
 
-	if (!juego.tablero[colorEval][PEON] && fase[colorEval]==6 && !juego.tablero[colorEval][ALFIL] 
-			&& !fase[xcolorEval] && !juego.tablero[xcolorEval][PEON])
+	if (!juego.tablero[colorEval][PEON] && faseEval[colorEval]==6 && !juego.tablero[colorEval][ALFIL] 
+			&& !faseEval[xcolorEval] && !juego.tablero[xcolorEval][PEON])
 		return FALSO;
 
 	if (nPeones[colorEval]==1 && !nPeones[xcolorEval] &&
-	   ((fase[colorEval]==5 && fase[xcolorEval]==5) || (fase[colorEval]==9 && fase[xcolorEval]==9)))
+	   ((faseEval[colorEval]==5 && faseEval[xcolorEval]==5) || (faseEval[colorEval]==9 && faseEval[xcolorEval]==9)))
 	{
 		esq = bitScanForwardBruijn(juego.tablero[colorEval][PEON]);
 
-		if ((FileDistancia(escaqueRey[xcolorEval],esq) < 2) && 
-			de_Enfrente(colorEval,RANKS[escaqueRey[xcolorEval]], RANKS[esq]))
+		if ((FileDistancia(escaqueReyEval[xcolorEval],esq) < 2) && 
+			de_Enfrente(colorEval,RANKS[escaqueReyEval[xcolorEval]], RANKS[esq]))
 		{
 			return FALSO;		
 
-		} else if ((FileDistancia(escaqueRey[colorEval],esq ) > 1) || 
-			de_Atras(colorEval,RANKS[escaqueRey[colorEval]], RANKS[esq])) {
+		} else if ((FileDistancia(escaqueReyEval[colorEval],esq ) > 1) || 
+			de_Atras(colorEval,RANKS[escaqueReyEval[colorEval]], RANKS[esq])) {
 
 			return FALSO;		
 		}
@@ -1849,42 +1849,42 @@ void evaluarMate(COLOR colorEval)
 	COLOR xcolorEval = !colorEval;
 	int puntaje	 = 0;
 
-	if (!fase[xcolorEval] && PIEZAS_MENORES[colorEval]==2 && nAlfil[colorEval]==1)
+	if (!faseEval[xcolorEval] && PIEZAS_MENORES[colorEval]==2 && nAlfil[colorEval]==1)
 	{
 		if (juego.tablero[colorEval][ALFIL] & ESCAQUES_NEGROS)
 		{
-			puntaje = alfil_mate_escaques_negros[escaqueRey[xcolorEval]];
+			puntaje = alfil_mate_escaques_negros[escaqueReyEval[xcolorEval]];
 
 		} else {
 
-			puntaje = alfil_mate_escaques_blancos[escaqueRey[xcolorEval]];
+			puntaje = alfil_mate_escaques_blancos[escaqueReyEval[xcolorEval]];
 		}
 
 	} else {
 	
-		puntaje  = mate[escaqueRey[xcolorEval]];
-		puntaje -= (DISTANCIA[escaqueRey[xcolorEval]][escaqueRey[colorEval]]-3) * REY_TROPISMO;
+		puntaje  = mate[escaqueReyEval[xcolorEval]];
+		puntaje -= (DISTANCIA[escaqueReyEval[xcolorEval]][escaqueReyEval[colorEval]]-3) * REY_TROPISMO;
 	}
 
-	puntaje_m[colorEval] += puntaje;
-	puntaje_f[colorEval] += puntaje;
+	puntajeEval_m[colorEval] += puntaje;
+	puntajeEval_f[colorEval] += puntaje;
 }
 
 int transformarSegunEmpate(int puedeGanar, int puntaje)
 {
-	if ((fase[BLANCO] < 9) && (fase[NEGRO] < 9))
+	if ((faseEval[BLANCO] < 9) && (faseEval[NEGRO] < 9))
 	{
 		if ((nAlfil[BLANCO]==1) && (nAlfil[NEGRO]==1))
 		{
 			if (((juego.tablero[BLANCO][ALFIL] & ESCAQUES_NEGROS)  && (juego.tablero[NEGRO][ALFIL] & ESCAQUES_BLANCOS)) ||
 			    ((juego.tablero[BLANCO][ALFIL] & ESCAQUES_BLANCOS) && (juego.tablero[NEGRO][ALFIL] & ESCAQUES_NEGROS ))) 
 			{
-				if (fase[BLANCO]==3 && fase[NEGRO]==3 &&
+				if (faseEval[BLANCO]==3 && faseEval[NEGRO]==3 &&
 				    nPeones[BLANCO] < 4 && nPeones[NEGRO] < 4)
 				{
 					puntaje = puntaje / 2;
 	
-				} else if (fase[BLANCO] == fase[NEGRO]) {
+				} else if (faseEval[BLANCO] == faseEval[NEGRO]) {
 
 					puntaje = 3 * puntaje/4;
 
@@ -1894,7 +1894,7 @@ int transformarSegunEmpate(int puedeGanar, int puntaje)
 	}
 
 #ifndef DESHABILITAR_NUEVOS_SCALERS
-	if (totalPeones <= 2 && abs(fase[BLANCO] - fase[NEGRO]) <= 3)
+	if (totalPeones <= 2 && abs(faseEval[BLANCO] - faseEval[NEGRO]) <= 3)
 		puntaje = 3 * puntaje / 4;
 
 	if (nTorres[BLANCO] == 1 && nTorres[NEGRO] == 1 &&

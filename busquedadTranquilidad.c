@@ -161,13 +161,13 @@ int busquedadTranquilidad(int capa, int alfa, int beta)
 			if (!OBT_MOV_PROMOCION(juego.Buffer_MOV[i]) && !ALFA_BETA_PROXIMO_MATE && !esFinal &&
 			    !estoyJaque && ES_MOV_CAPTURA(juego.Buffer_MOV[i]))
 			{
-				fase[colorMueve] = MINIMO(31,
+				faseEval[colorMueve] = MINIMO(31,
 					juego.estadoEvaluacion.fase[colorMueve]);
 
 				valorFC = VALORPIEZA_FASE[OBT_MOV_CAPTURA(juego.Buffer_MOV[i])];
 		
 				if ((VALORPIEZA_FASE[OBT_MOV_PIEZA(juego.Buffer_MOV[i])] > valorFC) &&
-				    ((fase[colorMueve] - valorFC) > 0) && !eetSuperaPoda)
+				    ((faseEval[colorMueve] - valorFC) > 0) && !eetSuperaPoda)
 				{
 #ifdef PRUEBAS_HCE
 					contadorPodasEET++;
