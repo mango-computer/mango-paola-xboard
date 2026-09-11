@@ -414,6 +414,21 @@ int main(int argc, char **argv)
 		       first == second,
 		       (unsigned long long)(aciertosHashMaterial - hitsBefore));
 	}
+	else if (strcmp(argv[1], "tt_epoch") == 0)
+	{
+		int flag = 0;
+		int staticEval = 0;
+		MOVIMIENTO mov = 0;
+
+		load_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		limpiarTablasHash();
+		agregarMovTablaHash(4, 2, 123, BANDERA_HASH_EXACTO, 0, 17);
+		limpiarTablasHash();
+		verificarTablaHash(-1000, 1000, 2, 4, &flag, &mov, &staticEval);
+		printf("epoch_miss=%d static_unknown=%d size=%zu\n",
+		       flag == BANDERA_HASH_VACIO, staticEval == INT_MAX,
+		       sizeof(REGISTRO_TABLA_HASH));
+	}
 	else
 	{
 		cerrarTablas();

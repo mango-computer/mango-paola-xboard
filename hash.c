@@ -38,6 +38,9 @@
 #ifndef HASH_C
 #define HASH_C
 
+_Static_assert(sizeof(REGISTRO_TABLA_HASH) == 32,
+	       "La entrada TT debe conservar el layout de 32 bytes");
+
 void iniciarHash()
 {
 	// Inicializar todos los números de 64 bits al azar

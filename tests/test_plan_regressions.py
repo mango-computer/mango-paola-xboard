@@ -311,6 +311,17 @@ class PlanRegressionTests(unittest.TestCase):
         )
         self.assertRegex(result.stdout, r"same_score=1 material_hits=[1-9]\d*")
 
+    def test_tt_layout_and_epoch_invalidation(self) -> None:
+        result = subprocess.run(
+            [str(self.audit), "tt_epoch"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=True,
+        )
+        self.assertIn("epoch_miss=1 static_unknown=1 size=32", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
