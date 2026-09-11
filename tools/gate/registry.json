@@ -177,7 +177,10 @@
       "requires": [
         "C05.c"
       ],
-      "status": "PENDING"
+      "status": "PROVISIONAL",
+      "last_commit": "592aa489f31b41d56e532fbacefc53eb6d18f3cd",
+      "last_evidence": "artifacts/gates/C07.a/20260911T194734Z",
+      "reason": "Regresi\u00f3n menor de 2.197 %; se evaluar\u00e1 con dependientes."
     },
     "C07.b": {
       "requires": [

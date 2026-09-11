@@ -37,6 +37,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C06.a | GREEN | `c49c7c6` / `BASE-12` | `artifacts/gates/C06.a/20260911T194337Z` | Intrínsecos equivalentes; promover |
 | C06.b | GREEN | `359c71f` / `BASE-13` | `artifacts/gates/C06.b/20260911T194440Z` | Limpieza completa verificada |
 | C06.c | GREEN | `aaa7d2b` / `BASE-14` | `artifacts/gates/C06.c/20260911T194607Z` | Impresión sin OOB |
+| C07.a | PROVISIONAL | `592aa48`, base `BASE-14` | `artifacts/gates/C07.a/20260911T194734Z` | Mantener para cadena TT |
 
 ## BASE-00
 
@@ -181,8 +182,17 @@ esta entrega congela su equivalencia y evita que vuelva el literal 64.
 última fila. El caso extremo pasa bajo UBSan y se elimina la advertencia
 reproducible de acceso fuera de rango. Regresión completa verde.
 
+## C07.a — Profundidad TT inclusiva
+
+Las entradas se reutilizan con profundidad igual (`>=`); el test exacto
+devuelve score 123 y bandera exacta. La búsqueda a profundidad 7 reduce nodos
+de 3492 a 2936 (`-15,922 %`), aunque la mediana temporal subió de 42,743 ms a
+43,682 ms (`+2,197 %`). Se conserva `PROVISIONAL` para completar C07.
+
 ## Regresiones y bloqueos
 
 - C03.a y C03.b mostraron provisionalmente `+2,974 %` y `+4,942 %`.
   C03.c cerró la cadena en `+0,097 %`; no se confirmó regresión y se promovió
   la corrección semántica completa.
+- C07.a: `+2,197 %` de tiempo con `-15,922 %` de nodos; se mantiene
+  provisional para medir la semántica TT completa.
