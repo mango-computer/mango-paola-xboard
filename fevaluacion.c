@@ -1411,31 +1411,6 @@ static ENTRADA_HASH_MATERIAL hashMaterial[1024];
 static uint64 aciertosHashMaterial;
 #endif
 
-static const uint64 CASILLAS_OSCURAS = 0xAA55AA55AA55AA55ULL;
-static const uint64 CASILLAS_CLARAS  = 0x55AA55AA55AA55AAULL;
-
-static void aplicarParejaAlfiles(void)
-{
-	COLOR color;
-
-	for (color = BLANCO; color <= NEGRO; color++)
-	{
-		uint64 alfiles = juego.tablero[color][ALFIL];
-		if ((alfiles & CASILLAS_CLARAS) && (alfiles & CASILLAS_OSCURAS))
-		{
-			puntajeEval_m[color] += 38;
-			puntajeEval_f[color] += 56;
-#ifdef PRUEBAS_HCE
-			auditParejaAlfiles[color] = 1;
-#endif
-		}
-#ifdef PRUEBAS_HCE
-		else
-			auditParejaAlfiles[color] = 0;
-#endif
-	}
-}
-
 static uint64 firmaMaterialActual(void)
 {
 	uint64 firma = 0xcbf29ce484222325ULL;
@@ -1466,7 +1441,6 @@ void ini_material()
 #ifdef PRUEBAS_HCE
 		aciertosHashMaterial++;
 #endif
-		aplicarParejaAlfiles();
 		return;
 	}
 
@@ -1539,6 +1513,19 @@ void ini_material()
 	printf("balance[%d][%d]=%d\n",mayores,menores,balance);
 #endif
 
+
+	if (nAlfil[BLANCO] > 1)
+	{
+		puntajeEval_m[BLANCO] += 38;
+		puntajeEval_f[BLANCO] += 56;
+	}	
+
+	if (nAlfil[NEGRO] > 1)
+	{
+		puntajeEval_m[NEGRO] += 38;
+		puntajeEval_f[NEGRO] += 56;
+	}
+
 	/* Interacciones compactas por pares de tipos, una vez por evaluación. */
 #ifndef DESHABILITAR_INTERACCIONES_MATERIAL
 	puntajeEval_m[BLANCO] += nCaballos[BLANCO] * nPeones[BLANCO] * 2;
@@ -1603,7 +1590,6 @@ void ini_material()
 		memcpy(entrada->puntajeF, puntajeEval_f, sizeof(entrada->puntajeF));
 		entrada->generacion = generacionHash;
 	}
-	aplicarParejaAlfiles();
 }
 
 static int defectosShelterColumnaRey(COLOR colorEval)

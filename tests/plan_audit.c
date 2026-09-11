@@ -467,21 +467,6 @@ int main(int argc, char **argv)
 		full_uncached();
 		printf("candidate=%d\n", !!(peonesCandidatos[BLANCO] & BITSET[26]));
 	}
-	else if (strcmp(argv[1], "bishop_pair") == 0)
-	{
-		int opposite;
-		int same;
-
-		load_fen("4k3/8/8/8/8/8/8/2B1KB2 w - - 0 1");
-		limpiarTablasHash();
-		full_uncached();
-		opposite = auditParejaAlfiles[BLANCO];
-		load_fen("4k3/8/8/8/8/B7/8/2B1K3 w - - 0 1");
-		limpiarTablasHash();
-		full_uncached();
-		same = auditParejaAlfiles[BLANCO];
-		printf("pair=%d pair_same=%d\n", opposite, same);
-	}
 	else if (strcmp(argv[1], "shelter_rights") == 0)
 	{
 		auditShelterPivote[BLANCO] = 0;
