@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_commit": "43ed23bfd6aa5df1e5d14a406d71a9fc35693859",
-  "current_base": "BASE-05",
+  "current_base": "BASE-06",
   "policy": {
     "timeout_seconds": 600,
     "neutral_percent": 2.0,
@@ -69,25 +69,29 @@
       "requires": [
         "C02"
       ],
-      "status": "PROVISIONAL",
+      "status": "GREEN",
       "last_commit": "63ad08276a3f6e107c3e755a63e7dd7088d5bd12",
       "last_evidence": "artifacts/gates/C03.a/20260911T185843Z",
-      "reason": "Regresi\u00f3n menor de 2.974 %; se evaluar\u00e1 con dependientes."
+      "reason": "Aceptado al cerrar C03: cadena completa dentro de la banda neutra."
     },
     "C03.b": {
       "requires": [
         "C03.a"
       ],
-      "status": "PROVISIONAL",
+      "status": "GREEN",
       "last_commit": "f71ee2b5344266170899746b3601623616e6fc0a",
       "last_evidence": "artifacts/gates/C03.b/20260911T193245Z",
-      "reason": "Regresi\u00f3n menor de 4.942 %; se evaluar\u00e1 con dependientes."
+      "reason": "Aceptado al cerrar C03: cadena completa dentro de la banda neutra."
     },
     "C03.c": {
       "requires": [
         "C03.b"
       ],
-      "status": "PENDING"
+      "status": "GREEN",
+      "last_commit": "61cf97a118e91ce9d50da006a5581a390eb8996a",
+      "last_evidence": "artifacts/gates/C03.c/20260911T193415Z",
+      "reason": "Correcci\u00f3n v\u00e1lida dentro de la banda neutra (0.097 %).",
+      "promoted_base": "BASE-06"
     },
     "C04.a": {
       "requires": [

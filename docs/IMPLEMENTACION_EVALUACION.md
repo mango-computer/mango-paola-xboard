@@ -26,8 +26,9 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C01.c | GREEN | `5ad6c24` / `BASE-03` | `artifacts/gates/C01.c/20260911T185347Z` | FEN limpia; promover |
 | C01.d | GREEN | `83ded49` / `BASE-04` | `artifacts/gates/C01.d/20260911T185511Z` | Null reversible; promover |
 | C02 | GREEN | `53caefd` / `BASE-05` | `artifacts/gates/C02/20260911T185648Z` | Terminales corregidos; promover |
-| C03.a | PROVISIONAL | `63ad082`, base `BASE-05` | `artifacts/gates/C03.a/20260911T185843Z` | Mantener para medir cadena C03 |
-| C03.b | PROVISIONAL | `f71ee2b`, base `BASE-05` | `artifacts/gates/C03.b/20260911T193245Z` | Mantener para medir cadena C03 |
+| C03.a | GREEN tras cadena | `63ad082`, base `BASE-05` | `artifacts/gates/C03.a/20260911T185843Z` | Aceptado con C03.c |
+| C03.b | GREEN tras cadena | `f71ee2b`, base `BASE-05` | `artifacts/gates/C03.b/20260911T193245Z` | Aceptado con C03.c |
+| C03.c | GREEN | `61cf97a` / `BASE-06` | `artifacts/gates/C03.c/20260911T193415Z` | Cadena C03 neutral; promover |
 
 ## BASE-00
 
@@ -103,10 +104,17 @@ rey e1 tras C03.b. Se corrigió el oráculo para comprobar los campos específic
 de la pieza clavada. No fue una regresión del motor. La repetición posterior
 superó las 52 pruebas.
 
+## C03.c — Área de movilidad
+
+Las piezas propias se excluyen explícitamente de los destinos útiles, sin
+perderlas del mapa geométrico de defensa. El fixture confirma que el peón
+propio bloqueador está en el rayo raw pero no suma movilidad. En la medición
+de cierre, la cadena completa quedó en 159,362 ms frente a 159,208 ms
+(`+0,097 %`), dentro del ruido, con 53 tests verdes. C03.a–C03.c se promueven
+juntas como `BASE-06`.
+
 ## Regresiones y bloqueos
 
-- C03.a: `+2,974 %` en lote de evaluación, por debajo del umbral fuerte del
-  10 %. Se conserva provisionalmente porque corrige la semántica requerida por
-  C03.b/C03.c.
-- C03.b: cadena C03 en `+4,942 %` de coste de evaluación. Sigue por debajo del
-  umbral fuerte y la búsqueda corta mejora tiempo; se conserva hasta C03.c.
+- C03.a y C03.b mostraron provisionalmente `+2,974 %` y `+4,942 %`.
+  C03.c cerró la cadena en `+0,097 %`; no se confirmó regresión y se promovió
+  la corrección semántica completa.
