@@ -32,6 +32,7 @@ Este documento registra la ejecución del plan de mejora sobre la rama
 | C04.a | GREEN | `3922475` / `BASE-07` | `artifacts/gates/C04.a/20260911T193554Z` | Coronación visible; promover |
 | C04.b | GREEN | `cb16fe3` / `BASE-08` | `artifacts/gates/C04.b/20260911T193733Z` | Finales completos; promover |
 | C05.a | GREEN | `2291494` / `BASE-09` | `artifacts/gates/C05.a/20260911T193859Z` | Lazy acotado; promover |
+| C05.b | GREEN | `bdccc6d` / `BASE-10` | `artifacts/gates/C05.b/20260911T194046Z` | Trazas estables; promover |
 
 ## BASE-00
 
@@ -137,6 +138,14 @@ Ambos cortes lazy se desactivan cuando el reloj supera 80. En KQ contra K con
 reloj 99, una ventana estrecha coincide con la evaluación completa. Frente a
 `BASE-08`, árbol idéntico, tiempo de búsqueda `-0,94 %` y lote de evaluación
 `-0,84 %`; 55 tests verdes.
+
+## C05.b — Trazas y caché de evaluación
+
+`evalprobe` evita deliberadamente la caché de evaluación y reconstruye todos
+los mapas con la misma semántica raw/efectiva/útil del evaluador. La caché
+normal continúa siendo sólo de puntuación: un hit devuelve el mismo valor sin
+pretender restaurar scratch global. Pasaron 57 tests; cambio limitado a
+instrumentación `PRUEBAS_HCE`.
 
 ## Regresiones y bloqueos
 
